@@ -98,6 +98,35 @@ textarea{resize:vertical;min-height:85px;line-height:1.75}
 .btn-word:hover{background:#2166c0}
 .btn-txt{padding:9px 20px;background:var(--gold);color:#fff;border:none;border-radius:8px;font-family:'Noto Sans Arabic',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:all .2s}
 .btn-txt:hover{background:var(--gold-l)}
+.btn-pdf{padding:9px 20px;background:#b91c1c;color:#fff;border:none;border-radius:8px;font-family:'Noto Sans Arabic',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:all .2s}
+.btn-pdf:hover{background:#991b1b}
+
+/* ══ طباعة / PDF ══ */
+#print-area{display:none}
+@media print{
+  body *{visibility:hidden}
+  #print-area,#print-area *{visibility:visible}
+  #print-area{
+    display:block!important;
+    position:absolute;inset:0;
+    font-family:'Traditional Arabic',Arial,sans-serif;
+    direction:rtl;font-size:13pt;
+    color:#1a1612;line-height:1.85;
+    padding:2cm;
+  }
+  @page{margin:2cm;size:A4}
+  .pr-cover{text-align:center;padding-bottom:30pt;margin-bottom:30pt;border-bottom:2pt solid #8B6914;page-break-after:always}
+  .pr-h1{font-size:22pt;color:#0d4f4a;margin:20pt 0 10pt;font-family:'Traditional Arabic',Arial,sans-serif}
+  .pr-h2{font-size:16pt;color:#8B6914;margin:18pt 0 8pt;font-family:'Traditional Arabic',Arial,sans-serif}
+  .pr-h3{font-size:13pt;color:#0d4f4a;margin:12pt 0 5pt;font-family:'Traditional Arabic',Arial,sans-serif}
+  .pr-p{margin-bottom:7pt;text-align:justify}
+  .pr-li{margin-bottom:4pt;padding-right:14pt}
+  .pr-lbl{font-size:10pt;color:#7a6a52;margin-bottom:2pt}
+  .pr-toc-item{margin:6pt 0;font-size:12pt}
+  table{width:100%;border-collapse:collapse;margin-top:8pt}
+  td,th{border:1pt solid #c8b89a;padding:5pt;font-size:11pt}
+  th{background:#f0e8d8;font-weight:bold}
+}
 /* plan */
 .ch-block{border:1px solid var(--border);border-radius:10px;margin-bottom:12px;overflow:hidden;background:var(--card)}
 .ch-hdr{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:9px;padding:10px 13px;background:rgba(139,105,20,.05);border-bottom:1px solid var(--parch-d)}
@@ -173,7 +202,7 @@ textarea{resize:vertical;min-height:85px;line-height:1.75}
   .g2,.g3{grid-template-columns:1fr}
   input[type=text],input[type=number],textarea,select{font-size:16px!important}
   .nav-btns{gap:7px}
-  .btn-next,.btn-prev,.btn-skip,.btn-word,.btn-txt{font-size:12px;padding:9px 14px}
+  .btn-next,.btn-prev,.btn-skip,.btn-word,.btn-txt,.btn-pdf{font-size:12px;padding:9px 14px}
   .sec-title{font-size:20px}
   .modal-box{margin:8px;max-height:95vh}
   .modal-hdr{padding:16px 16px 12px}
@@ -203,7 +232,7 @@ textarea{resize:vertical;min-height:85px;line-height:1.75}
 </div>
 
 <!-- ══ اتفاقية الاستخدام ══ -->
-<div id="tosModal" class="modal-overlay" style="display:none">
+<div id="tosModal" class="modal-overlay">
   <div class="modal-box">
     <div class="modal-hdr">
       <h2>اتفاقية الاستخدام</h2>
@@ -260,6 +289,8 @@ textarea{resize:vertical;min-height:85px;line-height:1.75}
     <p><em>بياناتكم محفوظة محلياً في متصفحكم الخاص ولا يتم إرسالها لأي خادم خارجي.</em></p>
     <p style="margin-top:10px; color:var(--gold);">فكرة: الأستاذ ع.بن دحمان / تصميم: Claude.ai (إصدار تجريبي 2026)</p>
   </footer>
+  <!-- منطقة الطباعة المخفية -->
+  <div id="print-area"></div>
 </div>
 </div>
 <script>
@@ -347,7 +378,7 @@ function resetAll(){
 function navBtns(hasPrev=true,isLast=false,isSkippable=false){
   let h='<div class="nav-btns">';
   if(!isLast) h+='<button class="btn-next" onclick="go(1)">التالي ←</button>';
-  if(isLast)  h+='<button class="btn-word" onclick="exportWord()">📄 تصدير Word</button><button class="btn-txt" onclick="exportTxt()">📋 تصدير نصي</button>';
+  if(isLast)  h+='<button class="btn-word" onclick="exportWord()">📄 تصدير Word</button><button class="btn-pdf" onclick="exportPdf()">🖨 تصدير PDF</button><button class="btn-txt" onclick="exportTxt()">📋 تصدير نصي</button>';
   if(isSkippable) h+='<button class="btn-skip" onclick="go(1)">تخطّي هذه الخطوة ←</button>';
   if(hasPrev) h+='<button class="btn-prev" onclick="go(-1)">→ السابق</button>';
   return h+'</div>';
@@ -680,7 +711,7 @@ function rSummary(){
   S('المصادر والمراجع',`<div class="sf"><div class="sl">المصادر الأولية</div>${d.sources.primary.filter(r=>r.text).map((r,i)=>`<div class="sv">${i+1}. ${r.text}</div>`).join('')}</div><div class="sf"><div class="sl">المراجع النقدية</div>${d.sources.secondary.filter(r=>r.text).map((r,i)=>`<div class="sv">${i+1}. ${r.text}</div>`).join('')}</div>`)+
   S('النتائج المتوقعة',d.results.items.filter(Boolean).map((r,i)=>`<div class="sf"><div class="sv">${i+1}. ${r}</div></div>`).join(''))+
   (tlHas?S('الجدول الزمني',`<table style="width:100%;border-collapse:collapse;font-size:12.5px"><tr><th style="text-align:right;padding:4px 7px;background:var(--parch-d);border:1px solid var(--border)">المرحلة</th><th style="text-align:right;padding:4px 7px;background:var(--parch-d);border:1px solid var(--border)">المدة</th><th style="text-align:right;padding:4px 7px;background:var(--parch-d);border:1px solid var(--border)">الوحدة</th></tr>${d.timeline.rows.filter(r=>r.task).map(r=>`<tr><td style="padding:4px 7px;border:1px solid var(--border)">${r.task}</td><td style="padding:4px 7px;border:1px solid var(--border)">${r.dur}</td><td style="padding:4px 7px;border:1px solid var(--border)">${r.unit}</td></tr>`).join('')}</table>`):'')
-  +`<div class="nav-btns"><button class="btn-word" onclick="exportWord()">📄 تصدير Word</button><button class="btn-txt" onclick="exportTxt()">📋 تصدير نصي</button><button class="btn-next" onclick="go(1)">إعدادات التنسيق ←</button><button class="btn-prev" onclick="go(-1)">→ السابق</button></div>`;
+  +`<div class="nav-btns"><button class="btn-word" onclick="exportWord()">📄 تصدير Word</button><button class="btn-pdf" onclick="exportPdf()">🖨 تصدير PDF</button><button class="btn-txt" onclick="exportTxt()">📋 تصدير نصي</button><button class="btn-next" onclick="go(1)">إعدادات التنسيق ←</button><button class="btn-prev" onclick="go(-1)">→ السابق</button></div>`;
 }
 
 /* ══════════════════════════════════════════════════════
@@ -755,6 +786,7 @@ function rFormat(){
   +navBtns(true,false)+
   `<div class="nav-btns" style="margin-top:0;padding-top:0;border:none">
     <button class="btn-word" onclick="saveFmtAndExport()">📄 تصدير Word الآن</button>
+    <button class="btn-pdf" onclick="exportPdf()">🖨 تصدير PDF الآن</button>
   </div>`;
 }
 
@@ -1063,6 +1095,110 @@ window.exportWord=()=>{
 };
 
 /* ══════════════════════════════════════════════════════
+   EXPORT — PDF (طباعة)
+══════════════════════════════════════════════════════ */
+window.exportPdf=function(){
+  save();const d=D;
+  const tlHas=d.timeline.rows.filter(r=>r.task).length>0;
+  const ord=['','أولًا','ثانيًا','ثالثًا','رابعًا','خامسًا','سادسًا','سابعًا','ثامنًا'];
+  const H=(n,t,cls)=>`<div class="${cls}">${n?ord[n]+': ':''}${t}</div>`;
+
+  // بناء محتوى الطباعة
+  let body='';
+
+  // ── الغلاف ──
+  body+=`<div class="pr-cover">
+    <div class="pr-lbl">الجامعة: ${d.cover.univ} | الكلية: ${d.cover.fac} | القسم: ${d.cover.dept}</div>
+    ${d.cover.branch?`<div class="pr-lbl">الفرع: ${d.cover.branch}</div>`:''}
+    <div class="pr-h1" style="margin-top:40pt">عنوان تصور البحث</div>
+    <div style="font-size:16pt;font-weight:bold;color:#0d4f4a;margin:10pt 0">${d.title.text}</div>
+    ${d.title.scope?`<div class="pr-lbl">${d.title.scope}</div>`:''}
+    ${d.cover.specialty?`<div class="pr-lbl">التخصص: ${d.cover.specialty}</div>`:''}
+    <div style="margin-top:30pt">
+      <div class="pr-lbl">إعداد الطالب(ة):</div>
+      <div>• ${d.cover.s1}</div>
+      ${d.cover.s2?`<div>• ${d.cover.s2}</div>`:''}
+    </div>
+    <div style="margin-top:14pt"><span class="pr-lbl">تحت إشراف: </span>${d.cover.sup}</div>
+    <div><span class="pr-lbl">السنة الجامعية: </span>${d.cover.year}</div>
+  </div>`;
+
+  // ── فهرس المحتويات ──
+  const tocItems=['صفحة الغلاف','العنوان والمتن','أسباب اختيار الموضوع','الإشكالية والفرضيات','الجهاز المنهجي','خطة البحث الأولية','الدراسات السابقة','المصادر والمراجع','النتائج المتوقعة',...(tlHas?['الجدول الزمني']:[]),'فهرس التصور'];
+  body+=`<div class="pr-h2" style="margin-top:0">فهرس محتويات التصور البحثي</div>`;
+  body+=tocItems.map((t,i)=>`<div class="pr-toc-item">${i+1}. ${t}</div>`).join('');
+  body+=`<div style="page-break-after:always"></div>`;
+
+  // ── أسباب الاختيار ──
+  body+=H(1,'أسباب اختيار الموضوع','pr-h2');
+  body+=H(0,'الأسباب الذاتية','pr-h3')+`<p class="pr-p">${d.reasons.subj}</p>`;
+  body+=H(0,'الأسباب الموضوعية','pr-h3')+`<p class="pr-p">${d.reasons.obj}</p>`;
+
+  // ── الإشكالية ──
+  body+=H(2,'الإشكالية والفرضيات','pr-h2');
+  body+=H(0,'الإشكالية المحورية','pr-h3')+`<p class="pr-p">${d.problem.main}</p>`;
+  if(d.problem.subs.filter(Boolean).length){
+    body+=H(0,'الأسئلة الفرعية','pr-h3');
+    body+=d.problem.subs.filter(Boolean).map((q,i)=>`<div class="pr-li">${i+1}. ${q}</div>`).join('');
+  }
+  if(d.problem.hyps.filter(Boolean).length){
+    body+=H(0,'الفرضيات','pr-h3');
+    body+=d.problem.hyps.filter(Boolean).map((h,i)=>`<div class="pr-li">${i+1}. ${h}</div>`).join('');
+  }
+
+  // ── المنهج ──
+  body+=H(3,'الجهاز المنهجي','pr-h2');
+  body+=H(0,'المنهج المعتمد','pr-h3')+`<p class="pr-p">${d.method.chosen}</p>`;
+  if(d.method.justify)body+=H(0,'مبررات الاختيار','pr-h3')+`<p class="pr-p">${d.method.justify}</p>`;
+  if(d.method.tools)body+=H(0,'الأدوات الإجرائية','pr-h3')+`<p class="pr-p">${d.method.tools}</p>`;
+
+  // ── خطة البحث ──
+  body+=H(4,'خطة البحث الأولية','pr-h2');
+  if(d.plan.intro)body+=H(0,'المقدمة','pr-h3')+`<p class="pr-p">${d.plan.intro}</p>`;
+  d.plan.chs.forEach(c=>{
+    body+=`<div class="pr-h3">${c.title}</div>`;
+    c.secs.filter(Boolean).forEach((s,j)=>{body+=`<div class="pr-li">${j+1}. ${s}</div>`;});
+  });
+  if(d.plan.conc)body+=H(0,'الخاتمة','pr-h3')+`<p class="pr-p">${d.plan.conc}</p>`;
+
+  // ── الدراسات السابقة ──
+  body+=H(5,'الدراسات السابقة','pr-h2');
+  d.prevlit.items.filter(it=>it.auth||it.title).forEach((it,i)=>{
+    body+=`<div class="pr-li">${i+1}. ${it.auth} (${it.year}). ${it.title}${it.link?' — '+it.link:''}</div>`;
+  });
+  if(d.prevlit.added)body+=H(0,'الجديد الذي يُضيفه البحث','pr-h3')+`<p class="pr-p">${d.prevlit.added}</p>`;
+
+  // ── المصادر والمراجع ──
+  body+=H(6,'المصادر والمراجع','pr-h2');
+  body+=H(0,'المصادر الأولية','pr-h3');
+  d.sources.primary.filter(r=>r.text).forEach((r,i)=>{body+=`<div class="pr-li">${i+1}. ${r.text}</div>`;});
+  body+=H(0,'المراجع النقدية والنظرية','pr-h3');
+  d.sources.secondary.filter(r=>r.text).forEach((r,i)=>{body+=`<div class="pr-li">${i+1}. ${r.text}</div>`;});
+
+  // ── النتائج ──
+  body+=H(7,'النتائج المتوقعة','pr-h2');
+  d.results.items.filter(Boolean).forEach((r,i)=>{body+=`<div class="pr-li">${i+1}. ${r}</div>`;});
+
+  // ── الجدول الزمني ──
+  if(tlHas){
+    body+=H(8,'الجدول الزمني','pr-h2');
+    body+=`<table><tr><th>المرحلة</th><th>المدة</th><th>الوحدة</th></tr>`;
+    d.timeline.rows.filter(r=>r.task).forEach(r=>{body+=`<tr><td>${r.task}</td><td>${r.dur}</td><td>${r.unit}</td></tr>`;});
+    body+=`</table>`;
+  }
+
+  // حقن المحتوى في منطقة الطباعة وطباعته
+  const pa=document.getElementById('print-area');
+  pa.innerHTML=body;
+  setTimeout(()=>{
+    window.print();
+    // تنظيف بعد الطباعة
+    setTimeout(()=>{pa.innerHTML='';},1000);
+  },120);
+  toast('جارٍ فتح نافذة الطباعة / PDF...');
+};
+
+/* ══════════════════════════════════════════════════════
    INIT
 ══════════════════════════════════════════════════════ */
 
@@ -1132,16 +1268,20 @@ window.closeDrawer=function(){
 
 /* ── اتفاقية الاستخدام ── */
 function initTOS(){
-  const agreed=localStorage.getItem('ARProposal_TOS_v1');
-  if(!agreed){
-    const modal=document.getElementById('tosModal');
+  const modal=document.getElementById('tosModal');
+  const agreed=localStorage.getItem('ARProposal_TOS_v2');
+  if(agreed){
+    // سبق القبول — أخفِ المودال فوراً
+    modal.style.display='none';
+  } else {
+    // لم يسبق القبول — أظهر مع تلاشٍ ناعم
     modal.style.display='flex';
     modal.style.opacity='0';
-    setTimeout(()=>{modal.style.transition='opacity .4s';modal.style.opacity='1';},10);
+    setTimeout(()=>{modal.style.transition='opacity .4s';modal.style.opacity='1';},30);
   }
 }
 window.acceptTOS=function(){
-  localStorage.setItem('ARProposal_TOS_v1','accepted_'+new Date().toISOString());
+  localStorage.setItem('ARProposal_TOS_v2','accepted_'+new Date().toISOString());
   const modal=document.getElementById('tosModal');
   modal.style.transition='opacity .35s';
   modal.style.opacity='0';
