@@ -6,6 +6,7 @@
 <title>محرّر التصور البحثي — الدراسات الأدبية الجزائرية</title>
 <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Noto+Sans+Arabic:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 <script src="https://cdn.jsdelivr.net/npm/html-docx-js@0.3.1/dist/html-docx.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -101,32 +102,8 @@ textarea{resize:vertical;min-height:85px;line-height:1.75}
 .btn-pdf{padding:9px 20px;background:#b91c1c;color:#fff;border:none;border-radius:8px;font-family:'Noto Sans Arabic',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:all .2s}
 .btn-pdf:hover{background:#991b1b}
 
-/* ══ طباعة / PDF ══ */
-#print-area{display:none}
-@media print{
-  body *{visibility:hidden}
-  #print-area,#print-area *{visibility:visible}
-  #print-area{
-    display:block!important;
-    position:absolute;inset:0;
-    font-family:'Traditional Arabic',Arial,sans-serif;
-    direction:rtl;font-size:13pt;
-    color:#1a1612;line-height:1.85;
-    padding:2cm;
-  }
-  @page{margin:2cm;size:A4}
-  .pr-cover{text-align:center;padding-bottom:30pt;margin-bottom:30pt;border-bottom:2pt solid #8B6914;page-break-after:always}
-  .pr-h1{font-size:22pt;color:#0d4f4a;margin:20pt 0 10pt;font-family:'Traditional Arabic',Arial,sans-serif}
-  .pr-h2{font-size:16pt;color:#8B6914;margin:18pt 0 8pt;font-family:'Traditional Arabic',Arial,sans-serif}
-  .pr-h3{font-size:13pt;color:#0d4f4a;margin:12pt 0 5pt;font-family:'Traditional Arabic',Arial,sans-serif}
-  .pr-p{margin-bottom:7pt;text-align:justify}
-  .pr-li{margin-bottom:4pt;padding-right:14pt}
-  .pr-lbl{font-size:10pt;color:#7a6a52;margin-bottom:2pt}
-  .pr-toc-item{margin:6pt 0;font-size:12pt}
-  table{width:100%;border-collapse:collapse;margin-top:8pt}
-  td,th{border:1pt solid #c8b89a;padding:5pt;font-size:11pt}
-  th{background:#f0e8d8;font-weight:bold}
-}
+/* ══ طباعة — غير مستخدمة (html2pdf يتولى التصدير) ══ */
+@media print{body{display:none}}
 /* plan */
 .ch-block{border:1px solid var(--border);border-radius:10px;margin-bottom:12px;overflow:hidden;background:var(--card)}
 .ch-hdr{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:9px;padding:10px 13px;background:rgba(139,105,20,.05);border-bottom:1px solid var(--parch-d)}
@@ -1094,109 +1071,45 @@ window.exportWord=()=>{
   }
 };
 
+
+
 /* ══════════════════════════════════════════════════════
-   EXPORT — PDF (طباعة)
+   EXPORT — PDF (تحميل مباشر)
 ══════════════════════════════════════════════════════ */
 window.exportPdf=function(){
-  save();const d=D;
-  const tlHas=d.timeline.rows.filter(r=>r.task).length>0;
-  const ord=['','أولًا','ثانيًا','ثالثًا','رابعًا','خامسًا','سادسًا','سابعًا','ثامنًا'];
-  const H=(n,t,cls)=>`<div class="${cls}">${n?ord[n]+': ':''}${t}</div>`;
-
-  // بناء محتوى الطباعة
-  let body='';
-
-  // ── الغلاف ──
-  body+=`<div class="pr-cover">
-    <div class="pr-lbl">الجامعة: ${d.cover.univ} | الكلية: ${d.cover.fac} | القسم: ${d.cover.dept}</div>
-    ${d.cover.branch?`<div class="pr-lbl">الفرع: ${d.cover.branch}</div>`:''}
-    <div class="pr-h1" style="margin-top:40pt">عنوان تصور البحث</div>
-    <div style="font-size:16pt;font-weight:bold;color:#0d4f4a;margin:10pt 0">${d.title.text}</div>
-    ${d.title.scope?`<div class="pr-lbl">${d.title.scope}</div>`:''}
-    ${d.cover.specialty?`<div class="pr-lbl">التخصص: ${d.cover.specialty}</div>`:''}
-    <div style="margin-top:30pt">
-      <div class="pr-lbl">إعداد الطالب(ة):</div>
-      <div>• ${d.cover.s1}</div>
-      ${d.cover.s2?`<div>• ${d.cover.s2}</div>`:''}
-    </div>
-    <div style="margin-top:14pt"><span class="pr-lbl">تحت إشراف: </span>${d.cover.sup}</div>
-    <div><span class="pr-lbl">السنة الجامعية: </span>${d.cover.year}</div>
-  </div>`;
-
-  // ── فهرس المحتويات ──
-  const tocItems=['صفحة الغلاف','العنوان والمتن','أسباب اختيار الموضوع','الإشكالية والفرضيات','الجهاز المنهجي','خطة البحث الأولية','الدراسات السابقة','المصادر والمراجع','النتائج المتوقعة',...(tlHas?['الجدول الزمني']:[]),'فهرس التصور'];
-  body+=`<div class="pr-h2" style="margin-top:0">فهرس محتويات التصور البحثي</div>`;
-  body+=tocItems.map((t,i)=>`<div class="pr-toc-item">${i+1}. ${t}</div>`).join('');
-  body+=`<div style="page-break-after:always"></div>`;
-
-  // ── أسباب الاختيار ──
-  body+=H(1,'أسباب اختيار الموضوع','pr-h2');
-  body+=H(0,'الأسباب الذاتية','pr-h3')+`<p class="pr-p">${d.reasons.subj}</p>`;
-  body+=H(0,'الأسباب الموضوعية','pr-h3')+`<p class="pr-p">${d.reasons.obj}</p>`;
-
-  // ── الإشكالية ──
-  body+=H(2,'الإشكالية والفرضيات','pr-h2');
-  body+=H(0,'الإشكالية المحورية','pr-h3')+`<p class="pr-p">${d.problem.main}</p>`;
-  if(d.problem.subs.filter(Boolean).length){
-    body+=H(0,'الأسئلة الفرعية','pr-h3');
-    body+=d.problem.subs.filter(Boolean).map((q,i)=>`<div class="pr-li">${i+1}. ${q}</div>`).join('');
+  if(typeof html2pdf==='undefined'){
+    toast('جارٍ تحميل مكتبة PDF، حاول مجدداً...','err');
+    return;
   }
-  if(d.problem.hyps.filter(Boolean).length){
-    body+=H(0,'الفرضيات','pr-h3');
-    body+=d.problem.hyps.filter(Boolean).map((h,i)=>`<div class="pr-li">${i+1}. ${h}</div>`).join('');
-  }
+  save();
+  toast('جارٍ تحضير ملف PDF...');
 
-  // ── المنهج ──
-  body+=H(3,'الجهاز المنهجي','pr-h2');
-  body+=H(0,'المنهج المعتمد','pr-h3')+`<p class="pr-p">${d.method.chosen}</p>`;
-  if(d.method.justify)body+=H(0,'مبررات الاختيار','pr-h3')+`<p class="pr-p">${d.method.justify}</p>`;
-  if(d.method.tools)body+=H(0,'الأدوات الإجرائية','pr-h3')+`<p class="pr-p">${d.method.tools}</p>`;
+  // التقاط الصفحة المرئية الحالية مباشرة
+  const element=document.querySelector('.main')||document.body;
 
-  // ── خطة البحث ──
-  body+=H(4,'خطة البحث الأولية','pr-h2');
-  if(d.plan.intro)body+=H(0,'المقدمة','pr-h3')+`<p class="pr-p">${d.plan.intro}</p>`;
-  d.plan.chs.forEach(c=>{
-    body+=`<div class="pr-h3">${c.title}</div>`;
-    c.secs.filter(Boolean).forEach((s,j)=>{body+=`<div class="pr-li">${j+1}. ${s}</div>`;});
-  });
-  if(d.plan.conc)body+=H(0,'الخاتمة','pr-h3')+`<p class="pr-p">${d.plan.conc}</p>`;
+  const fname='التصور_البحثي_'+((D.cover.s1||'').replace(/\s+/g,'_')||'draft');
+  const opt={
+    margin:[10,10,10,10],
+    filename:fname+'.pdf',
+    image:{type:'jpeg',quality:0.98},
+    html2canvas:{
+      scale:2,
+      useCORS:true,
+      letterRendering:true,
+      scrollX:0,
+      scrollY:-window.scrollY
+    },
+    jsPDF:{unit:'mm',format:'a4',orientation:'portrait'}
+  };
 
-  // ── الدراسات السابقة ──
-  body+=H(5,'الدراسات السابقة','pr-h2');
-  d.prevlit.items.filter(it=>it.auth||it.title).forEach((it,i)=>{
-    body+=`<div class="pr-li">${i+1}. ${it.auth} (${it.year}). ${it.title}${it.link?' — '+it.link:''}</div>`;
-  });
-  if(d.prevlit.added)body+=H(0,'الجديد الذي يُضيفه البحث','pr-h3')+`<p class="pr-p">${d.prevlit.added}</p>`;
-
-  // ── المصادر والمراجع ──
-  body+=H(6,'المصادر والمراجع','pr-h2');
-  body+=H(0,'المصادر الأولية','pr-h3');
-  d.sources.primary.filter(r=>r.text).forEach((r,i)=>{body+=`<div class="pr-li">${i+1}. ${r.text}</div>`;});
-  body+=H(0,'المراجع النقدية والنظرية','pr-h3');
-  d.sources.secondary.filter(r=>r.text).forEach((r,i)=>{body+=`<div class="pr-li">${i+1}. ${r.text}</div>`;});
-
-  // ── النتائج ──
-  body+=H(7,'النتائج المتوقعة','pr-h2');
-  d.results.items.filter(Boolean).forEach((r,i)=>{body+=`<div class="pr-li">${i+1}. ${r}</div>`;});
-
-  // ── الجدول الزمني ──
-  if(tlHas){
-    body+=H(8,'الجدول الزمني','pr-h2');
-    body+=`<table><tr><th>المرحلة</th><th>المدة</th><th>الوحدة</th></tr>`;
-    d.timeline.rows.filter(r=>r.task).forEach(r=>{body+=`<tr><td>${r.task}</td><td>${r.dur}</td><td>${r.unit}</td></tr>`;});
-    body+=`</table>`;
-  }
-
-  // حقن المحتوى في منطقة الطباعة وطباعته
-  const pa=document.getElementById('print-area');
-  pa.innerHTML=body;
-  setTimeout(()=>{
-    window.print();
-    // تنظيف بعد الطباعة
-    setTimeout(()=>{pa.innerHTML='';},1000);
-  },120);
-  toast('جارٍ فتح نافذة الطباعة / PDF...');
+  html2pdf().set(opt).from(element).save()
+    .then(()=>{toast('تم تحميل PDF بنجاح ✓');})
+    .catch(err=>{
+      console.error('PDF Error:',err);
+      toast('حدث خطأ أثناء تصدير PDF','err');
+    });
 };
+
 
 /* ══════════════════════════════════════════════════════
    INIT
