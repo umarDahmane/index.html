@@ -63,36 +63,30 @@ textarea{resize:vertical;min-height:85px;line-height:1.75}
 .tip{background:var(--gold-bg);border:1px solid var(--gold-border);border-radius:8px;padding:9px 13px;margin-bottom:12px;font-size:12px;color:var(--gold);line-height:1.7}
 .tip strong{font-weight:600}
 .info-box{background:var(--teal-bg);border:1px solid rgba(13,79,74,.2);border-radius:8px;padding:9px 13px;margin-bottom:12px;font-size:12px;color:var(--teal);line-height:1.7}
-/* word counter */
 .wc{font-size:11px;padding:2px 8px;border-radius:10px;display:inline-flex;align-items:center;gap:3px;margin-top:4px}
 .wc.ok{background:var(--teal-bg);color:var(--teal)}
 .wc.warn{background:#fff3e0;color:#8B4513}
-/* chips */
 .chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
 .chip{padding:4px 11px;border:1px solid var(--border);border-radius:20px;background:#fff;font-family:'Noto Sans Arabic',sans-serif;font-size:12px;color:var(--muted);cursor:pointer;transition:all .17s}
 .chip:hover{border-color:var(--gold);color:var(--gold);background:rgba(139,105,20,.04)}
 .chip:active{transform:scale(.96)}
-/* tags */
 .tag-wrap{display:flex;gap:7px}
 .tag-wrap input{flex:1}
 .btn-tag{padding:8px 13px;background:var(--teal);color:#fff;border:none;border-radius:8px;font-family:'Noto Sans Arabic',sans-serif;font-size:12px;cursor:pointer;white-space:nowrap}
 .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
 .tag{background:var(--teal-bg);color:var(--teal);padding:3px 10px;border-radius:20px;font-size:12px;display:flex;align-items:center;gap:4px}
 .tag button{background:none;border:none;color:var(--teal);cursor:pointer;font-size:12px;padding:0;line-height:1}
-/* list items */
 .btn-add{display:flex;align-items:center;gap:5px;padding:7px 14px;border:1px dashed var(--border);border-radius:8px;background:transparent;color:var(--muted);font-family:'Noto Sans Arabic',sans-serif;font-size:12px;cursor:pointer;transition:all .2s;width:100%;justify-content:center;margin-top:4px}
 .btn-add:hover{border-color:var(--gold);color:var(--gold);background:rgba(139,105,20,.03)}
 .li{display:flex;gap:8px;align-items:flex-start;margin-bottom:8px}
 .li input,.li textarea{flex:1}
 .btn-rm{padding:7px;border:1px solid #f0d0c8;border-radius:7px;background:#fff;color:#c0503a;cursor:pointer;font-size:12px;flex-shrink:0;transition:all .2s;line-height:1}
 .btn-rm:hover{background:#fdf0ec;border-color:#c0503a}
-/* radio */
 .radios{display:flex;flex-direction:column;gap:6px}
 .rlabel{display:flex;align-items:flex-start;gap:8px;padding:8px 11px;border:1px solid var(--border);border-radius:8px;cursor:pointer;font-size:12.5px;transition:all .2s;line-height:1.6}
 .rlabel:hover{border-color:var(--gold)}
 .rlabel input{margin-top:3px;accent-color:var(--teal);flex-shrink:0}
 .rlabel.on{border-color:var(--teal-m);background:var(--teal-bg);color:var(--teal)}
-/* nav buttons */
 .nav-btns{display:flex;gap:9px;margin-top:24px;padding-top:18px;border-top:1px solid var(--border);flex-wrap:wrap}
 .btn-next{padding:9px 22px;background:var(--teal);color:#fff;border:none;border-radius:8px;font-family:'Noto Sans Arabic',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:all .2s}
 .btn-next:hover{background:var(--teal-m)}
@@ -144,12 +138,14 @@ textarea{resize:vertical;min-height:85px;line-height:1.75}
 .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);padding:9px 20px;border-radius:8px;font-family:'Noto Sans Arabic',sans-serif;font-size:12.5px;z-index:9999;pointer-events:none;transition:opacity .4s;white-space:nowrap}
 .toast.ok{background:var(--teal);color:#fff}
 .toast.err{background:#a32d2d;color:#fff}
+/* Footer */
+.footer{text-align:center;padding:25px;font-size:12px;color:var(--muted);border-top:1px solid var(--border);margin-top:40px;background:var(--gold-bg);border-radius:12px 12px 0 0}
+.footer p{margin-bottom:6px}
 @media(max-width:700px){.app{grid-template-columns:1fr}.side{display:none}.g2,.g3{grid-template-columns:1fr}.main{padding:14px}}
 </style>
 </head>
 <body>
 <div class="app">
-<!-- ══ SIDEBAR ══════════════════════════════════════════ -->
 <div class="side">
   <div class="side-hdr">
     <div class="side-title">محرّر التصور البحثي</div>
@@ -165,10 +161,16 @@ textarea{resize:vertical;min-height:85px;line-height:1.75}
   </div>
   <ul class="nav" id="navEl"></ul>
 </div>
-<!-- ══ MAIN ════════════════════════════════════════════ -->
-<div class="main" id="mainEl"></div>
+<div class="main">
+  <div id="mainEl"></div>
+  <footer class="footer">
+    <p><strong>تنويه منهجي:</strong> هذا التطبيق "اجتهاد شخصي" مخصص للأغراض التعليمية والتدريبية فقط لمساعدة الطلبة على بناء تصوراتهم الأولية.</p>
+    <p>لا يعتبر وثيقة رسمية صادرة عن جهة إدارية، واستخدامه يتم على المسؤولية الشخصية للباحث مع ضرورة العودة للأدلة المنهجية المعتمدة.</p>
+    <p><em>بياناتكم محفوظة محلياً في متصفحكم الخاص ولا يتم إرسالها لأي خادم خارجي.</em></p>
+    <p style="margin-top:10px; color:var(--gold);">تطوير: أ.د. عمر ب. (إصدار تجريبي 2026)</p>
+  </footer>
 </div>
-
+</div>
 <script>
 /* ══════════════════════════════════════════════════════
    DATA MODEL
