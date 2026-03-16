@@ -6,7 +6,6 @@
 <title>محرّر التصور البحثي — الدراسات الأدبية الجزائرية</title>
 <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Noto+Sans+Arabic:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 <script src="https://cdn.jsdelivr.net/npm/html-docx-js@0.3.1/dist/html-docx.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -99,11 +98,7 @@ textarea{resize:vertical;min-height:85px;line-height:1.75}
 .btn-word:hover{background:#2166c0}
 .btn-txt{padding:9px 20px;background:var(--gold);color:#fff;border:none;border-radius:8px;font-family:'Noto Sans Arabic',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:all .2s}
 .btn-txt:hover{background:var(--gold-l)}
-.btn-pdf{padding:9px 20px;background:#b91c1c;color:#fff;border:none;border-radius:8px;font-family:'Noto Sans Arabic',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:all .2s}
-.btn-pdf:hover{background:#991b1b}
 
-/* ══ طباعة — غير مستخدمة (html2pdf يتولى التصدير) ══ */
-@media print{body{display:none}}
 /* plan */
 .ch-block{border:1px solid var(--border);border-radius:10px;margin-bottom:12px;overflow:hidden;background:var(--card)}
 .ch-hdr{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:9px;padding:10px 13px;background:rgba(139,105,20,.05);border-bottom:1px solid var(--parch-d)}
@@ -179,7 +174,7 @@ textarea{resize:vertical;min-height:85px;line-height:1.75}
   .g2,.g3{grid-template-columns:1fr}
   input[type=text],input[type=number],textarea,select{font-size:16px!important}
   .nav-btns{gap:7px}
-  .btn-next,.btn-prev,.btn-skip,.btn-word,.btn-txt,.btn-pdf{font-size:12px;padding:9px 14px}
+  .btn-next,.btn-prev,.btn-skip,.btn-word,.btn-txt{font-size:12px;padding:9px 14px}
   .sec-title{font-size:20px}
   .modal-box{margin:8px;max-height:95vh}
   .modal-hdr{padding:16px 16px 12px}
@@ -266,8 +261,7 @@ textarea{resize:vertical;min-height:85px;line-height:1.75}
     <p><em>بياناتكم محفوظة محلياً في متصفحكم الخاص ولا يتم إرسالها لأي خادم خارجي.</em></p>
     <p style="margin-top:10px; color:var(--gold);">فكرة: الأستاذ ع.بن دحمان / تصميم: Claude.ai (إصدار تجريبي 2026)</p>
   </footer>
-  <!-- منطقة الطباعة المخفية -->
-  <div id="print-area"></div>
+
 </div>
 </div>
 <script>
@@ -355,7 +349,7 @@ function resetAll(){
 function navBtns(hasPrev=true,isLast=false,isSkippable=false){
   let h='<div class="nav-btns">';
   if(!isLast) h+='<button class="btn-next" onclick="go(1)">التالي ←</button>';
-  if(isLast)  h+='<button class="btn-word" onclick="exportWord()">📄 تصدير Word</button><button class="btn-pdf" onclick="exportPdf()">🖨 تصدير PDF</button><button class="btn-txt" onclick="exportTxt()">📋 تصدير نصي</button>';
+  if(isLast)  h+='<button class="btn-word" onclick="exportWord()">📄 تصدير Word</button><button class="btn-txt" onclick="exportTxt()">📋 تصدير نصي</button>';
   if(isSkippable) h+='<button class="btn-skip" onclick="go(1)">تخطّي هذه الخطوة ←</button>';
   if(hasPrev) h+='<button class="btn-prev" onclick="go(-1)">→ السابق</button>';
   return h+'</div>';
@@ -688,7 +682,7 @@ function rSummary(){
   S('المصادر والمراجع',`<div class="sf"><div class="sl">المصادر الأولية</div>${d.sources.primary.filter(r=>r.text).map((r,i)=>`<div class="sv">${i+1}. ${r.text}</div>`).join('')}</div><div class="sf"><div class="sl">المراجع النقدية</div>${d.sources.secondary.filter(r=>r.text).map((r,i)=>`<div class="sv">${i+1}. ${r.text}</div>`).join('')}</div>`)+
   S('النتائج المتوقعة',d.results.items.filter(Boolean).map((r,i)=>`<div class="sf"><div class="sv">${i+1}. ${r}</div></div>`).join(''))+
   (tlHas?S('الجدول الزمني',`<table style="width:100%;border-collapse:collapse;font-size:12.5px"><tr><th style="text-align:right;padding:4px 7px;background:var(--parch-d);border:1px solid var(--border)">المرحلة</th><th style="text-align:right;padding:4px 7px;background:var(--parch-d);border:1px solid var(--border)">المدة</th><th style="text-align:right;padding:4px 7px;background:var(--parch-d);border:1px solid var(--border)">الوحدة</th></tr>${d.timeline.rows.filter(r=>r.task).map(r=>`<tr><td style="padding:4px 7px;border:1px solid var(--border)">${r.task}</td><td style="padding:4px 7px;border:1px solid var(--border)">${r.dur}</td><td style="padding:4px 7px;border:1px solid var(--border)">${r.unit}</td></tr>`).join('')}</table>`):'')
-  +`<div class="nav-btns"><button class="btn-word" onclick="exportWord()">📄 تصدير Word</button><button class="btn-pdf" onclick="exportPdf()">🖨 تصدير PDF</button><button class="btn-txt" onclick="exportTxt()">📋 تصدير نصي</button><button class="btn-next" onclick="go(1)">إعدادات التنسيق ←</button><button class="btn-prev" onclick="go(-1)">→ السابق</button></div>`;
+  +`<div class="nav-btns"><button class="btn-word" onclick="exportWord()">📄 تصدير Word</button><button class="btn-txt" onclick="exportTxt()">📋 تصدير نصي</button><button class="btn-next" onclick="go(1)">إعدادات التنسيق ←</button><button class="btn-prev" onclick="go(-1)">→ السابق</button></div>`;
 }
 
 /* ══════════════════════════════════════════════════════
@@ -763,7 +757,6 @@ function rFormat(){
   +navBtns(true,false)+
   `<div class="nav-btns" style="margin-top:0;padding-top:0;border:none">
     <button class="btn-word" onclick="saveFmtAndExport()">📄 تصدير Word الآن</button>
-    <button class="btn-pdf" onclick="exportPdf()">🖨 تصدير PDF الآن</button>
   </div>`;
 }
 
@@ -1070,46 +1063,6 @@ window.exportWord=()=>{
     mobileDownload(blob,'التصور_البحثي.doc');
   }
 };
-
-
-
-/* ══════════════════════════════════════════════════════
-   EXPORT — PDF (تحميل مباشر)
-══════════════════════════════════════════════════════ */
-window.exportPdf=function(){
-  if(typeof html2pdf==='undefined'){
-    toast('جارٍ تحميل مكتبة PDF، حاول مجدداً...','err');
-    return;
-  }
-  save();
-  toast('جارٍ تحضير ملف PDF...');
-
-  // التقاط الصفحة المرئية الحالية مباشرة
-  const element=document.querySelector('.main')||document.body;
-
-  const fname='التصور_البحثي_'+((D.cover.s1||'').replace(/\s+/g,'_')||'draft');
-  const opt={
-    margin:[10,10,10,10],
-    filename:fname+'.pdf',
-    image:{type:'jpeg',quality:0.98},
-    html2canvas:{
-      scale:2,
-      useCORS:true,
-      letterRendering:true,
-      scrollX:0,
-      scrollY:-window.scrollY
-    },
-    jsPDF:{unit:'mm',format:'a4',orientation:'portrait'}
-  };
-
-  html2pdf().set(opt).from(element).save()
-    .then(()=>{toast('تم تحميل PDF بنجاح ✓');})
-    .catch(err=>{
-      console.error('PDF Error:',err);
-      toast('حدث خطأ أثناء تصدير PDF','err');
-    });
-};
-
 
 /* ══════════════════════════════════════════════════════
    INIT
