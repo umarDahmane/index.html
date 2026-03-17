@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>محرّر التصور البحثي — الدراسات الأدبية الجزائرية</title>
 <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Noto+Sans+Arabic:wght@300;400;500;600&display=swap" rel="stylesheet"/>
-<script src="https://cdn.jsdelivr.net/npm/html-docx-js@0.3.1/dist/html-docx.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -96,6 +96,8 @@ textarea{resize:vertical;min-height:85px;line-height:1.75}
 .btn-skip:hover{border-color:var(--teal);color:var(--teal)}
 .btn-word{padding:9px 20px;background:#1a56a0;color:#fff;border:none;border-radius:8px;font-family:'Noto Sans Arabic',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:all .2s}
 .btn-word:hover{background:#2166c0}
+.btn-pdf{padding:9px 20px;background:#7a3e1a;color:#fff;border:none;border-radius:8px;font-family:'Noto Sans Arabic',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:all .2s}
+.btn-pdf:hover{background:#9a4e22}
 .btn-txt{padding:9px 20px;background:var(--gold);color:#fff;border:none;border-radius:8px;font-family:'Noto Sans Arabic',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:all .2s}
 .btn-txt:hover{background:var(--gold-l)}
 
@@ -349,7 +351,9 @@ function resetAll(){
 function navBtns(hasPrev=true,isLast=false,isSkippable=false){
   let h='<div class="nav-btns">';
   if(!isLast) h+='<button class="btn-next" onclick="go(1)">التالي ←</button>';
-  if(isLast)  h+='<button class="btn-word" onclick="exportWord()">📄 تصدير Word</button><button class="btn-txt" onclick="exportTxt()">📋 تصدير نصي</button>';
+  if(isLast)  h+=`<button class="btn-word" onclick="exportWord()">📄 تصدير Word</button>
+    <button class="btn-pdf" onclick="exportPdf()">📑 تصدير PDF</button>
+    <button class="btn-txt" onclick="exportTxt()">📋 تصدير نصي</button>`;
   if(isSkippable) h+='<button class="btn-skip" onclick="go(1)">تخطّي هذه الخطوة ←</button>';
   if(hasPrev) h+='<button class="btn-prev" onclick="go(-1)">→ السابق</button>';
   return h+'</div>';
@@ -954,114 +958,286 @@ window.exportTxt=()=>{
 };
 
 /* ══════════════════════════════════════════════════════
-   EXPORT — WORD
+   EXPORT — WORD  (JSZip + OOXML — يعمل على جميع الأجهزة)
 ══════════════════════════════════════════════════════ */
-window.exportWord=()=>{
-  save();const d=D;const f=d.fmt;
+
+/* ── مساعدات OOXML ── */
+function _ex(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+function _rpr(opts){
+  let r='<w:rPr>';
+  r+='<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Traditional Arabic" w:hint="cs"/>';
+  if(opts&&opts.bold)r+='<w:b/><w:bCs/>';
+  if(opts&&opts.italic)r+='<w:i/><w:iCs/>';
+  if(opts&&opts.color)r+=`<w:color w:val="${opts.color.replace('#','')}"/>`;
+  if(opts&&opts.sz)r+=`<w:sz w:val="${opts.sz}"/><w:szCs w:val="${opts.sz}"/>`;
+  r+='<w:rtl/><w:lang w:bidi="ar-SA"/>';
+  r+='</w:rPr>';return r;
+}
+
+/* ترتيب عناصر pPr حسب مخطط OOXML:
+   pStyle → bidi → jc → spacing */
+function _pPr(pStyle,j,spBefore,spAfter){
+  let r='<w:pPr>';
+  if(pStyle)r+=`<w:pStyle w:val="${pStyle}"/>`;
+  r+='<w:bidi/>';
+  r+=`<w:jc w:val="${j||'right'}"/>`;
+  if(spBefore||spAfter)r+=`<w:spacing${spBefore?` w:before="${spBefore}"`:''}${spAfter?` w:after="${spAfter}"`:''}/>`; 
+  r+='</w:pPr>';return r;
+}
+
+function _p(text,pStyle,rOpts,jc){
+  /* العناوين: محاذاة يمين — النص العادي: ضبط (justify) */
+  const isHdr=(pStyle==='H1'||pStyle==='H2'||pStyle==='H3');
+  const align=jc||(isHdr?'right':'both');
+  const sp=(pStyle==='H1'||pStyle==='H2')?[240,120]:pStyle==='H3'?[160,80]:[0,80];
+  return `<w:p>${_pPr(pStyle,align,sp[0],sp[1])}<w:r>${_rpr(rOpts)}<w:t xml:space="preserve">${_ex(text)}</w:t></w:r></w:p>`;
+}
+
+function _pMulti(runs,pStyle,jc){
+  const isHdr=(pStyle==='H1'||pStyle==='H2'||pStyle==='H3');
+  const align=jc||(isHdr?'right':'both');
+  const sp=(pStyle==='H1'||pStyle==='H2')?[240,120]:pStyle==='H3'?[160,80]:[0,80];
+  const rs=runs.map(([txt,opts])=>`<w:r>${_rpr(opts)}<w:t xml:space="preserve">${_ex(txt)}</w:t></w:r>`).join('');
+  return `<w:p>${_pPr(pStyle,align,sp[0],sp[1])}${rs}</w:p>`;
+}
+
+function _pageBreak(){return `<w:p>${_pPr('','right',0,0)}<w:r><w:br w:type="page"/></w:r></w:p>`;}
+function _blank(){return `<w:p>${_pPr('','right',0,80)}</w:p>`;}
+function _h1(t){return _p(t,'H1',{bold:true,sz:32,color:'0d4f4a'});}
+function _h2(t){return _p(t,'H2',{bold:true,sz:26,color:'1a7a73'});}
+function _h3(t){return _p(t,'H3',{bold:true,sz:22,color:'8B6914'});}
+function _body(t){return _p(t,'',{sz:24});}
+function _li(t,n){return _p(`${n}. ${t}`,'',{sz:24});}
+function _cvRow(label,val){
+  return _pMulti([[label,{bold:true,sz:22,color:'7a6a52'}],[val||'—',{sz:24}]],'');
+}
+
+function _tblRow(cells,isHeader){
+  const tds=cells.map(c=>`<w:tc><w:tcPr><w:tcBorders><w:top w:val="single" w:sz="4" w:color="c8b89a"/><w:bottom w:val="single" w:sz="4" w:color="c8b89a"/><w:right w:val="single" w:sz="4" w:color="c8b89a"/><w:left w:val="single" w:sz="4" w:color="c8b89a"/></w:tcBorders>${isHeader?'<w:shd w:val="clear" w:color="auto" w:fill="F0E8D8"/><w:tcMar><w:top w:w="60" w:type="dxa"/><w:bottom w:w="60" w:type="dxa"/><w:right w:w="100" w:type="dxa"/><w:left w:w="100" w:type="dxa"/></w:tcMar>':''}</w:tcPr>${_p(c,'',{bold:isHeader,sz:20})}</w:tc>`).join('');
+  return `<w:tr>${tds}</w:tr>`;
+}
+
+function _buildDocXml(d,f){
   const tlHas=d.timeline.rows.filter(r=>r.task).length>0;
   const ord=['','أولًا','ثانيًا','ثالثًا','رابعًا','خامسًا','سادسًا','سابعًا','ثامنًا'];
-  const H2=(n,t)=>`<h2>${ord[n]}: ${t}</h2>`;
-  const tocItems=['صفحة الغلاف','العنوان والمتن','أسباب اختيار الموضوع','الإشكالية والفرضيات','الجهاز المنهجي','خطة البحث الأولية','الدراسات السابقة','المصادر والمراجع','النتائج المتوقعة',...(tlHas?['الجدول الزمني']:[]),'فهرس التصور'];
-  const toc=tocItems.map((t,i)=>`<p style="margin:5pt 0">${i+1}. ${t}</p>`).join('');
+  const ps=[];
 
-  const coverAlign=f.coverCenter?'center':'right';
-  const margin=f.marginCm||'2.5';
+  /* ── صفحة الغلاف ── */
+  ps.push(_blank());
+  ps.push(_cvRow('الجامعة: ',d.cover.univ));
+  ps.push(_cvRow('الكلية: ',d.cover.fac));
+  ps.push(_cvRow('القسم: ',d.cover.dept));
+  if(d.cover.branch) ps.push(_cvRow('الفرع: ',d.cover.branch));
+  if(d.cover.specialty) ps.push(_cvRow('التخصص: ',d.cover.specialty));
+  ps.push(_blank());
+  ps.push(_h1('عنوان تصور البحث'));
+  ps.push(_p(d.title.text,'',{bold:true,sz:28,color:f.h1Color?f.h1Color.replace('#',''):'0d4f4a'},'center'));
+  if(d.title.scope) ps.push(_p(d.title.scope,'',{sz:22,color:'7a6a52'},'center'));
+  ps.push(_blank());
+  ps.push(_p('إعداد الطالب(ة):','',{bold:true,sz:24}));
+  ps.push(_p('• '+d.cover.s1,'',{sz:24}));
+  if(d.cover.s2) ps.push(_p('• '+d.cover.s2,'',{sz:24}));
+  ps.push(_blank());
+  ps.push(_cvRow('تحت إشراف: ',d.cover.sup));
+  ps.push(_cvRow('السنة الجامعية: ',d.cover.year));
+  ps.push(_pageBreak());
+
+  /* ── العنوان والمتن ── */
+  if(d.title.corpus){
+    ps.push(_h2('المتن الأدبي (Corpus)'));
+    ps.push(_pMulti([['نوع المتن: ',{bold:true,sz:24}],[d.title.corpusType||'',{sz:24}]],''));
+    ps.push(_body(d.title.corpus));
+  }
+  if(d.title.keywords&&d.title.keywords.length){
+    ps.push(_pMulti([['الكلمات المفتاحية: ',{bold:true,sz:24}],[d.title.keywords.join(' — '),{sz:24}]],''));
+  }
+
+  /* ── الأقسام ── */
+  ps.push(_h2(`${ord[1]}: أسباب اختيار الموضوع`));
+  ps.push(_h3('الأسباب الذاتية'));ps.push(_body(d.reasons.subj));
+  ps.push(_h3('الأسباب الموضوعية'));ps.push(_body(d.reasons.obj));
+
+  ps.push(_h2(`${ord[2]}: الإشكالية والفرضيات`));
+  ps.push(_h3('الإشكالية المحورية'));ps.push(_body(d.problem.main));
+  const subs=d.problem.subs.filter(Boolean);
+  if(subs.length){ps.push(_h3('الأسئلة الفرعية'));subs.forEach((q,i)=>ps.push(_li(q,i+1)));}
+  const hyps=d.problem.hyps.filter(Boolean);
+  if(hyps.length){ps.push(_h3('الفرضيات'));hyps.forEach((h,i)=>ps.push(_li(h,i+1)));}
+
+  ps.push(_h2(`${ord[3]}: الجهاز المنهجي`));
+  ps.push(_h3('المنهج المعتمد'));ps.push(_body(d.method.chosen));
+  if(d.method.justify){ps.push(_h3('مبررات الاختيار'));ps.push(_body(d.method.justify));}
+  if(d.method.tools){ps.push(_h3('الأدوات الإجرائية'));ps.push(_body(d.method.tools));}
+
+  ps.push(_h2(`${ord[4]}: خطة البحث الأولية`));
+  if(d.plan.intro){ps.push(_h3('المقدمة'));ps.push(_body(d.plan.intro));}
+  d.plan.chs.forEach(c=>{
+    ps.push(_h3(c.title));
+    c.secs.filter(Boolean).forEach((s,i)=>ps.push(_li(s,i+1)));
+  });
+  if(d.plan.conc){ps.push(_h3('الخاتمة'));ps.push(_body(d.plan.conc));}
+
+  ps.push(_h2(`${ord[5]}: الدراسات السابقة`));
+  d.prevlit.items.filter(it=>it.auth||it.title).forEach((it,i)=>{
+    ps.push(_p(`${i+1}. ${it.auth||''} (${it.year||''}). ${it.title||''}${it.link?' — '+it.link:''}`, '', {sz:24,italic:true}));
+  });
+  if(d.prevlit.added){ps.push(_h3('الجديد الذي يُضيفه البحث'));ps.push(_body(d.prevlit.added));}
+
+  ps.push(_h2(`${ord[6]}: المصادر والمراجع`));
+  ps.push(_h3('المصادر الأولية (النصوص الأدبية)'));
+  d.sources.primary.filter(r=>r.text).forEach((r,i)=>ps.push(_li(r.text,i+1)));
+  ps.push(_h3('المراجع النقدية والنظرية'));
+  d.sources.secondary.filter(r=>r.text).forEach((r,i)=>ps.push(_li(r.text,i+1)));
+
+  ps.push(_h2(`${ord[7]}: النتائج المتوقعة`));
+  d.results.items.filter(Boolean).forEach((r,i)=>ps.push(_li(r,i+1)));
+
+  if(tlHas){
+    ps.push(_h2(`${ord[8]}: الجدول الزمني`));
+    const tblRows=[_tblRow(['المرحلة','المدة','الوحدة'],true)];
+    d.timeline.rows.filter(r=>r.task).forEach(r=>tblRows.push(_tblRow([r.task,r.dur,r.unit],false)));
+    ps.push(`<w:tbl><w:tblPr><w:tblW w:w="5000" w:type="pct"/><w:tblBorders><w:top w:val="single" w:sz="4" w:color="c8b89a"/><w:bottom w:val="single" w:sz="4" w:color="c8b89a"/><w:insideH w:val="single" w:sz="4" w:color="c8b89a"/></w:tblBorders></w:tblPr><w:tblGrid><w:gridCol w:w="3600"/><w:gridCol w:w="900"/><w:gridCol w:w="900"/></w:tblGrid>${tblRows.join('')}</w:tbl>`);
+  }
+
+  /* ── الفهرس ── */
+  ps.push(_pageBreak());
+  ps.push(_h2('فهرس محتويات التصور البحثي'));
+  const tocItems=['صفحة الغلاف','العنوان والمتن','أسباب اختيار الموضوع','الإشكالية والفرضيات','الجهاز المنهجي','خطة البحث الأولية','الدراسات السابقة','المصادر والمراجع','النتائج المتوقعة',...(tlHas?['الجدول الزمني']:[]),'فهرس التصور'];
+  tocItems.forEach((t,i)=>ps.push(_li(t,i+1)));
+
+  const marginTwips=Math.round((parseFloat(f.marginCm||2.5)/2.54)*1440);
+  /* sectPr: ترتيب العناصر حسب مخطط OOXML — pgSz ← pgMar ← bidi */
+  return `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><w:body>${ps.join('')}<w:sectPr><w:pgSz w:w="11906" w:h="16838" w:orient="portrait"/><w:pgMar w:top="${marginTwips}" w:right="${marginTwips}" w:bottom="${marginTwips}" w:left="${marginTwips}" w:header="0" w:footer="0" w:gutter="0"/><w:bidi/></w:sectPr></w:body></w:document>`;
+}
+
+/* w:hint="cs" يُجبر Word على استخدام خط الكتابة المعقدة (العربية) لكل نص */
+function _buildStylesXml(){
+  const F='<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Traditional Arabic" w:hint="cs"/>';
+  const RTL='<w:rtl/><w:lang w:bidi="ar-SA"/>';
+  return `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:styles xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:docDefaults><w:rPrDefault><w:rPr>${F}${RTL}</w:rPr></w:rPrDefault><w:pPrDefault><w:pPr><w:bidi/><w:jc w:val="right"/></w:pPr></w:pPrDefault></w:docDefaults><w:style w:type="paragraph" w:default="1" w:styleId="Normal"><w:name w:val="Normal"/><w:pPr><w:bidi/><w:jc w:val="right"/></w:pPr><w:rPr>${F}${RTL}</w:rPr></w:style><w:style w:type="paragraph" w:styleId="H1"><w:name w:val="heading 1"/><w:basedOn w:val="Normal"/><w:pPr><w:bidi/><w:jc w:val="center"/><w:spacing w:before="300" w:after="160"/></w:pPr><w:rPr>${F}<w:b/><w:bCs/><w:color w:val="0d4f4a"/><w:sz w:val="32"/><w:szCs w:val="32"/>${RTL}</w:rPr></w:style><w:style w:type="paragraph" w:styleId="H2"><w:name w:val="heading 2"/><w:basedOn w:val="Normal"/><w:pPr><w:bidi/><w:jc w:val="right"/><w:spacing w:before="240" w:after="120"/></w:pPr><w:rPr>${F}<w:b/><w:bCs/><w:color w:val="1a7a73"/><w:sz w:val="26"/><w:szCs w:val="26"/>${RTL}</w:rPr></w:style><w:style w:type="paragraph" w:styleId="H3"><w:name w:val="heading 3"/><w:basedOn w:val="Normal"/><w:pPr><w:bidi/><w:jc w:val="right"/><w:spacing w:before="160" w:after="80"/></w:pPr><w:rPr>${F}<w:b/><w:bCs/><w:color w:val="8B6914"/><w:sz w:val="22"/><w:szCs w:val="22"/>${RTL}</w:rPr></w:style></w:styles>`;
+}
+
+window.exportWord=()=>{
+  save();const d=D;const f=d.fmt;
+  if(typeof JSZip==='undefined'){toast('خطأ: مكتبة JSZip غير محملة');return;}
+  try{
+    const zip=new JSZip();
+    zip.file('[Content_Types].xml',`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/><Override PartName="/word/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml"/><Override PartName="/word/settings.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.settings+xml"/></Types>`);
+    zip.file('_rels/.rels',`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>`);
+    zip.file('word/document.xml',_buildDocXml(d,f));
+    zip.file('word/styles.xml',_buildStylesXml());
+    zip.file('word/settings.xml',`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:settings xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:defaultTabStop w:val="720"/><w:compat><w:compatSetting w:name="compatibilityMode" w:uri="http://schemas.microsoft.com/office/word" w:val="15"/></w:compat></w:settings>`);
+    zip.file('word/_rels/document.xml.rels',`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/><Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/settings" Target="settings.xml"/></Relationships>`);
+    zip.generateAsync({type:'blob',mimeType:'application/vnd.openxmlformats-officedocument.wordprocessingml.document',compression:'DEFLATE',compressionOptions:{level:6}})
+      .then(blob=>{mobileDownload(blob,'التصور_البحثي.docx');toast('تم تصدير Word ✓');})
+      .catch(()=>toast('فشل التصدير — حاول مجدداً'));
+  }catch(e){toast('خطأ في التصدير: '+e.message);}
+};
+
+/* ══════════════════════════════════════════════════════
+   EXPORT — PDF  (print window — يعمل على جميع الأجهزة)
+══════════════════════════════════════════════════════ */
+window.exportPdf=()=>{
+  save();const d=D;
+  const tlHas=d.timeline.rows.filter(r=>r.task).length>0;
+  const ord=['','أولًا','ثانيًا','ثالثًا','رابعًا','خامسًا','سادسًا','سابعًا','ثامنًا'];
+
+  const sec=(title,body)=>`<div class="sec"><h2>${title}</h2>${body}</div>`;
+  const sub=(t,b)=>`<h3>${t}</h3><p>${b||''}</p>`;
+  const ol=items=>`<ol>${items.map(it=>`<li>${it}</li>`).join('')}</ol>`;
+
+  let body='';
+  /* غلاف */
+  body+=`<div class="cover">
+    <div class="inst"><strong>الجامعة:</strong> ${d.cover.univ||'—'}</div>
+    <div class="inst"><strong>الكلية:</strong> ${d.cover.fac||'—'} &nbsp;|&nbsp; <strong>القسم:</strong> ${d.cover.dept||'—'}</div>
+    ${d.cover.branch?`<div class="inst"><strong>الفرع:</strong> ${d.cover.branch}</div>`:''}
+    ${d.cover.specialty?`<div class="inst"><strong>التخصص:</strong> ${d.cover.specialty}</div>`:''}
+    <h1>${d.title.text||'عنوان التصور'}</h1>
+    ${d.title.scope?`<div class="scope">${d.title.scope}</div>`:''}
+    <div class="meta"><strong>إعداد الطالب(ة):</strong><br>• ${d.cover.s1||'—'}${d.cover.s2?'<br>• '+d.cover.s2:''}</div>
+    <div class="meta"><strong>تحت إشراف:</strong> ${d.cover.sup||'—'}</div>
+    <div class="meta"><strong>السنة الجامعية:</strong> ${d.cover.year||'—'}</div>
+  </div><div class="pb"></div>`;
+
+  if(d.title.corpus||d.title.keywords.length){
+    let kw='';
+    if(d.title.corpus) kw+=sub('المتن الأدبي (Corpus)',`<strong>نوع المتن:</strong> ${d.title.corpusType||''}<br>${d.title.corpus}`);
+    if(d.title.keywords.length) kw+=`<p><strong>الكلمات المفتاحية:</strong> ${d.title.keywords.join(' — ')}</p>`;
+    body+=sec('العنوان والمتن',kw);
+  }
+
+  body+=sec(`${ord[1]}: أسباب اختيار الموضوع`,
+    sub('الأسباب الذاتية',d.reasons.subj)+sub('الأسباب الموضوعية',d.reasons.obj));
+
+  let prob=sub('الإشكالية المحورية',d.problem.main);
+  if(d.problem.subs.filter(Boolean).length) prob+=`<h3>الأسئلة الفرعية</h3>${ol(d.problem.subs.filter(Boolean))}`;
+  if(d.problem.hyps.filter(Boolean).length) prob+=`<h3>الفرضيات</h3>${ol(d.problem.hyps.filter(Boolean))}`;
+  body+=sec(`${ord[2]}: الإشكالية والفرضيات`,prob);
+
+  let meth=sub('المنهج المعتمد',d.method.chosen);
+  if(d.method.justify) meth+=sub('مبررات الاختيار',d.method.justify);
+  if(d.method.tools) meth+=sub('الأدوات الإجرائية',d.method.tools);
+  body+=sec(`${ord[3]}: الجهاز المنهجي`,meth);
+
+  let plan=d.plan.intro?sub('المقدمة',d.plan.intro):'';
+  d.plan.chs.forEach(c=>{plan+=`<h3>${c.title}</h3>${ol(c.secs.filter(Boolean))}`;});
+  if(d.plan.conc) plan+=sub('الخاتمة',d.plan.conc);
+  body+=sec(`${ord[4]}: خطة البحث الأولية`,plan);
+
+  body+=sec(`${ord[5]}: الدراسات السابقة`,
+    ol(d.prevlit.items.filter(it=>it.auth||it.title).map(it=>`${it.auth||''} (${it.year||''}). <em>${it.title||''}</em>${it.link?' — '+it.link:''}`))
+    +(d.prevlit.added?sub('الجديد الذي يُضيفه البحث',d.prevlit.added):''));
+
+  body+=sec(`${ord[6]}: المصادر والمراجع`,
+    `<h3>المصادر الأولية</h3>${ol(d.sources.primary.filter(r=>r.text).map(r=>r.text))}`+
+    `<h3>المراجع النقدية والنظرية</h3>${ol(d.sources.secondary.filter(r=>r.text).map(r=>r.text))}`);
+
+  body+=sec(`${ord[7]}: النتائج المتوقعة`,ol(d.results.items.filter(Boolean)));
+
+  if(tlHas){
+    const rows=d.timeline.rows.filter(r=>r.task).map(r=>`<tr><td>${r.task}</td><td>${r.dur} ${r.unit}</td></tr>`).join('');
+    body+=sec(`${ord[8]}: الجدول الزمني`,`<table><thead><tr><th>المرحلة</th><th>المدة</th></tr></thead><tbody>${rows}</tbody></table>`);
+  }
+
+  const tocItems=['صفحة الغلاف','العنوان والمتن','أسباب اختيار الموضوع','الإشكالية والفرضيات','الجهاز المنهجي','خطة البحث الأولية','الدراسات السابقة','المصادر والمراجع','النتائج المتوقعة',...(tlHas?['الجدول الزمني']:[]),'فهرس التصور'];
+  body+=`<div class="pb"></div><div class="sec"><h2>فهرس محتويات التصور البحثي</h2><ol>${tocItems.map(t=>`<li>${t}</li>`).join('')}</ol></div>`;
 
   const html=`<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8">
-  <style>
-    body{font-family:'${f.bodyFont}',Arial,sans-serif;direction:rtl;font-size:${f.bodySize}pt;margin:${margin}cm;color:${f.bodyColor};line-height:${f.lineHeight};text-align:${f.align}}
-    p{margin-bottom:${f.paraSpace}pt}
-    h1{font-family:'${f.headFont}',Arial,sans-serif;font-size:${f.h1Size}pt;text-align:${coverAlign};color:${f.h1Color};padding-bottom:8pt;margin-bottom:12pt}
-    h2{font-family:'${f.headFont}',Arial,sans-serif;font-size:${f.h2Size}pt;color:${f.h2Color};margin-top:20pt;margin-bottom:9pt}
-    h3{font-family:'${f.headFont}',Arial,sans-serif;font-size:${f.h3Size}pt;color:${f.h3Color};margin-top:12pt;margin-bottom:5pt}
-    .cover{text-align:${coverAlign};padding:28pt 0;margin-bottom:0}
-    .page-break{page-break-after:always;margin:0;padding:0;height:0;border:none}
-    .cf{margin:5pt 0;font-family:'${f.bodyFont}',Arial,sans-serif;font-size:${f.bodySize}pt}
-    .cl{color:#7a6a52;font-size:${Math.max(10,parseInt(f.bodySize)-2)}pt}
-    ol,ul{padding-right:18pt}
-    li{margin-bottom:4pt}
-    table{width:100%;border-collapse:collapse;margin-top:7pt}
-    td,th{border:1pt solid #c8b89a;padding:5pt;font-size:${Math.max(10,parseInt(f.bodySize)-2)}pt}
-    th{background:#f0e8d8;font-weight:bold}
-    .toc-item{margin:5pt 0}
-  </style></head><body>
-  <div class="cover">
-    <div class="cf" style="font-weight:bold"><span class="cl">الجامعة: </span>${d.cover.univ}</div>
-    <div class="cf"><span class="cl">الكلية: </span>${d.cover.fac}</div>
-    <div class="cf"><span class="cl">القسم: </span>${d.cover.dept}</div>
-    ${d.cover.branch?`<div class="cf"><span class="cl">الفرع: </span>${d.cover.branch}</div>`:''}
-    <div style="height:16pt"></div>
-    <h1>عنوان تصور البحث</h1>
-    <div class="cf" style="font-size:${parseInt(f.bodySize)+2}pt;font-weight:bold;color:${f.h1Color};text-align:${coverAlign}">${d.title.text}</div>
-    ${d.title.scope?`<div class="cf" style="font-size:${parseInt(f.bodySize)-1}pt;color:#7a6a52;text-align:${coverAlign}">${d.title.scope}</div>`:''}
-    ${d.cover.specialty?`<div style="height:8pt"></div><div class="cf"><span class="cl">التخصص: </span>${d.cover.specialty}</div>`:''}
-    <div style="height:14pt"></div>
-    <div class="cf" style="font-weight:bold">إعداد الطالب(ة):</div>
-    <div class="cf" style="padding-right:14pt">• ${d.cover.s1}</div>
-    ${d.cover.s2?`<div class="cf" style="padding-right:14pt">• ${d.cover.s2}</div>`:''}
-    <div style="height:9pt"></div>
-    <div class="cf"><span class="cl">تحت إشراف: </span>${d.cover.sup}</div>
-    <div class="cf"><span class="cl">السنة الجامعية: </span>${d.cover.year}</div>
-  </div>
-  <div class="page-break"></div>
+<title>التصور البحثي — ${d.title.text||''}</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Noto+Sans+Arabic:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Noto Sans Arabic','Traditional Arabic',Arial,sans-serif;direction:rtl;font-size:12pt;color:#1a1612;background:#fff;line-height:1.9;text-align:justify}
+.cover{text-align:center;padding:60pt 0 40pt;page-break-after:always}
+.cover h1{font-family:'Amiri',serif;font-size:20pt;color:#0d4f4a;margin:20pt 0 8pt;border-bottom:2pt solid #c9a227;padding-bottom:10pt}
+.cover .inst{font-size:11pt;margin-bottom:4pt}
+.cover .scope{color:#7a6a52;font-size:11pt;margin-bottom:10pt}
+.cover .meta{margin-top:10pt;font-size:11.5pt}
+.pb{page-break-after:always}
+.sec{margin-bottom:20pt}
+h2{font-family:'Amiri',serif;font-size:15pt;color:#1a7a73;margin:20pt 0 10pt;border-right:4pt solid #c9a227;padding-right:10pt}
+h3{font-family:'Amiri',serif;font-size:13pt;color:#8B6914;margin:12pt 0 6pt}
+p{margin-bottom:8pt}
+ol{padding-right:18pt;margin-bottom:10pt}
+li{margin-bottom:4pt}
+table{width:100%;border-collapse:collapse;margin:10pt 0}
+th,td{border:1pt solid #c8b89a;padding:6pt 8pt;font-size:11pt}
+th{background:#f0e8d8;font-weight:bold;text-align:right}
+@media print{
+  @page{size:A4;margin:2cm}
+  body{font-size:11pt}
+  .cover{padding:40pt 0 30pt}
+  h2{font-size:14pt}
+}
+</style></head><body>${body}
+<script>window.onload=function(){window.print();}<\/script>
+</body></html>`;
 
-  ${d.title.corpus?`<h2>المتن الأدبي (Corpus)</h2>
-  <p><strong>نوع المتن:</strong> ${d.title.corpusType}</p>
-  <p>${d.title.corpus}</p>`:''}
-  ${d.title.keywords.length?`<p><strong>الكلمات المفتاحية:</strong> ${d.title.keywords.join(' — ')}</p>`:''}
-
-  ${H2(1,'أسباب اختيار الموضوع')}
-  <h3>الأسباب الذاتية</h3><p>${d.reasons.subj}</p>
-  <h3>الأسباب الموضوعية</h3><p>${d.reasons.obj}</p>
-
-  ${H2(2,'الإشكالية والفرضيات')}
-  <h3>الإشكالية المحورية</h3><p>${d.problem.main}</p>
-  ${d.problem.subs.filter(Boolean).length?`<h3>الأسئلة الفرعية</h3><ol>${d.problem.subs.filter(Boolean).map(q=>`<li>${q}</li>`).join('')}</ol>`:''}
-  ${d.problem.hyps.filter(Boolean).length?`<h3>الفرضيات</h3><ol>${d.problem.hyps.filter(Boolean).map(h=>`<li>${h}</li>`).join('')}</ol>`:''}
-
-  ${H2(3,'الجهاز المنهجي')}
-  <h3>المنهج المعتمد</h3><p>${d.method.chosen}</p>
-  ${d.method.justify?`<h3>مبررات الاختيار</h3><p>${d.method.justify}</p>`:''}
-  ${d.method.tools?`<h3>الأدوات الإجرائية</h3><p>${d.method.tools}</p>`:''}
-
-  ${H2(4,'خطة البحث الأولية')}
-  ${d.plan.intro?`<h3>المقدمة</h3><p>${d.plan.intro}</p>`:''}
-  ${d.plan.chs.map(c=>`<h3>${c.title}</h3><ul>${c.secs.filter(Boolean).map(s=>`<li>${s}</li>`).join('')}</ul>`).join('')}
-  ${d.plan.conc?`<h3>الخاتمة</h3><p>${d.plan.conc}</p>`:''}
-
-  ${H2(5,'الدراسات السابقة')}
-  <ol>${d.prevlit.items.filter(it=>it.auth||it.title).map(it=>`<li>${it.auth} (${it.year}). <em>${it.title}</em>${it.link?' — '+it.link:''}</li>`).join('')}</ol>
-  ${d.prevlit.added?`<h3>الجديد الذي يُضيفه البحث</h3><p>${d.prevlit.added}</p>`:''}
-
-  ${H2(6,'المصادر والمراجع')}
-  <h3>المصادر الأولية (النصوص الأدبية)</h3>
-  <ol>${d.sources.primary.filter(r=>r.text).map(r=>`<li>${r.text}</li>`).join('')}</ol>
-  <h3>المراجع النقدية والنظرية</h3>
-  <ol>${d.sources.secondary.filter(r=>r.text).map(r=>`<li>${r.text}</li>`).join('')}</ol>
-
-  ${H2(7,'النتائج المتوقعة')}
-  <ol>${d.results.items.filter(Boolean).map(r=>`<li>${r}</li>`).join('')}</ol>
-
-  ${tlHas?H2(8,'الجدول الزمني')+`<table><tr><th>المرحلة</th><th>المدة</th><th>الوحدة</th></tr>${d.timeline.rows.filter(r=>r.task).map(r=>`<tr><td>${r.task}</td><td>${r.dur}</td><td>${r.unit}</td></tr>`).join('')}</table>`:''}
-
-  <h2>فهرس محتويات التصور البحثي</h2>
-  ${toc}
-  </body></html>`;
-
-  try{
-    if(typeof htmlDocx!=='undefined'){
-      const blob=htmlDocx.asBlob(html);
-      mobileDownload(blob,'التصور_البحثي.docx');
-      toast('تم تصدير Word ✓');
-    }else{
-      const blob=new Blob([html],{type:'application/msword;charset=utf-8'});
-      mobileDownload(blob,'التصور_البحثي.doc');
-      toast('تم التصدير بصيغة .doc ✓');
-    }
-  }catch(e){
-    const blob=new Blob([html],{type:'application/msword;charset=utf-8'});
-    mobileDownload(blob,'التصور_البحثي.doc');
-  }
+  const w=window.open('','_blank','width=800,height=900');
+  if(w){w.document.write(html);w.document.close();}
+  else{toast('السماح بالنوافذ المنبثقة لاستخدام تصدير PDF','err');}
 };
 
 /* ══════════════════════════════════════════════════════
