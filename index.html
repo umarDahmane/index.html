@@ -124,80 +124,40 @@ textarea{resize:vertical;min-height:85px;line-height:1.75}
 /* summary */
 .sum-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:12px}
 .sum-card h3{font-family:'Amiri',serif;font-size:15px;color:var(--gold);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--parch-d)}
-.sf{display:flex;gap:12px;margin-bottom:7px;font-size:13px}
-.sl{color:var(--muted);min-width:110px;font-weight:500}
-.sv{color:var(--txt);flex:1;line-height:1.6}
-.done-banner{background:var(--teal);color:#fff;padding:24px;border-radius:12px;text-align:center;margin-bottom:18px}
-.done-banner h2{font-family:'Amiri',serif;font-size:22px;margin-bottom:6px}
-.done-banner p{font-size:13px;opacity:.85}
-/* toc */
-.toc-box{background:#fff;border:1px solid var(--border);border-radius:12px;padding:24px;max-width:600px;margin:0 auto}
-.toc-title{font-family:'Amiri',serif;font-size:18px;text-align:center;color:var(--teal);margin-bottom:20px;padding-bottom:10px;border-bottom:2px solid var(--gold)}
-.te{display:flex;align-items:center;gap:8px;margin-bottom:10px;font-size:13.5px}
-.te-dots{flex:1;border-bottom:1px dotted #c8b89a;margin-bottom:4px}
-.te.l1{font-weight:500}
-.footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--border);text-align:center;font-size:11.5px;color:var(--muted);line-height:1.8}
-.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:rgba(28,21,16,.9);color:#fff;padding:10px 20px;border-radius:30px;font-size:13px;z-index:10000;transition:opacity .4s;display:flex;align-items:center;gap:8px;box-shadow:0 4px 12px rgba(0,0,0,.15)}
+.sum-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:15px}
+.sum-item{font-size:12.5px}
+.sum-item label{font-size:10.5px;color:var(--muted);margin-bottom:2px}
+.sum-val{color:var(--txt);line-height:1.6}
+.sum-list{list-style:none}
+.sum-list li{position:relative;padding-right:15px;margin-bottom:5px;font-size:12.5px}
+.sum-list li::before{content:'•';position:absolute;right:0;color:var(--gold)}
+.sum-ch{margin-bottom:12px}
+.sum-ch-t{font-weight:600;font-size:13px;color:var(--teal);margin-bottom:4px}
+
+/* footer */
+.footer{margin-top:40px;padding:20px;border-top:1px solid var(--border);text-align:center;font-size:11px;color:var(--muted);line-height:1.8}
+
+/* toast */
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--side);color:#fff;padding:8px 20px;border-radius:30px;font-size:13px;z-index:1000;box-shadow:0 4px 12px rgba(0,0,0,.2);transition:opacity .4s}
 .toast.err{background:#c0503a}
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:20000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;visibility:hidden;transition:all .3s}
-.modal-overlay.on{opacity:1;visibility:visible}
-.modal-box{background:#fff;border-radius:16px;max-width:540px;width:100%;max-height:90vh;overflow-y:auto;display:flex;flex-direction:column;box-shadow:0 20px 50px rgba(0,0,0,.3)}
-.modal-hdr{padding:24px 24px 16px;text-align:center;border-bottom:1px solid var(--parch-d)}
-.modal-hdr h2{font-family:'Amiri',serif;font-size:22px;color:var(--teal)}
-.modal-hdr p{font-size:13px;color:var(--muted);margin-top:4px}
-.modal-body{padding:24px;font-size:13.5px;line-height:1.8;color:var(--txt);flex:1}
-.modal-body h3{font-family:'Amiri',serif;font-size:16px;color:var(--gold);margin:16px 0 8px}
-.modal-body ul{padding-right:20px;margin-bottom:12px}
-.modal-foot{padding:16px 24px 24px;text-align:center;background:var(--parch);border-top:1px solid var(--parch-d)}
-.modal-foot p{font-size:11px;color:var(--muted);margin-bottom:14px}
-.btn-agree{background:var(--teal);color:#fff;border:none;padding:12px 32px;border-radius:10px;font-family:'Noto Sans Arabic',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:all .2s}
-.btn-agree:hover{background:var(--teal-m);transform:translateY(-1px)}
-.drawer{position:fixed;top:0;right:-280px;width:280px;height:100vh;background:var(--side);z-index:15000;transition:right .3s ease;box-shadow:-5px 0 15px rgba(0,0,0,.2)}
-.drawer.on{right:0}
-.drawer-close{background:none;border:none;color:#fff;font-size:20px;cursor:pointer;padding:10px}
-@media (max-width:800px){
+
+/* toc */
+.toc-box{background:#fff;border:1px solid var(--border);border-radius:12px;padding:30px;max-width:600px;margin:0 auto}
+.toc-title{font-family:'Amiri',serif;font-size:20px;text-align:center;margin-bottom:25px;color:var(--teal);border-bottom:2px solid var(--gold);display:inline-block;padding:0 20px 5px}
+.toc-box{text-align:center}
+.te{display:flex;align-items:center;margin-bottom:10px;font-size:14px}
+.te-dots{flex:1;border-bottom:1px dotted var(--border);margin:0 10px;position:relative;top:-4px}
+.te.l1{font-weight:600}
+
+@media (max-width:850px){
   .app{grid-template-columns:1fr}
   .side{display:none}
-  .main{padding:20px 16px}
+  .main{padding:20px}
   .g2,.g3{grid-template-columns:1fr}
 }
 </style>
 </head>
 <body>
-
-<!-- ══ اتفاقية الاستخدام ══ -->
-<div id="tosModal" class="modal-overlay">
-  <div class="modal-box">
-    <div class="modal-hdr">
-      <h2>اتفاقية الاستخدام</h2>
-      <p>يرجى قراءة الشروط التالية قبل استخدام التطبيق</p>
-    </div>
-    <div class="modal-body">
-      <h3>1. طبيعة التطبيق</h3>
-      <p>هذا التطبيق هو <strong>اجتهاد شخصي وأداة تعليمية مساعدة</strong> مخصصة لمساعدة طلبة الدراسات الأدبية على بناء تصوراتهم البحثية الأولية. لا يمثّل وثيقةً رسمية صادرة عن أي جهة إدارية أو أكاديمية.</p>
-
-      <h3>2. حدود المسؤولية</h3>
-      <ul>
-        <li>لا يتحمل المطوّر أي مسؤولية عن الاستخدام غير الأمثل للتطبيق أو عن أي قرار أكاديمي مبني على مخرجاته.</li>
-        <li>يتحمل الطالب المسؤولية الكاملة عن مضامين التصور البحثي الذي يُعدّه، ويبقى ملزمًا بالعودة إلى المشرف الأكاديمي والأدلة المنهجية المعتمدة.</li>
-        <li>لا يُعفي استخدام هذه الأداة من احترام قواعد النزاهة العلمية وتجنب الانتحال الأدبي.</li>
-      </ul>
-
-      <h3>3. الخصوصية وحماية البيانات</h3>
-      <p>جميع البيانات المُدخَلة <strong>تُحفَظ محلياً</strong> في متصفح المستخدم فقط عبر تقنية <em>localStorage</em>، ولا يتم إرسال أي معلومة إلى أي خادم خارجي. المطوّر لا يملك ولا يعالج ولا يطّلع على أي بيانات شخصية للمستخدمين.</p>
-
-      <h3>4. الملكية الفكرية</h3>
-      <p>هذه الأداة مطوَّرة للاستخدام التعليمي غير التجاري. يُمنع إعادة توزيعها أو تعديلها أو الادعاء بملكيتها دون إذن صريح من المطوّر.</p>
-
-      <h3>5. قبول الشروط</h3>
-      <p>بالضغط على "أوافق وأبدأ"، تُقرّ بأنك قرأت هذه الاتفاقية وفهمتها وقبلتها كاملةً.</p>
-    </div>
-    <div class="modal-foot">
-      <p>فكرة: الأستاذ ع.بن دحمان / تصميم: Claude.ai — إصدار تجريبي 2026</p>
-      <button class="btn-agree" onclick="acceptTOS()">أوافق وأبدأ ←</button>
-    </div>
-  </div>
-</div>
 
 <div class="app">
 <div class="side">
@@ -295,10 +255,13 @@ function toast(msg,type='ok'){
   setTimeout(()=>{t.style.opacity='0';setTimeout(()=>t.remove(),400);},2400);
 }
 
-function saveAll(){
+function saveAll(silent=false){
   save();
-  try{localStorage.setItem('ARProposal4',JSON.stringify(D));toast('تم الحفظ ✓');}
-  catch(e){toast('تعذّر الحفظ','err');}
+  try{
+    localStorage.setItem('ARProposal4',JSON.stringify(D));
+    if(!silent) toast('تم الحفظ ✓');
+  }
+  catch(e){if(!silent) toast('تعذّر الحفظ','err');}
 }
 
 function resetAll(){
@@ -390,314 +353,226 @@ function rCover(){
     <div><label>الجامعة</label><input type="text" id="cv_u" value="${esc(d.univ)}" placeholder="مثال: جامعة الجزائر 2"></div>
     <div><label>الكلية</label><input type="text" id="cv_f" value="${esc(d.fac)}" placeholder="كلية الآداب واللغات"></div>
     <div><label>القسم</label><input type="text" id="cv_d" value="${esc(d.dept)}" placeholder="قسم اللغة العربية وآدابها"></div>
-    <div><label>الفرع <span class="opt-label">(اختياري)</span></label><input type="text" id="cv_br" value="${esc(d.branch)}" placeholder="مثال: دراسات أدبية"></div>
-    <div><label>التخصص <span class="opt-label">(اختياري)</span></label><input type="text" id="cv_sp" value="${esc(d.specialty)}" placeholder="مثال: الأدب العربي"></div>
+    <div><label>الفرع</label><input type="text" id="cv_br" value="${esc(d.branch)}" placeholder="مثال: دراسات أدبية"></div>
+    <div><label>التخصص</label><input type="text" id="cv_sp" value="${esc(d.specialty)}" placeholder="مثال: الأدب العربي"></div>
     <div></div>
   </div></div>
   <div class="card"><div class="card-title">بيانات الطالب والإشراف</div>
   <div class="g2">
     <div><label>الطالب 1 (إعداد)</label><input type="text" id="cv_s1" value="${esc(d.s1)}" placeholder="الاسم الكامل"></div>
     <div><label>الطالب 2 <span class="opt-label">(اختياري — للبحوث الثنائية)</span></label><input type="text" id="cv_s2" value="${esc(d.s2)}" placeholder="اختياري"></div>
-    <div><label>المشرف</label><input type="text" id="cv_sup" value="${esc(d.sup)}" placeholder="الأستاذ الدكتور ..."></div>
-    <div><label>الطور الدراسي</label><select id="cv_deg">
-      <option value="">-- اختر --</option>
-      ${['ليسانس','ماستر','دكتوراه'].map(v=>`<option ${d.degree===v?'selected':''}>${v}</option>`).join('')}
-    </select></div>
-    <div style="grid-column:1/-1"><label>السنة الجامعية</label><input type="text" id="cv_y" value="${esc(d.year||'2025-2026')}" placeholder="2025-2026"></div>
+    <div><label>تحت إشراف الأستاذ(ة)</label><input type="text" id="cv_sup" value="${esc(d.sup)}" placeholder="الاسم واللقب والدرجة العلمية"></div>
+    <div><label>السنة الجامعية</label><input type="text" id="cv_y" value="${esc(d.year)}" placeholder="2025/2026"></div>
+    <div><label>المستوى الدراسي</label>
+      <select id="cv_deg">
+        <option value="الماستر" ${d.degree==='الماستر'?'selected':''}>مذكرة ماستر</option>
+        <option value="الليسانس" ${d.degree==='الليسانس'?'selected':''}>مذكرة ليسانس</option>
+        <option value="الدكتوراه" ${d.degree==='الدكتوراه'?'selected':''}>أطروحة دكتوراه</option>
+      </select>
+    </div>
   </div></div>
   <div class="card" style="background:var(--parch)"><div class="card-title">معاينة الغلاف</div>${prev}</div>`
   +navBtns(false);
 }
 
-/* ══════════════════════════════════════════════════════
-   STEP 2 — العنوان والمتن
-══════════════════════════════════════════════════════ */
+/* ── STEP 2 — العنوان والمتن ── */
 function rTitle(){
   const d=D.title;
-  const wc=d.text.trim().split(/\s+/).filter(Boolean).length;
-  return hdr('2','العنوان والمتن','تحديد عنوان البحث ومجاله التطبيقي.')+
-  `<div class="card"><div class="card-title">عنوان التصور البحثي</div>
-  <textarea id="t_txt" rows="3" placeholder="اكتب العنوان المقترح هنا...">${esc(d.text)}</textarea>
-  ${wc>0?(wc<=15?`<div class="wc ok">✓ ${wc} كلمة</div>`:`<div class="wc warn">⚠ ${wc} كلمة — يُفضَّل أقل من 15</div>`):''}
+  return hdr('2','العنوان والمتن','تحديد عنوان البحث، الحقبة الزمنية، والمتن المدروس.')+
+  `<div class="card"><div class="card-title">عنوان البحث</div>
+  <textarea id="t_txt" placeholder="اكتب العنوان المقترح هنا...">${esc(d.text)}</textarea>
+  <div class="tip"><strong>نصيحة:</strong> اجعل العنوان دقيقاً وشاملاً للمتغيرات الأساسية (الموضوع، المتن، المنهج).</div>
   </div>
-  <div class="card"><div class="card-title">الحقبة الزمنية / المجال</div>
-  <input type="text" id="t_scope" value="${esc(d.scope)}" placeholder="مثال: الأدب الجزائري المعاصر، العصر العباسي..."></div>
-  <div class="card"><div class="card-title">المتن الأدبي (Corpus)</div>
-  <div class="g2" style="margin-bottom:10px">
-    <div><label>نوع المتن</label><select id="t_ctype">
-      ${['رواية','مجموعة شعرية','مجموعة قصصية','مسرحية','نصوص نقدية','أخرى'].map(v=>`<option ${d.corpusType===v?'selected':''}>${v}</option>`).join('')}
-    </select></div>
-    <div></div>
-  </div>
-  <label>تحديد المتن (اسم العمل والمؤلف)</label>
-  <textarea id="t_corpus" rows="2" placeholder="مثال: رواية 'اللاز' للطاهر وطار">${esc(d.corpus)}</textarea></div>
-  <div class="card"><div class="card-title">الكلمات المفتاحية</div>
-  <div class="tag-wrap"><input type="text" id="kw_in" placeholder="أضف كلمة..."><button class="btn-tag" onclick="addKw()">إضافة</button></div>
-  <div class="tags">${d.keywords.map((k,i)=>`<span class="tag">${esc(k)}<button onclick="rmKw(${i})">✕</button></span>`).join('')}</div></div>`+navBtns();
-}
-
-/* ══════════════════════════════════════════════════════
-   STEP 3 — أسباب اختيار الموضوع
-══════════════════════════════════════════════════════ */
-function rReasons(){
-  const d=D.reasons;
-  return hdr('3','أسباب اختيار الموضوع','لماذا اخترت هذا الموضوع تحديدًا؟')+
-  `<div class="card"><div class="card-title">الأسباب الذاتية</div>
-  <textarea id="rs_subj" rows="4" placeholder="الميول الشخصية، الاهتمام بنوع أدبي معين، الرغبة في اكتشاف كاتب...">${esc(d.subj)}</textarea></div>
-  <div class="card"><div class="card-title">الأسباب الموضوعية</div>
-  <textarea id="rs_obj" rows="4" placeholder="قلة الدراسات حول الموضوع، أهمية النص المختصر، الحاجة لتطبيق منهج معين...">${esc(d.obj)}</textarea></div>`+navBtns();
-}
-
-/* ══════════════════════════════════════════════════════
-   STEP 4 — الإشكالية والفرضيات
-══════════════════════════════════════════════════════ */
-function rProblem(){
-  const d=D.problem;
-  const subs=d.subs.length?d.subs:[''];
-  const hyps=d.hyps.length?d.hyps:[''];
-  return hdr('4','الإشكالية والفرضيات','جوهر التصور الأكاديمي الجزائري — تُقيَّم بعناية من طرف المشرفين.')+
-  `<div class="tip"><strong>معيار الإشكالية الجيدة:</strong> سؤال جوهري يتضمن مفارقة أو فجوة معرفية. في الأدب تركّز على "كيفية اشتغال النص" أو "العلاقة بين النص والواقع" أو "آلية إنتاج الدلالة".</div>
-  <div class="card"><div class="card-title">الإشكالية المحورية</div>
-  <textarea id="pr_main" rows="4" placeholder="مثال: كيف وظّف طاهر وطار البنية السردية أداةً لنقل الرؤية الإيديولوجية في رواية 'الزلزال'؟ وما العلاقة بين اختياراته الجمالية ومرحلة التحولات السياسية؟">${esc(d.main)}</textarea></div>
-  <div class="card"><div class="card-title">الأسئلة الفرعية</div>
-  <div class="info-box">تفتيت الإشكالية الكبرى إلى 3–4 أسئلة تفصيلية تُشكّل هيكل فصول البحث.</div>
-  <div id="subs_l">${subs.map((s,i)=>`<div class="li"><input type="text" id="sub_${i}" value="${esc(s)}" placeholder="السؤال الفرعي ${i+1}"><button class="btn-rm" onclick="rmSub(${i})">−</button></div>`).join('')}</div>
-  <button class="btn-add" onclick="addSub()">+ أضف سؤالًا فرعيًا</button></div>
-  <div class="card"><div class="card-title">الفرضيات</div>
-  <div class="info-box">إجابات مؤقتة وذكية يتعهد الطالب بالتحقق منها خلال فصول البحث. يجب أن تكون قابلة للإثبات أو النفي.</div>
-  <div id="hyps_l">${hyps.map((h,i)=>`<div class="li"><textarea id="hyp_${i}" rows="2" placeholder="الفرضية ${i+1}: يُفترض أن...">${esc(h)}</textarea><button class="btn-rm" onclick="rmHyp(${i})">−</button></div>`).join('')}</div>
-  <button class="btn-add" onclick="addHyp()">+ أضف فرضية</button></div>`+navBtns();
-}
-
-/* ══════════════════════════════════════════════════════
-   STEP 5 — المنهج المعتمد
-══════════════════════════════════════════════════════ */
-const METHODS_INFO=[
-  {n:'المنهج السيميائي',     d:'تحليل العلامات والدلالات ورصد أنظمة الدلالة داخل النص'},
-  {n:'المنهج البنيوي',       d:'دراسة العلاقات الداخلية للنص وبنيته السطحية والعميقة'},
-  {n:'المنهج الأسلوبي',     d:'دراسة اللغة في سياق الخطاب الأدبي وأثرها الجمالي'},
-  {n:'المنهج التداولي',      d:'تحليل الخطاب الأدبي في سياق التواصل وقصديّة المؤلف'},
-  {n:'المنهج التاريخي',      d:'ربط النص بظروفه التاريخية والسياسية والفكرية'},
-  {n:'المنهج الاجتماعي',    d:'دراسة علاقة النص بالواقع والبنيات الاجتماعية'},
-  {n:'المنهج النفسي',        d:'تحليل الأبعاد النفسية في شخصيات النص أو لدى المؤلف'},
-  {n:'المنهج المقارن',       d:'المقارنة بين نصوص أو مؤلفين أو تيارات أدبية مختلفة'},
-  {n:'منهج تحليل الخطاب',   d:'تفكيك البنى الخطابية والأيديولوجية في النص'},
-  {n:'المنهج السردي',        d:'دراسة تقنيات السرد والزمن والراوي والفضاء'},
-];
-
-function rMethod(){
-  const d=D.method;
-  return hdr('5','المنهج المعتمد','تحديد المنهج النقدي المعتمد في الجامعات الجزائرية حاليًا.')+
-  `<div class="card"><div class="card-title">اختر المنهج أو المقاربة (انقر للإضافة)</div>
-  <div class="chips">${METHODS_INFO.map(m=>`<button class="chip" title="${m.d}" onclick="appendField('meth_txt','${m.n}')"><strong>${m.n}</strong></button>`).join('')}</div>
-  <label>المنهج أو المقاربات المعتمدة</label>
-  <textarea id="meth_txt" rows="3" placeholder="انقر على المقترحات أعلاه أو اكتب مباشرة...">${esc(d.chosen)}</textarea></div>
-  <div class="card"><div class="card-title">مبررات اختيار المنهج</div>
-  <textarea id="meth_j" rows="4" placeholder="لماذا هذا المنهج تحديدًا؟ ما مدى انسجامه مع طبيعة المتن والإشكالية؟ هل سبق تطبيقه على هذا النص؟">${esc(d.justify)}</textarea></div>
-  <div class="card"><div class="card-title">الأدوات الإجرائية <span class="opt-label">(اختياري)</span></div>
-  <textarea id="meth_t" rows="3" placeholder="المفاهيم الإجرائية التي سيستعين بها البحث: مثلاً في المنهج السيميائي — العلامة، الأيقون، الرمز، المحور الاستبدالي...">${esc(d.tools)}</textarea></div>`+navBtns();
-}
-
-/* ══════════════════════════════════════════════════════
-   STEP 6 — خطة البحث
-══════════════════════════════════════════════════════ */
-function rPlan(){
-  const d=D.plan;
-  const chs=d.chs.length?d.chs:[{title:'الفصل الأول: الإطار النظري',secs:['']}];
-  return hdr('6','خطة البحث الأولية','البنية الكلاسيكية: مقدمة ← فصول ← خاتمة.')+
-  `<div class="tip"><strong>التقسيم المعتمد في الجامعة الجزائرية:</strong> فصل نظري (ضبط المفاهيم) + فصل أو فصلان تطبيقيان (تحليل المتن) + خاتمة (توقع النتائج).</div>
-  <div class="card"><div class="card-title">المقدمة</div>
-  <textarea id="pl_intro" rows="3" placeholder="ما الذي ستتضمنه المقدمة؟ (الإطار العام، مبررات الاختيار، الإشكالية، المنهج، تقسيمات البحث، الصعوبات...)">${esc(d.intro)}</textarea></div>
-  <div id="chs_tree">${chs.map((c,ci)=>chBlock(c,ci)).join('')}</div>
-  <button class="btn-add" style="margin-bottom:14px" onclick="addCh()">+ أضف فصلًا</button>
-  <div class="card"><div class="card-title">الخاتمة</div>
-  <textarea id="pl_conc" rows="3" placeholder="ما الذي ستتضمنه الخاتمة؟ (النتائج المتوقعة، التوصيات، الآفاق المستقبلية للبحث...)">${esc(d.conc)}</textarea></div>`+navBtns();
-}
-
-function chBlock(c,ci){
-  const secs=c.secs.length?c.secs:[''];
-  return`<div class="ch-block" id="ch_${ci}">
-  <div class="ch-hdr">
-    <span class="ch-badge">ف${ci+1}</span>
-    <input type="text" id="ch_t_${ci}" value="${esc(c.title)}" placeholder="عنوان الفصل">
-    <button class="btn-ch-rm" onclick="rmCh(${ci})">حذف</button>
-  </div>
-  <div class="ch-secs">
-    <div style="font-size:11px;color:var(--muted);margin-bottom:6px">المباحث والمحاور</div>
-    <div id="secs_${ci}">${secs.map((s,si)=>secRow(s,ci,si)).join('')}</div>
-    <button class="btn-sec-add" onclick="addSec(${ci})">+ مبحث</button>
-  </div></div>`;
-}
-
-function secRow(s,ci,si){
-  return`<div class="sec-row" id="sr_${ci}_${si}">
-  <div class="sec-dot"></div>
-  <input type="text" id="sec_${ci}_${si}" value="${esc(s)}" placeholder="المبحث ${si+1}">
-  <button class="btn-sec-rm" onclick="rmSec(${ci},${si})">−</button>
-  </div>`;
-}
-
-/* ══════════════════════════════════════════════════════
-   STEP 7 — الدراسات السابقة
-══════════════════════════════════════════════════════ */
-function rPrevlit(){
-  const d=D.prevlit;
-  const items=d.items.length?d.items:[{auth:'',year:'',title:'',link:'',added:''}];
-  return hdr('7','الدراسات السابقة','جرد الأعمال السابقة مع إبراز الجديد الذي يُضيفه بحثك.')+
-  `<div class="info-box"><strong>الهدف المزدوج:</strong> (1) إثبات اطّلاعك على الإنتاج السابق — (2) تبيان الفجوة التي يسدّها بحثك لتجنّب التكرار.</div>
-  <div id="pl_list">${items.map((it,i)=>prevItem(it,i)).join('')}</div>
-  <button class="btn-add" onclick="addPL()">+ أضف دراسة سابقة</button>
-  <div class="card" style="margin-top:14px"><div class="card-title">الجديد الذي يُضيفه هذا البحث</div>
-  <textarea id="pl_added" rows="4" placeholder="بعد استعراض الدراسات السابقة، ما الذي سيُقدّمه بحثك جديدًا؟ (منهج جديد، زاوية نظر مختلفة، نص لم يُدرَس كافيًا...)">${esc(d.added)}</textarea></div>`+navBtns();
-}
-
-function prevItem(it,i){
-  return`<div class="card" id="pl_c_${i}">
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
-    <span style="font-size:12px;color:var(--muted);font-weight:500">الدراسة ${i+1}</span>
-    <button style="padding:3px 8px;border:1px solid #f0d0c8;border-radius:5px;background:#fff;color:#c0503a;cursor:pointer;font-size:11.5px" onclick="rmPL(${i})">حذف</button>
-  </div>
+  <div class="card"><div class="card-title">المجال الزمني والمتن</div>
   <div class="g2">
-    <div><label>المؤلف</label><input type="text" id="pl_a_${i}" value="${esc(it.auth)}" placeholder="الاسم الكامل"></div>
-    <div><label>السنة</label><input type="text" id="pl_y_${i}" value="${esc(it.year)}" placeholder="2018"></div>
+    <div><label>الحقبة الزمنية (اختياري)</label><input type="text" id="t_scope" value="${esc(d.scope)}" placeholder="مثال: القرن العشرين، الفترة المعاصرة"></div>
+    <div><label>نوع المتن</label>
+      <select id="t_ctype">
+        <option value="مدونة" ${d.corpusType==='مدونة'?'selected':''}>مدونة (نصوص مختارة)</option>
+        <option value="رواية" ${d.corpusType==='رواية'?'selected':''}>رواية</option>
+        <option value="ديوان" ${d.corpusType==='ديوان'?'selected':''}>ديوان شعري</option>
+        <option value="مجموعة قصصية" ${d.corpusType==='مجموعة قصصية'?'selected':''}>مجموعة قصصية</option>
+        <option value="مسرحية" ${d.corpusType==='مسرحية'?'selected':''}>مسرحية</option>
+        <option value="خطاب" ${d.corpusType==='خطاب'?'selected':''}>خطاب (سياسي، ديني...)</option>
+      </select>
+    </div>
   </div>
-  <div style="margin-top:9px"><label>العنوان الكامل</label><input type="text" id="pl_t_${i}" value="${esc(it.title)}" placeholder="عنوان البحث أو الكتاب أو المذكرة"></div>
-  <div style="margin-top:9px"><label>الصلة بموضوعك وما يُميّز بحثك عنها</label><textarea id="pl_l_${i}" rows="2" placeholder="كيف يتقاطع مع موضوعك؟ وما نقطة الاختلاف أو التجاوز؟">${esc(it.link)}</textarea></div>
-  </div>`;
-}
-
-/* ══════════════════════════════════════════════════════
-   STEP 8 — المصادر والمراجع
-══════════════════════════════════════════════════════ */
-function rSources(){
-  const d=D.sources;
-  const prim=d.primary.length?d.primary:[{text:''}];
-  const sec=d.secondary.length?d.secondary:[{text:''}];
-  return hdr('8','المصادر والمراجع','تصنيف أولي بين النصوص الأدبية والكتب النقدية والنظرية.')+
-  `<div class="info-box"><strong>التمييز الجوهري:</strong> المصادر = النصوص الأدبية التي ستُحلَّل (المتن) | المراجع = الكتب النقدية والنظرية التي ستستند إليها في القراءة والتأطير.</div>
-  <div class="card"><div class="card-title">المصادر الأولية (النصوص الأدبية)</div>
-  <div id="prim_l">${prim.map((r,i)=>`<div class="li"><input type="text" id="prim_${i}" value="${esc(r.text)}" placeholder="المؤلف: العنوان، دار النشر، الطبعة، السنة."><button class="btn-rm" onclick="rmPrim(${i})">−</button></div>`).join('')}</div>
-  <button class="btn-add" onclick="addPrim()">+ أضف مصدرًا</button></div>
-  <div class="card"><div class="card-title">المراجع النقدية والنظرية</div>
-  <div id="sec_l">${sec.map((r,i)=>`<div class="li"><input type="text" id="sec_${i}" value="${esc(r.text)}" placeholder="المؤلف: العنوان، المترجم (إن وجد)، دار النشر، السنة."><button class="btn-rm" onclick="rmSec2(${i})">−</button></div>`).join('')}</div>
-  <button class="btn-add" onclick="addSec2()">+ أضف مرجعًا</button></div>`+navBtns();
-}
-
-/* ══════════════════════════════════════════════════════
-   STEP 9 — النتائج المتوقعة
-══════════════════════════════════════════════════════ */
-function rResults(){
-  const d=D.results;
-  const items=d.items.length?d.items:[''];
-  return hdr('9','النتائج المتوقعة','ما الذي تأمل الوصول إليه في نهاية البحث؟')+
-  `<div class="card"><div class="card-title">النتائج المنتظرة</div>
-  <div id="res_l">${items.map((r,i)=>`<div class="li"><textarea id="res_${i}" rows="2" placeholder="النتيجة ${i+1}...">${esc(r)}</textarea><button class="btn-rm" onclick="rmRes(${i})">−</button></div>`).join('')}</div>
-  <button class="btn-add" onclick="addRes()">+ أضف نتيجة</button></div>`+navBtns();
-}
-
-/* ══════════════════════════════════════════════════════
-   STEP 10 — الجدول الزمني
-══════════════════════════════════════════════════════ */
-function rTimeline(){
-  const d=D.timeline;
-  const rows=d.rows.length?d.rows:[{task:'جمع المادة العلمية والمصادر',dur:'2',unit:'أشهر'},{task:'تحليل المتن الأدبي',dur:'3',unit:'أشهر'},{task:'صياغة الفصول',dur:'4',unit:'أشهر'},{task:'المراجعة النهائية والتصحيح',dur:'1',unit:'أشهر'}];
-  return hdr('10','الجدول الزمني <span style="font-size:14px;font-weight:400;color:var(--muted)">(اختياري)</span>','توزيع مراحل العمل على الزمن المتاح.')+
-  `<div class="card"><div class="card-title">مراحل البحث</div>
-  <div style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:9px;margin-bottom:7px;padding:0 2px">
-    <span style="font-size:11.5px;color:var(--muted);font-weight:500">المرحلة</span>
-    <span style="font-size:11.5px;color:var(--muted);font-weight:500">المدة</span>
-    <span style="font-size:11.5px;color:var(--muted);font-weight:500">الوحدة</span>
+  <div style="margin-top:12px"><label>اسم المتن / العينة</label><input type="text" id="t_corpus" value="${esc(d.corpus)}" placeholder="مثال: رواية 'ريح الجنوب' لعبد الحميد بن هدوقة"></div>
   </div>
-  <div id="tl_l">${rows.map((r,i)=>`<div style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:9px;margin-bottom:8px">
-    <input type="text" id="tl_t_${i}" value="${esc(r.task)}" placeholder="المرحلة ${i+1}">
-    <input type="number" id="tl_d_${i}" value="${r.dur}" placeholder="3" min="1">
-    <select id="tl_u_${i}">${['أيام','أسابيع','أشهر'].map(u=>`<option ${r.unit===u||(!r.unit&&u==='أشهر')?'selected':''}>${u}</option>`).join('')}</select>
-  </div>`).join('')}</div>
-  <button class="btn-add" onclick="addTL()">+ أضف مرحلة</button></div>
-  <div style="margin-top:12px;padding:9px 13px;background:var(--gold-bg);border-radius:8px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:9px">
-    <span style="font-size:12px;color:var(--muted)">هذه الخطوة اختيارية</span>
-    <button class="btn-skip" onclick="go(1)">تخطّي ←</button>
+  <div class="card"><div class="card-title">الكلمات المفتاحية</div>
+  <div class="tag-wrap"><input type="text" id="kw_in" placeholder="أضف كلمة..."><button class="btn-tag" onclick="addKw()">+ إضافة</button></div>
+  <div class="tags">${d.keywords.map((k,i)=>`<span class="tag">${esc(k)}<button onclick="rmKw(${i})">×</button></span>`).join('')}</div>
   </div>`+navBtns();
 }
 
-/* ══════════════════════════════════════════════════════
-   STEP 11 — المراجعة والتصدير
-══════════════════════════════════════════════════════ */
+/* ── STEP 3 — أسباب اختيار الموضوع ── */
+function rReasons(){
+  const d=D.reasons;
+  return hdr('3','أسباب اختيار الموضوع','لماذا اخترت هذا الموضوع بالذات؟')+
+  `<div class="card"><div class="card-title">الأسباب الذاتية</div>
+  <div class="chips">
+    <div class="chip" onclick="appendField('rs_subj','الميل الشخصي لهذا النوع من الدراسات')">الميل الشخصي</div>
+    <div class="chip" onclick="appendField('rs_subj','الرغبة في التعمق في أعمال هذا الأديب')">التعمق في الأديب</div>
+    <div class="chip" onclick="appendField('rs_subj','تراكم معرفي سابق حول هذا الموضوع')">تراكم معرفي</div>
+  </div>
+  <textarea id="rs_subj" placeholder="دوافعك الشخصية واهتمامك بالموضوع...">${esc(d.subj)}</textarea></div>
+  <div class="card"><div class="card-title">الأسباب الموضوعية</div>
+  <div class="chips">
+    <div class="chip" onclick="appendField('rs_obj','قلة الدراسات الأكاديمية التي تناولت هذا المتن')">ندرة الدراسات</div>
+    <div class="chip" onclick="appendField('rs_obj','أهمية المتن في تاريخ الأدب الجزائري')">أهمية المتن</div>
+    <div class="chip" onclick="appendField('rs_obj','صلاحية المنهج المختار لمقاربة هذا النص')">صلاحية المنهج</div>
+  </div>
+  <textarea id="rs_obj" placeholder="الأهمية العلمية والأكاديمية للبحث...">${esc(d.obj)}</textarea></div>`+navBtns();
+}
+
+/* ── STEP 4 — الإشكالية والفرضيات ── */
+function rProblem(){
+  const d=D.problem;
+  return hdr('4','الإشكالية والفرضيات','جوهر البحث والأسئلة التي يسعى للإجابة عنها.')+
+  `<div class="card"><div class="card-title">الإشكالية المحورية</div>
+  <textarea id="pr_main" placeholder="صغ التساؤل الرئيسي للبحث هنا...">${esc(d.main)}</textarea></div>
+  <div class="card"><div class="card-title">الأسئلة الفرعية</div>
+  <div id="subs_list">${d.subs.map((s,i)=>`<div class="li"><input type="text" id="sub_${i}" value="${esc(s)}" placeholder="سؤال فرعي..."><button class="btn-rm" onclick="rmSub(${i})">✕</button></div>`).join('')}</div>
+  <button class="btn-add" onclick="addSub()">+ إضافة سؤال فرعي</button></div>
+  <div class="card"><div class="card-title">الفرضيات</div>
+  <div id="hyps_list">${d.hyps.map((h,i)=>`<div class="li"><input type="text" id="hyp_${i}" value="${esc(h)}" placeholder="فرضية مقترحة..."><button class="btn-rm" onclick="rmHyp(${i})">✕</button></div>`).join('')}</div>
+  <button class="btn-add" onclick="addHyp()">+ إضافة فرضية</button></div>`+navBtns();
+}
+
+/* ── STEP 5 — المنهج المعتمد ── */
+function rMethod(){
+  const d=D.method;
+  const ms=['المنهج الوصفي التحليلي','المنهج السيميائي','المنهج البنيوي','المنهج التفكيكي','المنهج النفسي','المنهج السوسيولوجي','المنهج الأسلوبي','المنهج المقارن','منهج تحليل الخطاب'];
+  return hdr('5','المنهج المعتمد','الأدوات المعرفية التي ستستخدمها في التحليل.')+
+  `<div class="card"><div class="card-title">المنهج المختار</div>
+  <div class="radios">${ms.map(m=>`<label class="rlabel ${d.chosen===m?'on':''}" onclick="setMeth('${m}')"><input type="radio" name="m" ${d.chosen===m?'checked':''}> ${m}</label>`).join('')}
+  <div class="li" style="margin-top:5px"><input type="text" id="meth_custom" placeholder="منهج آخر..." oninput="setMeth(this.value)"></div></div>
+  <input type="hidden" id="meth_txt" value="${esc(d.chosen)}"></div>
+  <div class="card"><div class="card-title">مبررات اختيار المنهج</div>
+  <textarea id="meth_j" placeholder="لماذا هذا المنهج هو الأنسب لهذا البحث؟">${esc(d.justify)}</textarea></div>
+  <div class="card"><div class="card-title">الأدوات الإجرائية (اختياري)</div>
+  <input type="text" id="meth_t" value="${esc(d.tools)}" placeholder="مثال: آليات التحليل السيميائي، مقولات جيرار جينيت..."></div>`+navBtns();
+}
+window.setMeth=v=>{$('meth_txt').value=v;render();};
+
+/* ── STEP 6 — خطة البحث ── */
+function rPlan(){
+  const d=D.plan;
+  return hdr('6','خطة البحث الأولية','هيكل البحث المقترح (فصول وعناصر).')+
+  `<div class="card"><div class="card-title">المقدمة</div><input type="text" id="pl_intro" value="${esc(d.intro)}" placeholder="عناصر المقدمة باختصار..."></div>
+  <div id="chs_list">${d.chs.map((c,ci)=>`
+    <div class="ch-block">
+      <div class="ch-hdr"><span class="ch-badge">الفصل ${ci+1}</span><input type="text" id="ch_t_${ci}" value="${esc(c.title)}"><button class="btn-ch-rm" onclick="rmCh(${ci})">حذف الفصل</button></div>
+      <div class="ch-secs">
+        ${c.secs.map((s,si)=>`<div class="sec-row"><div class="sec-dot"></div><input type="text" id="sec_${ci}_${si}" value="${esc(s)}" placeholder="عنوان المبحث أو المطلب..."><button class="btn-sec-rm" onclick="rmSec(${ci},${si})">✕</button></div>`).join('')}
+        <button class="btn-sec-add" onclick="addSec(${ci})">+ إضافة عنصر</button>
+      </div>
+    </div>`).join('')}</div>
+  <button class="btn-add" style="margin-bottom:15px" onclick="addCh()">+ إضافة فصل جديد</button>
+  <div class="card"><div class="card-title">الخاتمة</div><input type="text" id="pl_conc" value="${esc(d.conc)}" placeholder="أهم النتائج المتوقعة وآفاق البحث..."></div>`+navBtns();
+}
+
+/* ── STEP 7 — الدراسات السابقة ── */
+function rPrevlit(){
+  const d=D.prevlit;
+  return hdr('7','الدراسات السابقة','أهم البحوث التي تناولت الموضوع أو جانباً منه.')+
+  `<div id="pl_list">${d.items.map((it,i)=>`
+    <div class="card"><div class="card-title">دراسة #${i+1}</div>
+    <div class="g2">
+      <div><label>الباحث</label><input type="text" id="pl_a_${i}" value="${esc(it.auth)}" placeholder="الاسم واللقب"></div>
+      <div><label>السنة</label><input type="text" id="pl_y_${i}" value="${esc(it.year)}" placeholder="2020"></div>
+    </div>
+    <div style="margin-top:8px"><label>عنوان الدراسة</label><input type="text" id="pl_t_${i}" value="${esc(it.title)}" placeholder="عنوان الكتاب أو الأطروحة"></div>
+    <div style="margin-top:8px"><label>رابط (اختياري)</label><input type="text" id="pl_l_${i}" value="${esc(it.link)}" placeholder="رابط التحميل أو المعاينة"></div>
+    <button class="btn-rm" style="margin-top:10px;width:100%" onclick="rmPL(${i})">حذف هذه الدراسة</button>
+    </div>`).join('')}</div>
+  <button class="btn-add" onclick="addPL()">+ إضافة دراسة سابقة</button>
+  <div class="card" style="margin-top:15px"><div class="card-title">ماذا سيضيف بحثك؟</div>
+  <textarea id="pl_added" placeholder="الجديد الذي سيقدمه بحثك مقارنة بهذه الدراسات...">${esc(d.added)}</textarea></div>`+navBtns();
+}
+
+/* ── STEP 8 — المصادر والمراجع ── */
+function rSources(){
+  const d=D.sources;
+  return hdr('8','المصادر والمراجع','قائمة أولية بالمصادر والمراجع المعتمدة.')+
+  `<div class="card"><div class="card-title">المصادر الأولية (المتن)</div>
+  <div id="prim_list">${d.primary.map((r,i)=>`<div class="li"><input type="text" id="prim_${i}" value="${esc(r.text)}" placeholder="بيانات المصدر..."><button class="btn-rm" onclick="rmPrim(${i})">✕</button></div>`).join('')}</div>
+  <button class="btn-add" onclick="addPrim()">+ إضافة مصدر</button></div>
+  <div class="card"><div class="card-title">المراجع النقدية والنظرية</div>
+  <div id="sec_list">${d.secondary.map((r,i)=>`<div class="li"><input type="text" id="sec_${i}" value="${esc(r.text)}" placeholder="بيانات المرجع..."><button class="btn-rm" onclick="rmSec2(${i})">✕</button></div>`).join('')}</div>
+  <button class="btn-add" onclick="addSec2()">+ إضافة مرجع</button></div>`+navBtns();
+}
+
+/* ── STEP 9 — النتائج المتوقعة ── */
+function rResults(){
+  const d=D.results;
+  return hdr('9','النتائج المتوقعة','ما الذي تتوقع الوصول إليه في نهاية البحث؟')+
+  `<div class="card"><div class="card-title">قائمة النتائج</div>
+  <div id="res_list">${d.items.map((r,i)=>`<div class="li"><input type="text" id="res_${i}" value="${esc(r)}" placeholder="نتيجة متوقعة..."><button class="btn-rm" onclick="rmRes(${i})">✕</button></div>`).join('')}</div>
+  <button class="btn-add" onclick="addRes()">+ إضافة نتيجة</button></div>`+navBtns();
+}
+
+/* ── STEP 10 — الجدول الزمني ── */
+function rTimeline(){
+  const d=D.timeline;
+  return hdr('10','الجدول الزمني (اختياري)','توزيع مراحل البحث على فترات زمنية.')+
+  `<div class="card"><div class="card-title">مراحل الإنجاز</div>
+  <div id="tl_list">${d.rows.map((r,i)=>`
+    <div class="li">
+      <input type="text" id="tl_t_${i}" value="${esc(r.task)}" placeholder="المرحلة (مثال: جمع المادة العلمية)">
+      <input type="number" id="tl_d_${i}" value="${esc(r.dur)}" style="width:70px" placeholder="المدة">
+      <select id="tl_u_${i}" style="width:90px"><option value="أشهر" ${r.unit==='أشهر'?'selected':''}>أشهر</option><option value="أسابيع" ${r.unit==='أسابيع'?'selected':''}>أسابيع</option></select>
+      <button class="btn-rm" onclick="rmTL(${i})">✕</button>
+    </div>`).join('')}</div>
+  <button class="btn-add" onclick="addTL()">+ إضافة مرحلة</button></div>`+navBtns(true,false,true);
+}
+
+/* ── STEP 11 — المراجعة والتصدير ── */
 function rSummary(){
   save();const d=D;
-  const S=(t,c)=>`<div class="sum-card"><h3>${t}</h3>${c}</div>`;
-  const F=(l,v)=>v?`<div class="sf"><div class="sl">${l}</div><div class="sv">${v}</div></div>`:'';
   const tlHas=d.timeline.rows.filter(r=>r.task).length>0;
-  return`<div class="done-banner"><h2>✦ مراجعة التصور البحثي</h2><p>راجع قبل التصدير — يمكنك العودة لأي خطوة للتعديل</p></div>`+
-  S('الغلاف',F('الجامعة',d.cover.univ)+F('الكلية',d.cover.fac)+F('القسم',d.cover.dept)+(d.cover.branch?F('الفرع',d.cover.branch):'')+(d.cover.specialty?F('التخصص',d.cover.specialty):'')+F('الطالب 1',d.cover.s1)+(d.cover.s2?F('الطالب 2',d.cover.s2):'')+F('المشرف',d.cover.sup)+F('السنة الجامعية',d.cover.year))+
-  S('العنوان والمتن',F('العنوان',d.title.text)+F('الحقبة الزمنية',d.title.scope)+F('نوع المتن',d.title.corpusType)+F('المتن',d.title.corpus)+(d.title.keywords.length?F('الكلمات المفتاحية',d.title.keywords.join(' — ')):''))+
-  S('أسباب الاختيار',F('الأسباب الذاتية',d.reasons.subj)+F('الأسباب الموضوعية',d.reasons.obj))+
-  S('الإشكالية والفرضيات',F('الإشكالية المحورية',d.problem.main)+d.problem.subs.filter(Boolean).map((s,i)=>`<div class="sf"><div class="sl">السؤال الفرعي ${i+1}</div><div class="sv">${s}</div></div>`).join('')+d.problem.hyps.filter(Boolean).map((h,i)=>`<div class="sf"><div class="sl">الفرضية ${i+1}</div><div class="sv">${h}</div></div>`).join(''))+
-  S('المنهج المعتمد',F('المنهج المعتمد',d.method.chosen)+F('المبررات',d.method.justify)+(d.method.tools?F('الأدوات الإجرائية',d.method.tools):''))+
-  S('خطة البحث',F('المقدمة',d.plan.intro)+d.plan.chs.map((c,i)=>`<div class="sf"><div class="sl" style="font-weight:600;color:var(--txt)">${c.title}</div>${c.secs.filter(Boolean).map(s=>`<div class="sv" style="padding-right:12px">• ${s}</div>`).join('')}</div>`).join('')+F('الخاتمة',d.plan.conc))+
-  S('الدراسات السابقة',d.prevlit.items.filter(it=>it.auth||it.title).map((it,i)=>`<div class="sf"><div class="sl">${i+1}. ${it.auth} (${it.year})</div><div class="sv">${it.title}</div></div>`).join('')+F('الجديد الذي يُضيفه البحث',d.prevlit.added))+
-  S('المصادر والمراجع',`<div class="sf"><div class="sl">المصادر الأولية</div>${d.sources.primary.filter(r=>r.text).map((r,i)=>`<div class="sv">${i+1}. ${r.text}</div>`).join('')}</div><div class="sf"><div class="sl">المراجع النقدية</div>${d.sources.secondary.filter(r=>r.text).map((r,i)=>`<div class="sv">${i+1}. ${r.text}</div>`).join('')}</div>`)+
-  S('النتائج المتوقعة',d.results.items.filter(Boolean).map((r,i)=>`<div class="sf"><div class="sv">${i+1}. ${r}</div></div>`).join(''))+
-  (tlHas?S('الجدول الزمني',`<table style="width:100%;border-collapse:collapse;font-size:12.5px"><tr><th style="text-align:right;padding:4px 7px;background:var(--parch-d);border:1px solid var(--border)">المرحلة</th><th style="text-align:right;padding:4px 7px;background:var(--parch-d);border:1px solid var(--border)">المدة</th><th style="text-align:right;padding:4px 7px;background:var(--parch-d);border:1px solid var(--border)">الوحدة</th></tr>${d.timeline.rows.filter(r=>r.task).map(r=>`<tr><td style="padding:4px 7px;border:1px solid var(--border)">${r.task}</td><td style="padding:4px 7px;border:1px solid var(--border)">${r.dur}</td><td style="padding:4px 7px;border:1px solid var(--border)">${r.unit}</td></tr>`).join('')}</table>`):'')
-  +`<div class="nav-btns"><button class="btn-word" onclick="exportWord()">📄 تصدير Word</button><button class="btn-txt" onclick="exportTxt()">📋 تصدير نصي</button><button class="btn-next" onclick="go(1)">إعدادات التنسيق ←</button><button class="btn-prev" onclick="go(-1)">→ السابق</button></div>`;
+  return hdr('11','المراجعة والتصدير','راجع بياناتك قبل تصدير الملف النهائي.')+
+  `<div class="sum-card"><h3>الهوية والعنوان</h3><div class="sum-grid">
+    <div class="sum-item"><label>العنوان</label><div class="sum-val">${d.title.text||'—'}</div></div>
+    <div class="sum-item"><label>الطالب</label><div class="sum-val">${d.cover.s1} ${d.cover.s2?'/ '+d.cover.s2:''}</div></div>
+    <div class="sum-item"><label>المستوى</label><div class="sum-val">${d.cover.degree}</div></div>
+  </div></div>
+  <div class="sum-card"><h3>الإشكالية والمنهج</h3>
+    <div class="sum-item"><label>الإشكالية</label><div class="sum-val">${d.problem.main||'—'}</div></div>
+    <div style="height:10px"></div>
+    <div class="sum-item"><label>المنهج</label><div class="sum-val">${d.method.chosen||'—'}</div></div>
+  </div>
+  <div class="sum-card"><h3>خطة البحث</h3>
+    ${d.plan.chs.map(c=>`<div class="sum-ch"><div class="sum-ch-t">${c.title}</div><ul class="sum-list">${c.secs.map(s=>`<li>${s}</li>`).join('')}</ul></div>`).join('')}
+  </div>
+  <div class="info-box">تأكد من مراجعة كافة الحقول. يمكنك العودة لأي خطوة من القائمة الجانبية.</div>`+navBtns(true,true);
 }
 
-/* ══════════════════════════════════════════════════════
-   STEP 12 — إعدادات تنسيق ملف Word
-══════════════════════════════════════════════════════ */
-const ARABIC_FONTS=['Traditional Arabic','Simplified Arabic','Arabic Typesetting','Amiri','Noto Naskh Arabic','Times New Roman','Arial','Calibri','Georgia','Tahoma'];
-const LATIN_FONTS=['Times New Roman','Arial','Calibri','Georgia','Tahoma','Garamond','Palatino'];
-
-function fontOpts(sel){
-  return [...ARABIC_FONTS,...LATIN_FONTS].map(f=>`<option ${sel===f?'selected':''}>${f}</option>`).join('');
-}
-
-function colorSwatch(id,val){
-  return`<div style="display:flex;align-items:center;gap:8px;margin-top:4px">
-    <input type="color" id="${id}" value="${val}" style="width:36px;height:32px;border:1px solid var(--border);border-radius:6px;padding:2px;cursor:pointer;background:#fff">
-    <input type="text" id="${id}_hex" value="${val}" style="width:90px;font-size:12px" oninput="syncColor('${id}','${id}_hex')" placeholder="#000000">
-  </div>`;
-}
-
+/* ── STEP 12 — إعدادات التنسيق ── */
 function rFormat(){
   const f=D.fmt;
-  const numInput=(id,val,min,max)=>
-    `<input type="number" id="${id}" value="${val}" min="${min}" max="${max}" style="width:80px">`;
+  const fonts=['Traditional Arabic','Amiri','Simplified Arabic','Arial','Times New Roman'];
+  const numInput=(id,v,min,max)=>`<input type="number" id="${id}" value="${v}" min="${min}" max="${max}" oninput="updateFmtPreview()">`;
+  const colorSwatch=(id,v)=>`<div style="display:flex;gap:5px;align-items:center"><input type="color" id="${id}" value="${v}" style="width:40px;height:30px;padding:2px"><input type="text" id="${id}_hex" value="${v}" style="width:80px;font-size:11px" oninput="syncColor('${id}','${id}_hex')"></div>`;
 
-  return hdr('12','إعدادات التنسيق','تحكّم في مظهر ملف Word المُصدَّر — الخطوط، الأحجام، التباعد، الهوامش، الألوان.')+
-
-  `<div class="card"><div class="card-title">خط نص المتن</div>
+  return hdr('12','إعدادات التنسيق','تخصيص مظهر ملف Word الناتج.')+
+  `<div class="card"><div class="card-title">الخطوط والأحجام</div>
   <div class="g2">
-    <div><label>نوع الخط</label>
-    <select id="fmt_bf">${fontOpts(f.bodyFont)}</select></div>
-    <div><label>حجم الخط (نقطة)</label>${numInput('fmt_bs',f.bodySize,8,22)}</div>
-    <div><label>تباعد الأسطر</label>
-    <select id="fmt_lh">
-      ${['1.0','1.15','1.5','1.85','2.0','2.5'].map(v=>`<option ${f.lineHeight===v?'selected':''}>${v}</option>`).join('')}
-    </select></div>
-    <div><label>المسافة بين الفقرات (نقطة)</label>${numInput('fmt_ps',f.paraSpace,0,24)}</div>
-    <div><label>محاذاة النص</label>
-    <select id="fmt_al">
-      <option ${f.align==='justify'?'selected':''} value="justify">ضبط (Justify)</option>
-      <option ${f.align==='right'?'selected':''} value="right">يمين</option>
-      <option ${f.align==='center'?'selected':''} value="center">وسط</option>
-    </select></div>
-    <div><label>هامش الصفحة (سم)</label>
-    <select id="fmt_mg">
-      ${['1.5','2.0','2.5','3.0','3.5'].map(v=>`<option ${f.marginCm===v?'selected':''}>${v} سم</option>`).join('')}
-    </select></div>
-    <div><label>لون نص المتن</label>${colorSwatch('fmt_bc',f.bodyColor)}</div>
-    <div><label>توسيط غلاف التصور</label>
-    <div style="display:flex;align-items:center;gap:8px;margin-top:6px">
-      <input type="checkbox" id="fmt_cv" ${f.coverCenter?'checked':''} style="width:16px;height:16px;cursor:pointer;accent-color:var(--teal)">
-      <label for="fmt_cv" style="font-size:12.5px;color:var(--txt);margin:0;font-weight:400">توسيط محتوى صفحة الغلاف</label>
-    </div></div>
+    <div><label>خط المتن</label><select id="fmt_bf" onchange="updateFmtPreview()">${fonts.map(font=>`<option value="${font}" ${f.bodyFont===font?'selected':''}>${font}</option>`).join('')}</select></div>
+    <div><label>حجم خط المتن (نقطة)</label>${numInput('fmt_bs',f.bodySize,10,18)}</div>
+    <div><label>خط العناوين</label><select id="fmt_hf" onchange="updateFmtPreview()">${fonts.map(font=>`<option value="${font}" ${f.headFont===font?'selected':''}>${font}</option>`).join('')}</select></div>
+    <div><label>تباعد الأسطر</label><select id="fmt_lh" onchange="updateFmtPreview()"><option value="1" ${f.lineHeight==='1'?'selected':''}>مفرد</option><option value="1.15" ${f.lineHeight==='1.15'?'selected':''}>1.15</option><option value="1.5" ${f.lineHeight==='1.5'?'selected':''}>1.5</option><option value="1.85" ${f.lineHeight==='1.85'?'selected':''}>1.85 (معياري)</option><option value="2" ${f.lineHeight==='2'?'selected':''}>مزدوج</option></select></div>
   </div></div>
-
-  <div class="card"><div class="card-title">خطوط العناوين</div>
+  <div class="card"><div class="card-title">الصفحة والفقرات</div>
   <div class="g2">
-    <div><label>نوع خط العناوين</label>
-    <select id="fmt_hf">${fontOpts(f.headFont)}</select></div>
+    <div><label>الهوامش (سم)</label><input type="text" id="fmt_mg" value="${f.marginCm} سم" readonly></div>
+    <div><label>تباعد الفقرات (نقطة)</label>${numInput('fmt_ps',f.paraSpace,0,24)}</div>
+    <div><label>محاذاة النص</label><select id="fmt_al" onchange="updateFmtPreview()"><option value="justify" ${f.align==='justify'?'selected':''}>ضبط (Justify)</option><option value="right" ${f.align==='right'?'selected':''}>يمين</option></select></div>
+    <div style="display:flex;align-items:center;gap:8px;margin-top:20px"><input type="checkbox" id="fmt_cv" ${f.coverCenter?'checked':''} onchange="updateFmtPreview()"> <label style="margin:0">توسيط محتوى الغلاف</label></div>
+  </div></div>
+  <div class="card"><div class="card-title">الألوان (للعناوين)</div>
+  <div class="g2">
+    <div><label>لون النص الأساسي</label>${colorSwatch('fmt_bc',f.bodyColor)}</div>
     <div></div>
     <div><label>حجم العنوان الرئيسي H1 (نقطة)</label>${numInput('fmt_h1',f.h1Size,12,32)}</div>
     <div><label>لون H1</label>${colorSwatch('fmt_h1c',f.h1Color)}</div>
@@ -843,6 +718,7 @@ window.rmSec2=i=>{save();D.sources.secondary.splice(i,1);render();};
 window.addRes=()=>{save();D.results.items.push('');render();};
 window.rmRes=i=>{save();D.results.items.splice(i,1);render();};
 window.addTL=()=>{save();D.timeline.rows.push({task:'',dur:'',unit:'أشهر'});render();};
+window.rmTL=i=>{save();D.timeline.rows.splice(i,1);render();};
 window.syncColor=(colorId,hexId)=>{
   const hex=$(hexId);const col=$(colorId);
   if(!hex||!col)return;
@@ -863,6 +739,8 @@ document.addEventListener('input',e=>{
     }
     updateFmtPreview();
   }
+  // Auto-save on any input
+  saveAll(true);
 });
 window.goTo=goTo;window.go=go;
 
@@ -997,51 +875,48 @@ function _buildDocXml(d,f){
   ps.push(_pageBreak());
   
   if(d.title.corpus||d.title.keywords.length){
-    ps.push(_h2('العنوان والمتن'));
-    if(d.title.corpus) {
-      ps.push(_h3('المتن الأدبي (Corpus)'));
-      ps.push(_p('نوع المتن: '+(d.title.corpusType||'')));
-      ps.push(_p(d.title.corpus));
-    }
-    if(d.title.keywords.length) ps.push(_p('الكلمات المفتاحية: '+d.title.keywords.join(' — ')));
+    ps.push(_h2('بيانات المتن والكلمات المفتاحية'));
+    if(d.title.corpus) ps.push(_pMulti([{text:'المتن المدروس: ',opts:{bold:true}},{text:d.title.corpusType+' — '+d.title.corpus,opts:{}}]));
+    if(d.title.keywords.length) ps.push(_pMulti([{text:'الكلمات المفتاحية: ',opts:{bold:true}},{text:d.title.keywords.join(' — '),opts:{}}]));
+    ps.push(_p('',null,null));
   }
 
   ps.push(_h2(ord[1]+': أسباب اختيار الموضوع'));
-  ps.push(_h3('الأسباب الذاتية')); ps.push(_p(d.reasons.subj));
-  ps.push(_h3('الأسباب الموضوعية')); ps.push(_p(d.reasons.obj));
+  ps.push(_h3('1. الأسباب الذاتية:'));ps.push(_p(d.reasons.subj));
+  ps.push(_h3('2. الأسباب الموضوعية:'));ps.push(_p(d.reasons.obj));
 
   ps.push(_h2(ord[2]+': الإشكالية والفرضيات'));
-  ps.push(_h3('الإشكالية المحورية')); ps.push(_p(d.problem.main));
+  ps.push(_h3('1. الإشكالية المحورية:'));ps.push(_p(d.problem.main));
   if(d.problem.subs.filter(Boolean).length){
-    ps.push(_h3('الأسئلة الفرعية'));
+    ps.push(_h3('2. الأسئلة الفرعية:'));
     d.problem.subs.filter(Boolean).forEach((q,i)=>ps.push(_li(q,i+1)));
   }
   if(d.problem.hyps.filter(Boolean).length){
-    ps.push(_h3('الفرضيات'));
+    ps.push(_h3('3. الفرضيات:'));
     d.problem.hyps.filter(Boolean).forEach((h,i)=>ps.push(_li(h,i+1)));
   }
 
   ps.push(_h2(ord[3]+': المنهج المعتمد'));
-  ps.push(_p(d.method.chosen));
-  if(d.method.justify) { ps.push(_h3('مبررات الاختيار')); ps.push(_p(d.method.justify)); }
-  if(d.method.tools) { ps.push(_h3('الأدوات الإجرائية')); ps.push(_p(d.method.tools)); }
+  ps.push(_pMulti([{text:'المنهج المختار: ',opts:{bold:true}},{text:d.method.chosen,opts:{}}]));
+  ps.push(_h3('مبررات اختيار المنهج:'));ps.push(_p(d.method.justify));
+  if(d.method.tools) ps.push(_pMulti([{text:'الأدوات الإجرائية: ',opts:{bold:true}},{text:d.method.tools,opts:{}}]));
 
   ps.push(_h2(ord[4]+': خطة البحث الأولية'));
-  if(d.plan.intro) { ps.push(_h3('المقدمة')); ps.push(_p(d.plan.intro)); }
-  d.plan.chs.forEach(c=>{
+  if(d.plan.intro) ps.push(_pMulti([{text:'المقدمة: ',opts:{bold:true}},{text:d.plan.intro,opts:{}}]));
+  d.plan.chs.forEach((c,i)=>{
     ps.push(_h3(c.title));
-    c.secs.filter(Boolean).forEach((s,i)=>ps.push(_li(s,i+1)));
+    c.secs.filter(Boolean).forEach((sc,j)=>ps.push(_li(sc,j+1)));
   });
-  if(d.plan.conc) { ps.push(_h3('الخاتمة')); ps.push(_p(d.plan.conc)); }
+  if(d.plan.conc) ps.push(_pMulti([{text:'الخاتمة: ',opts:{bold:true}},{text:d.plan.conc,opts:{}}]));
 
   ps.push(_h2(ord[5]+': الدراسات السابقة'));
-  d.prevlit.items.filter(it=>it.auth||it.title).forEach((it,i)=>ps.push(_li(`${it.auth||''} (${it.year||''}). ${it.title||''}${it.link?' — '+it.link:''}`,i+1)));
-  if(d.prevlit.added) { ps.push(_h3('الجديد الذي يُضيفه البحث')); ps.push(_p(d.prevlit.added)); }
+  d.prevlit.items.forEach((it,i)=>ps.push(_li(`${it.auth} (${it.year}). ${it.title}${it.link?' — '+it.link:''}`,i+1)));
+  if(d.prevlit.added){ps.push(_h3('الإضافة العلمية للبحث:'));ps.push(_p(d.prevlit.added));}
 
   ps.push(_h2(ord[6]+': المصادر والمراجع'));
-  ps.push(_h3('المصادر الأولية'));
+  ps.push(_h3('1. المصادر الأولية:'));
   d.sources.primary.filter(r=>r.text).forEach((r,i)=>ps.push(_li(r.text,i+1)));
-  ps.push(_h3('المراجع النقدية والنظرية'));
+  ps.push(_h3('2. المراجع النقدية والنظرية:'));
   d.sources.secondary.filter(r=>r.text).forEach((r,i)=>ps.push(_li(r.text,i+1)));
 
   ps.push(_h2(ord[7]+': النتائج المتوقعة'));
@@ -1054,194 +929,56 @@ function _buildDocXml(d,f){
 
   /* ── الفهرس ── */
   ps.push(_pageBreak());
-  ps.push(_h2('فهرس المحتويات'));
+  ps.push(_p('فهرس المحتويات',null,{bold:true,sz:32,color:'0d4f4a'},'center'));
+  ps.push(_p('',null,null));
   const tocItems=['صفحة الغلاف','العنوان والمتن','أسباب اختيار الموضوع','الإشكالية والفرضيات','المنهج المعتمد','خطة البحث الأولية','الدراسات السابقة','المصادر والمراجع','النتائج المتوقعة',...(tlHas?['الجدول الزمني']:[]),'فهرس المحتويات'];
-  tocItems.forEach((t,i)=>ps.push(_li(t,i+1)));
+  tocItems.forEach((item,i)=>ps.push(_li(item,i+1)));
 
-  const marginTwips=Math.round((parseFloat(f.marginCm||2.5)/2.54)*1440);
-  /* sectPr: ترتيب العناصر حسب مخطط OOXML — pgSz ← pgMar ← bidi */
-  return `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><w:body>${ps.join('')}<w:sectPr><w:pgSz w:w="11906" w:h="16838" w:orient="portrait"/><w:pgMar w:top="${marginTwips}" w:right="${marginTwips}" w:bottom="${marginTwips}" w:left="${marginTwips}" w:header="0" w:footer="0" w:gutter="0"/><w:bidi/></w:sectPr></w:body></w:document>`;
+  return `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">
+  <w:body>
+    ${ps.join('')}
+    <w:sectPr>
+      <w:pgSz w:w="11906" w:h="16838"/>
+      <w:pgMar w:top="1440" w:right="1440" w:bottom="1440" w:left="1440" w:header="720" w:footer="720" w:gutter="0"/>
+      <w:cols w:space="720"/>
+    </w:sectPr>
+  </w:body>
+</w:document>`;
 }
 
-/* w:hint="cs" يُجبر Word على استخدام خط الكتابة المعقدة (العربية) لكل نص */
-function _buildStylesXml(){
-  const F='<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Traditional Arabic" w:hint="cs"/>';
-  const RTL='<w:rtl/><w:lang w:bidi="ar-SA"/>';
-  return `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:styles xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:docDefaults><w:rPrDefault><w:rPr>${F}${RTL}</w:rPr></w:rPrDefault><w:pPrDefault><w:pPr><w:bidi/><w:jc w:val="right"/></w:pPr></w:pPrDefault></w:docDefaults><w:style w:type="paragraph" w:default="1" w:styleId="Normal"><w:name w:val="Normal"/><w:pPr><w:bidi/><w:jc w:val="right"/></w:pPr><w:rPr>${F}${RTL}</w:rPr></w:style><w:style w:type="paragraph" w:styleId="H1"><w:name w:val="heading 1"/><w:basedOn w:val="Normal"/><w:pPr><w:bidi/><w:jc w:val="center"/><w:spacing w:before="300" w:after="160"/></w:pPr><w:rPr>${F}<w:b/><w:bCs/><w:color w:val="0d4f4a"/><w:sz w:val="32"/><w:szCs w:val="32"/>${RTL}</w:rPr></w:style><w:style w:type="paragraph" w:styleId="H2"><w:name w:val="heading 2"/><w:basedOn w:val="Normal"/><w:pPr><w:bidi/><w:jc w:val="right"/><w:spacing w:before="240" w:after="120"/></w:pPr><w:rPr>${F}<w:b/><w:bCs/><w:color w:val="1a7a73"/><w:sz w:val="26"/><w:szCs w:val="26"/>${RTL}</w:rPr></w:style><w:style w:type="paragraph" w:styleId="H3"><w:name w:val="heading 3"/><w:basedOn w:val="Normal"/><w:pPr><w:bidi/><w:jc w:val="right"/><w:spacing w:before="160" w:after="80"/></w:pPr><w:rPr>${F}<w:b/><w:bCs/><w:color w:val="8B6914"/><w:sz w:val="22"/><w:szCs w:val="22"/>${RTL}</w:rPr></w:style></w:styles>`;
-}
-
-window.exportWord=()=>{
-  save();const d=D;const f=d.fmt;
-  if(typeof JSZip==='undefined'){toast('خطأ: مكتبة JSZip غير محملة');return;}
-  try{
-    const zip=new JSZip();
-    zip.file('[Content_Types].xml',`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/><Override PartName="/word/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml"/><Override PartName="/word/settings.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.settings+xml"/></Types>`);
-    zip.file('_rels/.rels',`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>`);
-    zip.file('word/document.xml',_buildDocXml(d,f));
-    zip.file('word/styles.xml',_buildStylesXml());
-    zip.file('word/settings.xml',`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:settings xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:defaultTabStop w:val="720"/><w:compat><w:compatSetting w:name="compatibilityMode" w:uri="http://schemas.microsoft.com/office/word" w:val="15"/></w:compat></w:settings>`);
-    zip.file('word/_rels/document.xml.rels',`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/><Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/settings" Target="settings.xml"/></Relationships>`);
-    zip.generateAsync({type:'blob',mimeType:'application/vnd.openxmlformats-officedocument.wordprocessingml.document',compression:'DEFLATE',compressionOptions:{level:6}})
-      .then(blob=>{mobileDownload(blob,'التصور_البحثي.docx');toast('تم تصدير Word ✓');})
-      .catch(()=>toast('فشل التصدير — حاول مجدداً'));
-  }catch(e){toast('خطأ في التصدير: '+e.message);}
+window.exportWord=async()=>{
+  save();const zip=new JSZip();
+  zip.file("[Content_Types].xml",`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/><Override PartName="/word/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml"/></Types>`);
+  zip.file("_rels/.rels",`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>`);
+  zip.file("word/styles.xml",`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:styles xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:style w:type="paragraph" w:styleId="H1"><w:name w:val="heading 1"/><w:pPr><w:jc w:val="center"/><w:spacing w:before="240" w:after="120"/></w:pPr><w:rPr><w:b/><w:sz w:val="32"/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="H2"><w:name w:val="heading 2"/><w:pPr><w:spacing w:before="240" w:after="120"/></w:pPr><w:rPr><w:b/><w:sz w:val="26"/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="H3"><w:name w:val="heading 3"/><w:pPr><w:spacing w:before="160" w:after="80"/></w:pPr><w:rPr><w:b/><w:sz w:val="22"/></w:rPr></w:style></w:styles>`);
+  zip.file("word/document.xml",_buildDocXml(D,D.fmt));
+  const blob=await zip.generateAsync({type:"blob"});
+  mobileDownload(blob,"التصور_البحثي.docx");
 };
 
 /* ══════════════════════════════════════════════════════
-   EXPORT — PDF  (print window — يعمل على جميع الأجهزة)
+   EXPORT — PDF (Print to PDF)
 ══════════════════════════════════════════════════════ */
 window.exportPdf=()=>{
-  save();const d=D;
-  const tlHas=d.timeline.rows.filter(r=>r.task).length>0;
-  const ord=['','أولًا','ثانيًا','ثالثًا','رابعًا','خامسًا','سادسًا','سابعًا','ثامنًا'];
-
-  const sec=(title,body)=>`<div class="sec"><h2>${title}</h2>${body}</div>`;
-  const sub=(t,b)=>`<h3>${t}</h3><p>${b||''}</p>`;
-  const ol=items=>`<ol>${items.map(it=>`<li>${it}</li>`).join('')}</ol>`;
-
-  let body='';
-  /* غلاف */
-  body+=`<div class="cover">
-    <div class="inst"><strong>الجامعة:</strong> ${d.cover.univ||'—'}</div>
-    <div class="inst"><strong>الكلية:</strong> ${d.cover.fac||'—'} &nbsp;|&nbsp; <strong>القسم:</strong> ${d.cover.dept||'—'}</div>
-    ${d.cover.branch?`<div class="inst"><strong>الفرع:</strong> ${d.cover.branch}</div>`:''}
-    ${d.cover.specialty?`<div class="inst"><strong>التخصص:</strong> ${d.cover.specialty}</div>`:''}
-    <h1>${d.title.text||'عنوان التصور'}</h1>
-    ${d.title.scope?`<div class="scope">${d.title.scope}</div>`:''}
-    <div class="meta"><strong>إعداد الطالب(ة):</strong><br>• ${d.cover.s1||'—'}${d.cover.s2?'<br>• '+d.cover.s2:''}</div>
-    <div class="meta"><strong>تحت إشراف:</strong> ${d.cover.sup||'—'}</div>
-    <div class="meta"><strong>السنة الجامعية:</strong> ${d.cover.year||'—'}</div>
-  </div><div class="pb"></div>`;
-
-  if(d.title.corpus||d.title.keywords.length){
-    let kw='';
-    if(d.title.corpus) kw+=sub('المتن الأدبي (Corpus)',`<strong>نوع المتن:</strong> ${d.title.corpusType||''}<br>${d.title.corpus}`);
-    if(d.title.keywords.length) kw+=`<p><strong>الكلمات المفتاحية:</strong> ${d.title.keywords.join(' — ')}</p>`;
-    body+=sec('العنوان والمتن',kw);
-  }
-
-  body+=sec(`${ord[1]}: أسباب اختيار الموضوع`,
-    sub('الأسباب الذاتية',d.reasons.subj)+sub('الأسباب الموضوعية',d.reasons.obj));
-
-  let prob=sub('الإشكالية المحورية',d.problem.main);
-  if(d.problem.subs.filter(Boolean).length) prob+=`<h3>الأسئلة الفرعية</h3>${ol(d.problem.subs.filter(Boolean))}`;
-  if(d.problem.hyps.filter(Boolean).length) prob+=`<h3>الفرضيات</h3>${ol(d.problem.hyps.filter(Boolean))}`;
-  body+=sec(`${ord[2]}: الإشكالية والفرضيات`,prob);
-
-  let meth=sub('المنهج المعتمد',d.method.chosen);
-  if(d.method.justify) meth+=sub('مبررات الاختيار',d.method.justify);
-  if(d.method.tools) meth+=sub('الأدوات الإجرائية',d.method.tools);
-  body+=sec(`${ord[3]}: المنهج المعتمد`,meth);
-
-  let plan=d.plan.intro?sub('المقدمة',d.plan.intro):'';
-  d.plan.chs.forEach(c=>{plan+=`<h3>${c.title}</h3>${ol(c.secs.filter(Boolean))}`;});
-  if(d.plan.conc) plan+=sub('الخاتمة',d.plan.conc);
-  body+=sec(`${ord[4]}: خطة البحث الأولية`,plan);
-
-  body+=sec(`${ord[5]}: الدراسات السابقة`,
-    ol(d.prevlit.items.filter(it=>it.auth||it.title).map(it=>`${it.auth||''} (${it.year||''}). <em>${it.title||''}</em>${it.link?' — '+it.link:''}`))
-    +(d.prevlit.added?sub('الجديد الذي يُضيفه البحث',d.prevlit.added):''));
-
-  body+=sec(`${ord[6]}: المصادر والمراجع`,
-    `<h3>المصادر الأولية</h3>${ol(d.sources.primary.filter(r=>r.text).map(r=>r.text))}`+
-    `<h3>المراجع النقدية والنظرية</h3>${ol(d.sources.secondary.filter(r=>r.text).map(r=>r.text))}`);
-
-  body+=sec(`${ord[7]}: النتائج المتوقعة`,ol(d.results.items.filter(Boolean)));
-
-  if(tlHas){
-    const rows=d.timeline.rows.filter(r=>r.task).map(r=>`<tr><td>${r.task}</td><td>${r.dur} ${r.unit}</td></tr>`).join('');
-    body+=sec(`${ord[8]}: الجدول الزمني`,`<table><thead><tr><th>المرحلة</th><th>المدة</th></tr></thead><tbody>${rows}</tbody></table>`);
-  }
-
-  const tocItems=['صفحة الغلاف','العنوان والمتن','أسباب اختيار الموضوع','الإشكالية والفرضيات','المنهج المعتمد','خطة البحث الأولية','الدراسات السابقة','المصادر والمراجع','النتائج المتوقعة',...(tlHas?['الجدول الزمني']:[]),'فهرس المحتويات'];
-  body+=`<div class="pb"></div><div class="sec"><h2>فهرس المحتويات</h2><ol>${tocItems.map(t=>`<li>${t}</li>`).join('')}</ol></div>`;
-
-  const html=`<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8">
-<title>التصور البحثي — ${d.title.text||''}</title>
-<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Noto+Sans+Arabic:wght@400;500&display=swap" rel="stylesheet">
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Noto Sans Arabic','Traditional Arabic',Arial,sans-serif;direction:rtl;font-size:12pt;color:#1a1612;background:#fff;line-height:1.9;text-align:justify}
-.cover{text-align:center;padding:60pt 0 40pt;page-break-after:always}
-.cover h1{font-family:'Amiri',serif;font-size:20pt;color:#0d4f4a;margin:20pt 0 8pt;border-bottom:2pt solid #c9a227;padding-bottom:10pt}
-.cover .inst{font-size:11pt;margin-bottom:4pt}
-.cover .scope{color:#7a6a52;font-size:11pt;margin-bottom:10pt}
-.cover .meta{margin-top:10pt;font-size:11.5pt}
-.pb{page-break-after:always}
-.sec{margin-bottom:20pt}
-h2{font-family:'Amiri',serif;font-size:15pt;color:#1a7a73;margin:20pt 0 10pt;border-right:4pt solid #c9a227;padding-right:10pt}
-h3{font-family:'Amiri',serif;font-size:13pt;color:#8B6914;margin:12pt 0 6pt}
-p{margin-bottom:8pt}
-ol{padding-right:18pt;margin-bottom:10pt}
-li{margin-bottom:4pt}
-table{width:100%;border-collapse:collapse;margin:10pt 0}
-th,td{border:1pt solid #c8b89a;padding:6pt 8pt;font-size:11pt}
-th{background:#f0e8d8;font-weight:bold;text-align:right}
-@media print{
-  @page{size:A4;margin:2cm}
-  body{font-size:11pt}
-  .cover{padding:40pt 0 30pt}
-  h2{font-size:14pt}
-}
-</style></head><body>${body}
-<script>window.onload=function(){window.print();}<\/script>
-</body></html>`;
-
-  const w=window.open('','_blank','width=800,height=900');
-  if(w){w.document.write(html);w.document.close();}
-  else{toast('السماح بالنوافذ المنبثقة لاستخدام تصدير PDF','err');}
+  save();
+  toast('جاري تجهيز نسخة الطباعة...','ok');
+  setTimeout(()=>window.print(),500);
 };
+
+/* ── مساعد التحميل للجوال ── */
+function mobileDownload(blob,name){
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;a.download=name;
+  document.body.appendChild(a);a.click();
+  setTimeout(()=>{document.body.removeChild(a);URL.revokeObjectURL(url);},100);
+}
 
 /* ══════════════════════════════════════════════════════
    INIT
 ══════════════════════════════════════════════════════ */
-
-/* ── تنزيل متوافق مع الهاتف والتابلت ── */
-function mobileDownload(blob, filename){
-  const url=URL.createObjectURL(blob);
-  // iOS Safari: doesn't support a.click() on blob — open in new tab instead
-  const isIOS=/iPad|iPhone|iPod/.test(navigator.userAgent)&&!window.MSStream;
-  if(isIOS){
-    // Show a download link the user can tap
-    showMobileLink(url,filename);
-  }else{
-    const a=document.createElement('a');
-    a.href=url;a.download=filename;
-    document.body.appendChild(a);a.click();
-    document.body.removeChild(a);
-    setTimeout(()=>URL.revokeObjectURL(url),2000);
-  }
-}
-
-function showMobileLink(url,filename){
-  // Create a tap-to-download overlay for iOS
-  const overlay=document.createElement('div');
-  overlay.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:20000;display:flex;align-items:center;justify-content:center;padding:20px';
-  overlay.innerHTML=`<div style="background:#fff;border-radius:14px;padding:28px 24px;text-align:center;max-width:320px;width:100%;font-family:'Noto Sans Arabic',sans-serif;direction:rtl">
-    <div style="font-size:28px;margin-bottom:12px">📄</div>
-    <h3 style="font-family:'Amiri',serif;color:#0d4f4a;margin-bottom:10px;font-size:18px">الملف جاهز</h3>
-    <p style="font-size:13px;color:#7a6a52;margin-bottom:18px;line-height:1.7">اضغط على الزر أدناه لفتح الملف، ثم اختر "مشاركة" أو "حفظ في الملفات" من القائمة.</p>
-    <a href="${url}" target="_blank" download="${filename}"
-       style="display:block;background:#0d4f4a;color:#fff;padding:13px;border-radius:9px;text-decoration:none;font-size:14px;font-weight:600;margin-bottom:10px">
-       افتح الملف ←
-    </a>
-    <button onclick="this.closest('div').parentElement.remove()"
-      style="background:none;border:1px solid #c8b89a;color:#7a6a52;padding:10px 20px;border-radius:8px;font-family:'Noto Sans Arabic',sans-serif;font-size:13px;cursor:pointer;width:100%">
-      إغلاق
-    </button>
-  </div>`;
-  document.body.appendChild(overlay);
-}
-
-function acceptTOS(){
-  localStorage.setItem('ARProposal4_TOS','1');
-  $('tosModal').classList.remove('on');
-}
-
-window.onload=()=>{
-  if(!localStorage.getItem('ARProposal4_TOS')) $('tosModal').classList.add('on');
-  buildNav();render();
-};
+buildNav();render();
 </script>
 </body>
 </html>
