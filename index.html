@@ -124,86 +124,46 @@ textarea{resize:vertical;min-height:85px;line-height:1.75}
 /* summary */
 .sum-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:12px}
 .sum-card h3{font-family:'Amiri',serif;font-size:15px;color:var(--gold);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--parch-d)}
-.sf{margin-bottom:7px}
-.sl{font-size:11px;color:var(--muted);margin-bottom:2px}
-.sv{font-size:12.5px;color:var(--txt);line-height:1.6}
-.done-banner{background:linear-gradient(135deg,var(--teal),#0a3d38);border-radius:12px;padding:18px;text-align:center;margin-bottom:18px;color:#fff}
-.done-banner h2{font-family:'Amiri',serif;font-size:19px;margin-bottom:5px;color:#c9a227}
-.done-banner p{font-size:12.5px;opacity:.75}
-/* TOC */
-.toc-box{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px}
-.toc-title{font-family:'Amiri',serif;font-size:18px;color:var(--txt);text-align:center;margin-bottom:15px;padding-bottom:10px;border-bottom:2px solid var(--parch-d)}
-.te{display:flex;align-items:baseline;gap:5px;margin-bottom:5px;font-size:13px}
-.te.l1{font-family:'Amiri',serif;font-size:14.5px;color:var(--txt);margin-top:8px;font-weight:700}
-.te.l2{padding-right:18px;color:var(--muted);font-size:12.5px}
-.te-dots{flex:1;border-bottom:1px dotted var(--border);margin:0 5px;margin-bottom:2px}
-/* toast */
-.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);padding:9px 20px;border-radius:8px;font-family:'Noto Sans Arabic',sans-serif;font-size:12.5px;z-index:9999;pointer-events:none;transition:opacity .4s;white-space:nowrap}
-.toast.ok{background:var(--teal);color:#fff}
-.toast.err{background:#a32d2d;color:#fff}
-/* ── Terms of Use Modal ── */
-.modal-overlay{position:fixed;inset:0;background:rgba(20,14,8,.75);z-index:10000;display:flex;align-items:center;justify-content:center;padding:16px}
-.modal-box{background:#fff;border-radius:14px;max-width:560px;width:100%;max-height:90vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.4)}
-.modal-hdr{background:var(--side);padding:22px 24px 16px;text-align:center;flex-shrink:0}
-.modal-hdr h2{font-family:'Amiri',serif;font-size:20px;color:#c9a227;margin-bottom:4px}
-.modal-hdr p{font-size:11px;color:rgba(255,255,255,.45)}
-.modal-body{overflow-y:auto;padding:22px 24px;flex:1}
-.modal-body h3{font-family:'Amiri',serif;font-size:14px;color:var(--teal);margin:14px 0 6px}
-.modal-body h3:first-child{margin-top:0}
-.modal-body p{font-size:12.5px;color:var(--txt);line-height:1.8;margin-bottom:6px}
-.modal-body ul{padding-right:18px;margin-bottom:8px}
-.modal-body ul li{font-size:12.5px;color:var(--txt);line-height:1.8;margin-bottom:3px}
-.modal-foot{padding:16px 24px;border-top:1px solid var(--parch-d);background:var(--parch);flex-shrink:0;text-align:center}
-.modal-foot p{font-size:11.5px;color:var(--muted);margin-bottom:10px}
-.btn-agree{padding:11px 40px;background:var(--teal);color:#fff;border:none;border-radius:8px;font-family:'Noto Sans Arabic',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:all .2s}
+.sf{display:flex;gap:12px;margin-bottom:7px;font-size:13px}
+.sl{color:var(--muted);min-width:110px;font-weight:500}
+.sv{color:var(--txt);flex:1;line-height:1.6}
+.done-banner{background:var(--teal);color:#fff;padding:24px;border-radius:12px;text-align:center;margin-bottom:18px}
+.done-banner h2{font-family:'Amiri',serif;font-size:22px;margin-bottom:6px}
+.done-banner p{font-size:13px;opacity:.85}
+/* toc */
+.toc-box{background:#fff;border:1px solid var(--border);border-radius:12px;padding:24px;max-width:600px;margin:0 auto}
+.toc-title{font-family:'Amiri',serif;font-size:18px;text-align:center;color:var(--teal);margin-bottom:20px;padding-bottom:10px;border-bottom:2px solid var(--gold)}
+.te{display:flex;align-items:center;gap:8px;margin-bottom:10px;font-size:13.5px}
+.te-dots{flex:1;border-bottom:1px dotted #c8b89a;margin-bottom:4px}
+.te.l1{font-weight:500}
+.footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--border);text-align:center;font-size:11.5px;color:var(--muted);line-height:1.8}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:rgba(28,21,16,.9);color:#fff;padding:10px 20px;border-radius:30px;font-size:13px;z-index:10000;transition:opacity .4s;display:flex;align-items:center;gap:8px;box-shadow:0 4px 12px rgba(0,0,0,.15)}
+.toast.err{background:#c0503a}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:20000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;visibility:hidden;transition:all .3s}
+.modal-overlay.on{opacity:1;visibility:visible}
+.modal-box{background:#fff;border-radius:16px;max-width:540px;width:100%;max-height:90vh;overflow-y:auto;display:flex;flex-direction:column;box-shadow:0 20px 50px rgba(0,0,0,.3)}
+.modal-hdr{padding:24px 24px 16px;text-align:center;border-bottom:1px solid var(--parch-d)}
+.modal-hdr h2{font-family:'Amiri',serif;font-size:22px;color:var(--teal)}
+.modal-hdr p{font-size:13px;color:var(--muted);margin-top:4px}
+.modal-body{padding:24px;font-size:13.5px;line-height:1.8;color:var(--txt);flex:1}
+.modal-body h3{font-family:'Amiri',serif;font-size:16px;color:var(--gold);margin:16px 0 8px}
+.modal-body ul{padding-right:20px;margin-bottom:12px}
+.modal-foot{padding:16px 24px 24px;text-align:center;background:var(--parch);border-top:1px solid var(--parch-d)}
+.modal-foot p{font-size:11px;color:var(--muted);margin-bottom:14px}
+.btn-agree{background:var(--teal);color:#fff;border:none;padding:12px 32px;border-radius:10px;font-family:'Noto Sans Arabic',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:all .2s}
 .btn-agree:hover{background:var(--teal-m);transform:translateY(-1px)}
-/* Footer */
-.footer{text-align:center;padding:25px;font-size:12px;color:var(--muted);border-top:1px solid var(--border);margin-top:40px;background:var(--gold-bg);border-radius:12px 12px 0 0}
-.footer p{margin-bottom:6px}
-/* ── Mobile nav drawer ── */
-.mob-bar{display:none;position:fixed;top:0;right:0;left:0;z-index:500;background:var(--side);padding:10px 14px;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(201,162,39,.2)}
-.mob-title{font-family:'Amiri',serif;font-size:14px;color:#c9a227}
-.mob-menu-btn{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:#fff;padding:6px 11px;border-radius:7px;font-size:13px;cursor:pointer}
-.drawer-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:600}
-.drawer{position:fixed;top:0;right:0;width:78vw;max-width:280px;height:100vh;background:var(--side);z-index:700;transform:translateX(100%);transition:transform .3s;overflow-y:auto;display:flex;flex-direction:column}
-.drawer.open{transform:translateX(0)}
-.drawer-close{background:none;border:none;color:rgba(255,255,255,.6);font-size:20px;cursor:pointer;padding:14px 16px;text-align:left}
-@media(max-width:700px){
+.drawer{position:fixed;top:0;right:-280px;width:280px;height:100vh;background:var(--side);z-index:15000;transition:right .3s ease;box-shadow:-5px 0 15px rgba(0,0,0,.2)}
+.drawer.on{right:0}
+.drawer-close{background:none;border:none;color:#fff;font-size:20px;cursor:pointer;padding:10px}
+@media (max-width:800px){
   .app{grid-template-columns:1fr}
   .side{display:none}
-  .mob-bar{display:flex}
-  .main{padding:60px 14px 14px}
+  .main{padding:20px 16px}
   .g2,.g3{grid-template-columns:1fr}
-  input[type=text],input[type=number],textarea,select{font-size:16px!important}
-  .nav-btns{gap:7px}
-  .btn-next,.btn-prev,.btn-skip,.btn-word,.btn-txt{font-size:12px;padding:9px 14px}
-  .sec-title{font-size:20px}
-  .modal-box{margin:8px;max-height:95vh}
-  .modal-hdr{padding:16px 16px 12px}
-  .modal-body{padding:14px 16px}
-  .modal-foot{padding:12px 16px}
-  .btn-agree{width:100%;padding:13px}
-  .card{padding:14px}
 }
 </style>
 </head>
 <body>
-<!-- ══ شريط الهاتف ══ -->
-<div class="mob-bar" id="mobBar">
-  <div class="mob-title">محرّر التصور البحثي</div>
-  <div style="display:flex;gap:7px">
-    <button class="mob-menu-btn" onclick="saveAll()" title="حفظ">💾</button>
-    <button class="mob-menu-btn" onclick="openDrawer()">☰ القائمة</button>
-  </div>
-</div>
-<div class="drawer-overlay" id="drawerOvl" onclick="closeDrawer()"></div>
-<div class="drawer" id="navDrawer">
-  <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-bottom:1px solid rgba(201,162,39,.2)">
-    <span style="font-family:'Amiri',serif;font-size:14px;color:#c9a227">خطوات التصور</span>
-    <button class="drawer-close" onclick="closeDrawer()">✕</button>
-  </div>
-  <ul class="nav" id="drawerNav" style="padding:6px 0"></ul>
-</div>
 
 <!-- ══ اتفاقية الاستخدام ══ -->
 <div id="tosModal" class="modal-overlay">
@@ -275,7 +235,7 @@ const STEPS=[
   {id:'title',   lbl:'العنوان والمتن',       grp:'الهوية'},
   {id:'reasons', lbl:'أسباب اختيار الموضوع',grp:'التأطير'},
   {id:'problem', lbl:'الإشكالية والفرضيات', grp:'التأطير'},
-  {id:'method',  lbl:'الجهاز المنهجي',       grp:'التأطير'},
+  {id:'method',  lbl:'المنهج المعتمد',       grp:'التأطير'},
   {id:'plan',    lbl:'خطة البحث الأولية',    grp:'البناء'},
   {id:'prevlit', lbl:'الدراسات السابقة',     grp:'البناء'},
   {id:'sources', lbl:'المصادر والمراجع',     grp:'البناء'},
@@ -283,7 +243,7 @@ const STEPS=[
   {id:'timeline',lbl:'الجدول الزمني',        grp:'البناء', opt:true},
   {id:'summary', lbl:'المراجعة والتصدير',    grp:'التصدير'},
   {id:'format',  lbl:'إعدادات التنسيق',       grp:'التصدير'},
-  {id:'toc',     lbl:'فهرس التصور',          grp:'التصدير'},
+  {id:'toc',     lbl:'فهرس المحتويات',          grp:'التصدير'},
 ];
 
 function blank(){
@@ -427,11 +387,11 @@ function rCover(){
   return hdr('1','صفحة الغلاف','بيانات المؤسسة والطالب والمشرف.')+
   `<div class="card"><div class="card-title">بيانات المؤسسة</div>
   <div class="g3">
-    <div><label>الجامعة</label><input type="text" id="cv_u" value="${esc(d.univ)}" placeholder="جامعة الجزائر 2"></div>
+    <div><label>الجامعة</label><input type="text" id="cv_u" value="${esc(d.univ)}" placeholder="مثال: جامعة الجزائر 2"></div>
     <div><label>الكلية</label><input type="text" id="cv_f" value="${esc(d.fac)}" placeholder="كلية الآداب واللغات"></div>
     <div><label>القسم</label><input type="text" id="cv_d" value="${esc(d.dept)}" placeholder="قسم اللغة العربية وآدابها"></div>
-    <div><label>الفرع <span class="opt-label">(اختياري)</span></label><input type="text" id="cv_br" value="${esc(d.branch)}" placeholder="مثال: أدب عربي، لسانيات..."></div>
-    <div><label>التخصص <span class="opt-label">(اختياري)</span></label><input type="text" id="cv_sp" value="${esc(d.specialty)}" placeholder="مثال: نقد أدبي معاصر..."></div>
+    <div><label>الفرع <span class="opt-label">(اختياري)</span></label><input type="text" id="cv_br" value="${esc(d.branch)}" placeholder="مثال: دراسات أدبية"></div>
+    <div><label>التخصص <span class="opt-label">(اختياري)</span></label><input type="text" id="cv_sp" value="${esc(d.specialty)}" placeholder="مثال: الأدب العربي"></div>
     <div></div>
   </div></div>
   <div class="card"><div class="card-title">بيانات الطالب والإشراف</div>
@@ -441,9 +401,9 @@ function rCover(){
     <div><label>المشرف</label><input type="text" id="cv_sup" value="${esc(d.sup)}" placeholder="الأستاذ الدكتور ..."></div>
     <div><label>الطور الدراسي</label><select id="cv_deg">
       <option value="">-- اختر --</option>
-      ${['ليسانس','ماجستير — السنة الأولى','ماجستير — السنة الثانية','دكتوراه — السنة الأولى','دكتوراه — السنة الثانية','دكتوراه — السنة الثالثة'].map(v=>`<option ${d.degree===v?'selected':''}>${v}</option>`).join('')}
+      ${['ليسانس','ماستر','دكتوراه'].map(v=>`<option ${d.degree===v?'selected':''}>${v}</option>`).join('')}
     </select></div>
-    <div style="grid-column:1/-1"><label>السنة الجامعية</label><input type="text" id="cv_y" value="${esc(d.year)}" placeholder="2024 / 2025"></div>
+    <div style="grid-column:1/-1"><label>السنة الجامعية</label><input type="text" id="cv_y" value="${esc(d.year||'2025-2026')}" placeholder="2025-2026"></div>
   </div></div>
   <div class="card" style="background:var(--parch)"><div class="card-title">معاينة الغلاف</div>${prev}</div>`
   +navBtns(false);
@@ -455,28 +415,25 @@ function rCover(){
 function rTitle(){
   const d=D.title;
   const wc=d.text.trim().split(/\s+/).filter(Boolean).length;
-  const wcEl=wc>0?(wc<=15?`<div class="wc ok">✓ ${wc} كلمة</div>`:`<div class="wc warn">⚠ ${wc} كلمة — يُفضَّل أقل من 15</div>`):'';
-  return hdr('2','العنوان والمتن','العنوان يجب أن يكون جامعًا مانعًا مع تحديد المجال والمتن الأدبي بدقة.')+
-  `<div class="info-box"><strong>نموذج جيد:</strong> "تلقي الرواية الجزائرية المعاصرة في النقد الجامعي 2010–2020" — يحدد النوع الأدبي، الموقع، الحقبة الزمنية.</div>
-  <div class="card"><div class="card-title">صياغة العنوان</div>
-  <label>العنوان الكامل</label>
-  <textarea id="t_txt" rows="3" placeholder="مثال: البنية السردية في رواية 'الزلزال' لطاهر وطار — دراسة بنيوية">${esc(d.text)}</textarea>${wcEl}
-  <div class="g2" style="margin-top:12px">
-    <div><label>الحقبة الزمنية <span class="opt-label">(اختياري)</span></label><input type="text" id="t_scope" value="${esc(d.scope)}" placeholder="مثال: 1990–2020، العصر الحديث..."></div>
-    <div><label>الكلمات المفتاحية <span class="opt-label">(اختيارية)</span></label>
-      <div class="tag-wrap"><input type="text" id="kw_in" placeholder="أضف كلمة..."><button class="btn-tag" onclick="addKw()">+</button></div>
-      <div class="tags" id="kw_tags">${d.keywords.map((k,i)=>`<span class="tag">${esc(k)}<button onclick="rmKw(${i})">×</button></span>`).join('')}</div>
-    </div>
-  </div></div>
-  <div class="card"><div class="card-title">تحديد المتن (Corpus)</div>
-  <div class="tip"><strong>أهمية المتن:</strong> في الدراسات الأدبية يجب تحديد "المدونة" بدقة قبل الشروع في البحث — رواية بعينها، ديوان شعري، مجموعة نصوص نقدية، أو مجموعة قصصية محددة.</div>
-  <div class="g2">
+  return hdr('2','العنوان والمتن','تحديد عنوان البحث ومجاله التطبيقي.')+
+  `<div class="card"><div class="card-title">عنوان التصور البحثي</div>
+  <textarea id="t_txt" rows="3" placeholder="اكتب العنوان المقترح هنا...">${esc(d.text)}</textarea>
+  ${wc>0?(wc<=15?`<div class="wc ok">✓ ${wc} كلمة</div>`:`<div class="wc warn">⚠ ${wc} كلمة — يُفضَّل أقل من 15</div>`):''}
+  </div>
+  <div class="card"><div class="card-title">الحقبة الزمنية / المجال</div>
+  <input type="text" id="t_scope" value="${esc(d.scope)}" placeholder="مثال: الأدب الجزائري المعاصر، العصر العباسي..."></div>
+  <div class="card"><div class="card-title">المتن الأدبي (Corpus)</div>
+  <div class="g2" style="margin-bottom:10px">
     <div><label>نوع المتن</label><select id="t_ctype">
-      <option value="">-- اختر --</option>
-      ${['رواية','ديوان شعري','قصص قصيرة','نصوص نقدية','مسرحية','مقالات أدبية','مخطوطات','أخرى'].map(v=>`<option ${d.corpusType===v?'selected':''}>${v}</option>`).join('')}
+      ${['رواية','مجموعة شعرية','مجموعة قصصية','مسرحية','نصوص نقدية','أخرى'].map(v=>`<option ${d.corpusType===v?'selected':''}>${v}</option>`).join('')}
     </select></div>
-    <div><label>وصف المتن بدقة</label><input type="text" id="t_corpus" value="${esc(d.corpus)}" placeholder="مثال: رواية 'الزلزال' لطاهر وطار، دار الآداب 1974"></div>
-  </div></div>`+navBtns();
+    <div></div>
+  </div>
+  <label>تحديد المتن (اسم العمل والمؤلف)</label>
+  <textarea id="t_corpus" rows="2" placeholder="مثال: رواية 'اللاز' للطاهر وطار">${esc(d.corpus)}</textarea></div>
+  <div class="card"><div class="card-title">الكلمات المفتاحية</div>
+  <div class="tag-wrap"><input type="text" id="kw_in" placeholder="أضف كلمة..."><button class="btn-tag" onclick="addKw()">إضافة</button></div>
+  <div class="tags">${d.keywords.map((k,i)=>`<span class="tag">${esc(k)}<button onclick="rmKw(${i})">✕</button></span>`).join('')}</div></div>`+navBtns();
 }
 
 /* ══════════════════════════════════════════════════════
@@ -484,14 +441,11 @@ function rTitle(){
 ══════════════════════════════════════════════════════ */
 function rReasons(){
   const d=D.reasons;
-  return hdr('3','أسباب اختيار الموضوع','يُميّز التصور الأكاديمي الجزائري بين نوعين من الأسباب.')+
-  `<div class="info-box">يُعدّ التصريح بأسباب الاختيار دليلًا على وعي الباحث بموقعه من الموضوع، ويُثبت أن اختياره مدروس وليس عشوائيًا.</div>
-  <div class="card"><div class="card-title">الأسباب الذاتية</div>
-  <div class="tip"><strong>ماذا تشمل؟</strong> ميول الطالب الشخصية، اهتمامه بالكاتب أو الجنس الأدبي أو المنهج النقدي، علاقته بالموضوع من حيث القراءات والدراسة السابقة.</div>
-  <textarea id="rs_subj" rows="4" placeholder="مثال: انبثق اهتمامي بهذا الموضوع من قراءتي المبكرة لأعمال الكاتب، وإعجابي بأسلوبه السردي الذي يمزج بين الواقعي والرمزي...">${esc(d.subj)}</textarea></div>
+  return hdr('3','أسباب اختيار الموضوع','لماذا اخترت هذا الموضوع تحديدًا؟')+
+  `<div class="card"><div class="card-title">الأسباب الذاتية</div>
+  <textarea id="rs_subj" rows="4" placeholder="الميول الشخصية، الاهتمام بنوع أدبي معين، الرغبة في اكتشاف كاتب...">${esc(d.subj)}</textarea></div>
   <div class="card"><div class="card-title">الأسباب الموضوعية</div>
-  <div class="tip"><strong>ماذا تشمل؟</strong> شُح الدراسات حول الموضوع، وجود فجوة معرفية، رغبة في تطبيق منهج نقدي جديد على نص لم يُدرَس وفق هذا المنهج، الأهمية الأدبية والثقافية للنص.</div>
-  <textarea id="rs_obj" rows="4" placeholder="مثال: تكمن الأهمية الموضوعية في ندرة الدراسات التي تناولت هذا النص وفق المنهج السيميائي، وهو ما يجعل هذا البحث إضافة جديدة في المكتبة النقدية الجزائرية...">${esc(d.obj)}</textarea></div>`+navBtns();
+  <textarea id="rs_obj" rows="4" placeholder="قلة الدراسات حول الموضوع، أهمية النص المختصر، الحاجة لتطبيق منهج معين...">${esc(d.obj)}</textarea></div>`+navBtns();
 }
 
 /* ══════════════════════════════════════════════════════
@@ -516,7 +470,7 @@ function rProblem(){
 }
 
 /* ══════════════════════════════════════════════════════
-   STEP 5 — الجهاز المنهجي
+   STEP 5 — المنهج المعتمد
 ══════════════════════════════════════════════════════ */
 const METHODS_INFO=[
   {n:'المنهج السيميائي',     d:'تحليل العلامات والدلالات ورصد أنظمة الدلالة داخل النص'},
@@ -533,10 +487,10 @@ const METHODS_INFO=[
 
 function rMethod(){
   const d=D.method;
-  return hdr('5','الجهاز المنهجي','تحديد المنهج النقدي المعتمد في الجامعات الجزائرية حاليًا.')+
-  `<div class="card"><div class="card-title">اختر المنهج (انقر لإضافته)</div>
+  return hdr('5','المنهج المعتمد','تحديد المنهج النقدي المعتمد في الجامعات الجزائرية حاليًا.')+
+  `<div class="card"><div class="card-title">اختر المنهج أو المقاربة (انقر للإضافة)</div>
   <div class="chips">${METHODS_INFO.map(m=>`<button class="chip" title="${m.d}" onclick="appendField('meth_txt','${m.n}')"><strong>${m.n}</strong></button>`).join('')}</div>
-  <label>المنهج أو المناهج المعتمدة</label>
+  <label>المنهج أو المقاربات المعتمدة</label>
   <textarea id="meth_txt" rows="3" placeholder="انقر على المقترحات أعلاه أو اكتب مباشرة...">${esc(d.chosen)}</textarea></div>
   <div class="card"><div class="card-title">مبررات اختيار المنهج</div>
   <textarea id="meth_j" rows="4" placeholder="لماذا هذا المنهج تحديدًا؟ ما مدى انسجامه مع طبيعة المتن والإشكالية؟ هل سبق تطبيقه على هذا النص؟">${esc(d.justify)}</textarea></div>
@@ -622,11 +576,11 @@ function rSources(){
   return hdr('8','المصادر والمراجع','تصنيف أولي بين النصوص الأدبية والكتب النقدية والنظرية.')+
   `<div class="info-box"><strong>التمييز الجوهري:</strong> المصادر = النصوص الأدبية التي ستُحلَّل (المتن) | المراجع = الكتب النقدية والنظرية التي ستستند إليها في القراءة والتأطير.</div>
   <div class="card"><div class="card-title">المصادر الأولية (النصوص الأدبية)</div>
-  <div id="prim_l">${prim.map((r,i)=>`<div class="li"><input type="text" id="prim_${i}" value="${esc(r.text)}" placeholder="مثال: وطار، طاهر. الزلزال. الجزائر: الشركة الوطنية للنشر والتوزيع، 1974."><button class="btn-rm" onclick="rmPrim(${i})">−</button></div>`).join('')}</div>
-  <button class="btn-add" onclick="addPrim()">+ أضف مصدرًا أوليًا</button></div>
+  <div id="prim_l">${prim.map((r,i)=>`<div class="li"><input type="text" id="prim_${i}" value="${esc(r.text)}" placeholder="المؤلف: العنوان، دار النشر، الطبعة، السنة."><button class="btn-rm" onclick="rmPrim(${i})">−</button></div>`).join('')}</div>
+  <button class="btn-add" onclick="addPrim()">+ أضف مصدرًا</button></div>
   <div class="card"><div class="card-title">المراجع النقدية والنظرية</div>
-  <div id="sec_l">${sec.map((r,i)=>`<div class="li"><input type="text" id="sec_${i}" value="${esc(r.text)}" placeholder="مثال: بارت، رولان. لذة النص. ترجمة فؤاد صفا. بيروت: دار توبقال، 1988."><button class="btn-rm" onclick="rmSec2(${i})">−</button></div>`).join('')}</div>
-  <button class="btn-add" onclick="addSec2()">+ أضف مرجعًا نقديًا</button></div>`+navBtns();
+  <div id="sec_l">${sec.map((r,i)=>`<div class="li"><input type="text" id="sec_${i}" value="${esc(r.text)}" placeholder="المؤلف: العنوان، المترجم (إن وجد)، دار النشر، السنة."><button class="btn-rm" onclick="rmSec2(${i})">−</button></div>`).join('')}</div>
+  <button class="btn-add" onclick="addSec2()">+ أضف مرجعًا</button></div>`+navBtns();
 }
 
 /* ══════════════════════════════════════════════════════
@@ -635,19 +589,18 @@ function rSources(){
 function rResults(){
   const d=D.results;
   const items=d.items.length?d.items:[''];
-  return hdr('9','النتائج المتوقعة','ما الذي تتوقع أن يُقدّمه بحثك؟ استنادًا إلى فرضياتك وخطتك.')+
-  `<div class="info-box">النتائج المتوقعة ليست "يقينًا" بل "رهانًا بحثيًا" — تُظهر للمشرف وضوح رؤيتك وقدرتك على توقّع مسار البحث.</div>
-  <div class="card"><div class="card-title">النتائج المتوقعة</div>
-  <div id="res_l">${items.map((r,i)=>`<div class="li"><input type="text" id="res_${i}" value="${esc(r)}" placeholder="النتيجة ${i+1}..."><button class="btn-rm" onclick="rmRes(${i})">−</button></div>`).join('')}</div>
+  return hdr('9','النتائج المتوقعة','ما الذي تأمل الوصول إليه في نهاية البحث؟')+
+  `<div class="card"><div class="card-title">النتائج المنتظرة</div>
+  <div id="res_l">${items.map((r,i)=>`<div class="li"><textarea id="res_${i}" rows="2" placeholder="النتيجة ${i+1}...">${esc(r)}</textarea><button class="btn-rm" onclick="rmRes(${i})">−</button></div>`).join('')}</div>
   <button class="btn-add" onclick="addRes()">+ أضف نتيجة</button></div>`+navBtns();
 }
 
 /* ══════════════════════════════════════════════════════
-   STEP 10 — الجدول الزمني (اختياري)
+   STEP 10 — الجدول الزمني
 ══════════════════════════════════════════════════════ */
 function rTimeline(){
   const d=D.timeline;
-  const rows=d.rows.length?d.rows:[{task:'',dur:'',unit:'أشهر'}];
+  const rows=d.rows.length?d.rows:[{task:'جمع المادة العلمية والمصادر',dur:'2',unit:'أشهر'},{task:'تحليل المتن الأدبي',dur:'3',unit:'أشهر'},{task:'صياغة الفصول',dur:'4',unit:'أشهر'},{task:'المراجعة النهائية والتصحيح',dur:'1',unit:'أشهر'}];
   return hdr('10','الجدول الزمني <span style="font-size:14px;font-weight:400;color:var(--muted)">(اختياري)</span>','توزيع مراحل العمل على الزمن المتاح.')+
   `<div class="card"><div class="card-title">مراحل البحث</div>
   <div style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:9px;margin-bottom:7px;padding:0 2px">
@@ -680,7 +633,7 @@ function rSummary(){
   S('العنوان والمتن',F('العنوان',d.title.text)+F('الحقبة الزمنية',d.title.scope)+F('نوع المتن',d.title.corpusType)+F('المتن',d.title.corpus)+(d.title.keywords.length?F('الكلمات المفتاحية',d.title.keywords.join(' — ')):''))+
   S('أسباب الاختيار',F('الأسباب الذاتية',d.reasons.subj)+F('الأسباب الموضوعية',d.reasons.obj))+
   S('الإشكالية والفرضيات',F('الإشكالية المحورية',d.problem.main)+d.problem.subs.filter(Boolean).map((s,i)=>`<div class="sf"><div class="sl">السؤال الفرعي ${i+1}</div><div class="sv">${s}</div></div>`).join('')+d.problem.hyps.filter(Boolean).map((h,i)=>`<div class="sf"><div class="sl">الفرضية ${i+1}</div><div class="sv">${h}</div></div>`).join(''))+
-  S('الجهاز المنهجي',F('المنهج المعتمد',d.method.chosen)+F('المبررات',d.method.justify)+(d.method.tools?F('الأدوات الإجرائية',d.method.tools):''))+
+  S('المنهج المعتمد',F('المنهج المعتمد',d.method.chosen)+F('المبررات',d.method.justify)+(d.method.tools?F('الأدوات الإجرائية',d.method.tools):''))+
   S('خطة البحث',F('المقدمة',d.plan.intro)+d.plan.chs.map((c,i)=>`<div class="sf"><div class="sl" style="font-weight:600;color:var(--txt)">${c.title}</div>${c.secs.filter(Boolean).map(s=>`<div class="sv" style="padding-right:12px">• ${s}</div>`).join('')}</div>`).join('')+F('الخاتمة',d.plan.conc))+
   S('الدراسات السابقة',d.prevlit.items.filter(it=>it.auth||it.title).map((it,i)=>`<div class="sf"><div class="sl">${i+1}. ${it.auth} (${it.year})</div><div class="sv">${it.title}</div></div>`).join('')+F('الجديد الذي يُضيفه البحث',d.prevlit.added))+
   S('المصادر والمراجع',`<div class="sf"><div class="sl">المصادر الأولية</div>${d.sources.primary.filter(r=>r.text).map((r,i)=>`<div class="sv">${i+1}. ${r.text}</div>`).join('')}</div><div class="sf"><div class="sl">المراجع النقدية</div>${d.sources.secondary.filter(r=>r.text).map((r,i)=>`<div class="sv">${i+1}. ${r.text}</div>`).join('')}</div>`)+
@@ -776,22 +729,23 @@ function rTOC(){
   save();const d=D;
   const tlHas=d.timeline.rows.filter(r=>r.task).length>0;
   const sections=[
-    {n:1,label:'صفحة الغلاف'},
-    {n:2,label:'العنوان والمتن'+(d.title.keywords.length?' والكلمات المفتاحية':'')},
-    {n:3,label:'أسباب اختيار الموضوع'},
-    {n:4,label:'الإشكالية والفرضيات'},
-    {n:5,label:'الجهاز المنهجي'},
-    {n:6,label:'خطة البحث الأولية'},
-    {n:7,label:'الدراسات السابقة'},
-    {n:8,label:'المصادر والمراجع'},
-    {n:9,label:'النتائج المتوقعة'},
+    {n:1,label:'صفحة الغلاف',p:1},
+    {n:2,label:'العنوان والمتن',p:2},
+    {n:3,label:'أسباب اختيار الموضوع',p:2},
+    {n:4,label:'الإشكالية والفرضيات',p:3},
+    {n:5,label:'المنهج المعتمد',p:3},
+    {n:6,label:'خطة البحث الأولية',p:4},
+    {n:7,label:'الدراسات السابقة',p:5},
+    {n:8,label:'المصادر والمراجع',p:6},
+    {n:9,label:'النتائج المتوقعة',p:7},
   ];
   let n=10;
-  if(tlHas){sections.push({n:n,label:'الجدول الزمني'});n++;}
-  sections.push({n:n,label:'فهرس التصور'});
-  const entries=sections.map(s=>`<div class="te l1"><span style="min-width:24px;color:var(--muted);font-size:12px;flex-shrink:0">${s.n}</span><span>${s.label}</span><span class="te-dots"></span></div>`).join('');
-  return hdr('13','فهرس التصور البحثي','فهرس محتويات هذا التصور — يتكيّف تلقائيًا مع المحتوى.')+
-  `<div class="toc-box"><div class="toc-title">فهرس محتويات التصور البحثي</div>${entries}</div>
+  let lastP=7;
+  if(tlHas){sections.push({n:n,label:'الجدول الزمني',p:8});n++;lastP=8;}
+  sections.push({n:n,label:'فهرس المحتويات',p:lastP+1});
+  const entries=sections.map(s=>`<div class="te l1"><span style="min-width:24px;color:var(--muted);font-size:12px;flex-shrink:0">${s.n}</span><span>${s.label}</span><span class="te-dots"></span><span style="color:var(--gold);font-weight:600;margin-right:8px">${s.p}</span></div>`).join('');
+  return hdr('13','فهرس المحتويات','فهرس محتويات هذا التصور — يتكيّف تلقائيًا مع المحتوى.')+
+  `<div class="toc-box"><div class="toc-title">فهرس المحتويات</div>${entries}</div>
   <p style="font-size:11.5px;color:var(--muted);margin-top:10px;text-align:center">يتغيّر الفهرس تلقائيًا — عُد لأي خطوة للتعديل</p>`
   +navBtns(true,true);
 }
@@ -935,7 +889,7 @@ window.exportTxt=()=>{
   s('الإشكالية المحورية:');s(d.problem.main);s('');
   if(d.problem.subs.filter(Boolean).length){s('الأسئلة الفرعية:');d.problem.subs.filter(Boolean).forEach((q,i)=>s(`  ${i+1}. ${q}`));s('');}
   if(d.problem.hyps.filter(Boolean).length){s('الفرضيات:');d.problem.hyps.filter(Boolean).forEach((h,i)=>s(`  ${i+1}. ${h}`));s('');}
-  s('ثالثًا: الجهاز المنهجي');s('─────────────────────────────');
+  s('ثالثًا: المنهج المعتمد');s('─────────────────────────────');
   s(d.method.chosen);s(d.method.justify);if(d.method.tools){s('');s('الأدوات الإجرائية: '+d.method.tools);}s('');
   s('رابعًا: خطة البحث الأولية');s('─────────────────────────────');
   if(d.plan.intro)s('المقدمة: '+d.plan.intro);
@@ -950,8 +904,8 @@ window.exportTxt=()=>{
   s('سابعًا: النتائج المتوقعة');s('─────────────────────────────');
   d.results.items.filter(Boolean).forEach((r,i)=>s(`${i+1}. ${r}`));s('');
   if(tlHas){s('ثامنًا: الجدول الزمني');s('─────────────────────────────');d.timeline.rows.filter(r=>r.task).forEach((r,i)=>s(`${i+1}. ${r.task} — ${r.dur} ${r.unit}`));s('');}
-  s('════════ فهرس محتويات التصور ════════');
-  ['صفحة الغلاف','العنوان والمتن','أسباب اختيار الموضوع','الإشكالية والفرضيات','الجهاز المنهجي','خطة البحث الأولية','الدراسات السابقة','المصادر والمراجع','النتائج المتوقعة',...(tlHas?['الجدول الزمني']:[]),'فهرس التصور'].forEach((item,i)=>s(`${i+1}. ${item}`));
+  s('════════ فهرس المحتويات ════════');
+  ['صفحة الغلاف','العنوان والمتن','أسباب اختيار الموضوع','الإشكالية والفرضيات','المنهج المعتمد','خطة البحث الأولية','الدراسات السابقة','المصادر والمراجع','النتائج المتوقعة',...(tlHas?['الجدول الزمني']:[]),'فهرس المحتويات'].forEach((item,i)=>s(`${i+1}. ${item}`));
   s('');s('══════════════════════════════════════════════');
   const blob=new Blob([L.join('\n')],{type:'text/plain;charset=utf-8'});
   mobileDownload(blob,'التصور_البحثي.txt');
@@ -981,7 +935,9 @@ function _pPr(pStyle,j,spBefore,spAfter){
   let r='<w:pPr>';
   if(pStyle)r+=`<w:pStyle w:val="${pStyle}"/>`;
   r+='<w:bidi/>';
-  r+=`<w:jc w:val="${j||'right'}"/>`;
+  // OOXML uses 'both' for justification
+  const align = (j === 'justify' || j === 'both') ? 'both' : (j || 'right');
+  r+=`<w:jc w:val="${align}"/>`;
   if(spBefore||spAfter)r+=`<w:spacing${spBefore?` w:before="${spBefore}"`:''}${spAfter?` w:after="${spAfter}"`:''}/>`; 
   r+='</w:pPr>';return r;
 }
@@ -998,112 +954,108 @@ function _pMulti(runs,pStyle,jc){
   const isHdr=(pStyle==='H1'||pStyle==='H2'||pStyle==='H3');
   const align=jc||(isHdr?'right':'both');
   const sp=(pStyle==='H1'||pStyle==='H2')?[240,120]:pStyle==='H3'?[160,80]:[0,80];
-  const rs=runs.map(([txt,opts])=>`<w:r>${_rpr(opts)}<w:t xml:space="preserve">${_ex(txt)}</w:t></w:r>`).join('');
-  return `<w:p>${_pPr(pStyle,align,sp[0],sp[1])}${rs}</w:p>`;
+  return `<w:p>${_pPr(pStyle,align,sp[0],sp[1])}${runs.map(r=>`<w:r>${_rpr(r.opts)}<w:t xml:space="preserve">${_ex(r.text)}</w:t></w:r>`).join('')}</w:p>`;
 }
 
-function _pageBreak(){return `<w:p>${_pPr('','right',0,0)}<w:r><w:br w:type="page"/></w:r></w:p>`;}
-function _blank(){return `<w:p>${_pPr('','right',0,80)}</w:p>`;}
-function _h1(t){return _p(t,'H1',{bold:true,sz:32,color:'0d4f4a'});}
+function _h1(t){return _p(t,'H1',{bold:true,sz:32,color:'0d4f4a'},'center');}
 function _h2(t){return _p(t,'H2',{bold:true,sz:26,color:'1a7a73'});}
 function _h3(t){return _p(t,'H3',{bold:true,sz:22,color:'8B6914'});}
-function _body(t){return _p(t,'',{sz:24});}
-function _li(t,n){return _p(`${n}. ${t}`,'',{sz:24});}
-function _cvRow(label,val){
-  return _pMulti([[label,{bold:true,sz:22,color:'7a6a52'}],[val||'—',{sz:24}]],'');
-}
-
-function _tblRow(cells,isHeader){
-  const tds=cells.map(c=>`<w:tc><w:tcPr><w:tcBorders><w:top w:val="single" w:sz="4" w:color="c8b89a"/><w:bottom w:val="single" w:sz="4" w:color="c8b89a"/><w:right w:val="single" w:sz="4" w:color="c8b89a"/><w:left w:val="single" w:sz="4" w:color="c8b89a"/></w:tcBorders>${isHeader?'<w:shd w:val="clear" w:color="auto" w:fill="F0E8D8"/><w:tcMar><w:top w:w="60" w:type="dxa"/><w:bottom w:w="60" w:type="dxa"/><w:right w:w="100" w:type="dxa"/><w:left w:w="100" w:type="dxa"/></w:tcMar>':''}</w:tcPr>${_p(c,'',{bold:isHeader,sz:20})}</w:tc>`).join('');
-  return `<w:tr>${tds}</w:tr>`;
-}
+function _li(t,i){return `<w:p>${_pPr(null,'right',0,80)}<w:r>${_rpr({bold:true})}<w:t>${i}. </w:t></w:r><w:r>${_rpr()}<w:t>${_ex(t)}</w:t></w:r></w:p>`;}
+function _pageBreak(){return '<w:p><w:r><w:br w:type="page"/></w:r></w:p>';}
 
 function _buildDocXml(d,f){
+  const ps=[];
   const tlHas=d.timeline.rows.filter(r=>r.task).length>0;
   const ord=['','أولًا','ثانيًا','ثالثًا','رابعًا','خامسًا','سادسًا','سابعًا','ثامنًا'];
-  const ps=[];
 
-  /* ── صفحة الغلاف ── */
-  ps.push(_blank());
-  ps.push(_cvRow('الجامعة: ',d.cover.univ));
-  ps.push(_cvRow('الكلية: ',d.cover.fac));
-  ps.push(_cvRow('القسم: ',d.cover.dept));
-  if(d.cover.branch) ps.push(_cvRow('الفرع: ',d.cover.branch));
-  if(d.cover.specialty) ps.push(_cvRow('التخصص: ',d.cover.specialty));
-  ps.push(_blank());
-  ps.push(_h1('عنوان تصور البحث'));
-  ps.push(_p(d.title.text,'',{bold:true,sz:28,color:f.h1Color?f.h1Color.replace('#',''):'0d4f4a'},'center'));
-  if(d.title.scope) ps.push(_p(d.title.scope,'',{sz:22,color:'7a6a52'},'center'));
-  ps.push(_blank());
-  ps.push(_p('إعداد الطالب(ة):','',{bold:true,sz:24}));
-  ps.push(_p('• '+d.cover.s1,'',{sz:24}));
-  if(d.cover.s2) ps.push(_p('• '+d.cover.s2,'',{sz:24}));
-  ps.push(_blank());
-  ps.push(_cvRow('تحت إشراف: ',d.cover.sup));
-  ps.push(_cvRow('السنة الجامعية: ',d.cover.year));
+  /* ── الغلاف ── */
+  const cAlign=f.coverCenter?'center':'right';
+  ps.push(_p('الجمهورية الجزائرية الديمقراطية الشعبية',null,{bold:true,sz:24},'center'));
+  ps.push(_p('وزارة التعليم العالي والبحث العلمي',null,{bold:true,sz:24},'center'));
+  ps.push(_p('',null,null,'center'));
+  ps.push(_pMulti([{text:'الجامعة: ',opts:{bold:true}},{text:d.cover.univ||'—',opts:{}}],null,cAlign));
+  ps.push(_pMulti([{text:'الكلية: ',opts:{bold:true}},{text:d.cover.fac||'—',opts:{}},{text:'  |  القسم: ',opts:{bold:true}},{text:d.cover.dept||'—',opts:{}}],null,cAlign));
+  if(d.cover.branch) ps.push(_pMulti([{text:'الفرع: ',opts:{bold:true}},{text:d.cover.branch,opts:{}}],null,cAlign));
+  if(d.cover.specialty) ps.push(_pMulti([{text:'التخصص: ',opts:{bold:true}},{text:d.cover.specialty,opts:{}}],null,cAlign));
+  
+  ps.push(_p('',null,null,'center'));ps.push(_p('',null,null,'center'));
+  ps.push(_p('تصور بحث لمذكرة '+d.cover.degree,null,{bold:true,sz:28,color:'8B6914'},'center'));
+  ps.push(_h1(d.title.text||'عنوان التصور البحثي'));
+  if(d.title.scope) ps.push(_p(d.title.scope,null,{italic:true,color:'7a6a52'},'center'));
+  
+  ps.push(_p('',null,null,'center'));ps.push(_p('',null,null,'center'));
+  ps.push(_p('إعداد الطالب(ة):',null,{bold:true},cAlign));
+  ps.push(_p('• '+ (d.cover.s1||'—'),null,{},cAlign));
+  if(d.cover.s2) ps.push(_p('• '+ d.cover.s2,null,{},cAlign));
+  
+  ps.push(_p('',null,null,'center'));
+  ps.push(_pMulti([{text:'تحت إشراف الأستاذ: ',opts:{bold:true}},{text:d.cover.sup||'—',opts:{}}],null,cAlign));
+  ps.push(_p('',null,null,'center'));
+  ps.push(_pMulti([{text:'السنة الجامعية: ',opts:{bold:true}},{text:d.cover.year||'—',opts:{}}],null,cAlign));
+
+  /* ── المحتوى ── */
   ps.push(_pageBreak());
-
-  /* ── العنوان والمتن ── */
-  if(d.title.corpus){
-    ps.push(_h2('المتن الأدبي (Corpus)'));
-    ps.push(_pMulti([['نوع المتن: ',{bold:true,sz:24}],[d.title.corpusType||'',{sz:24}]],''));
-    ps.push(_body(d.title.corpus));
+  
+  if(d.title.corpus||d.title.keywords.length){
+    ps.push(_h2('العنوان والمتن'));
+    if(d.title.corpus) {
+      ps.push(_h3('المتن الأدبي (Corpus)'));
+      ps.push(_p('نوع المتن: '+(d.title.corpusType||'')));
+      ps.push(_p(d.title.corpus));
+    }
+    if(d.title.keywords.length) ps.push(_p('الكلمات المفتاحية: '+d.title.keywords.join(' — ')));
   }
-  if(d.title.keywords&&d.title.keywords.length){
-    ps.push(_pMulti([['الكلمات المفتاحية: ',{bold:true,sz:24}],[d.title.keywords.join(' — '),{sz:24}]],''));
+
+  ps.push(_h2(ord[1]+': أسباب اختيار الموضوع'));
+  ps.push(_h3('الأسباب الذاتية')); ps.push(_p(d.reasons.subj));
+  ps.push(_h3('الأسباب الموضوعية')); ps.push(_p(d.reasons.obj));
+
+  ps.push(_h2(ord[2]+': الإشكالية والفرضيات'));
+  ps.push(_h3('الإشكالية المحورية')); ps.push(_p(d.problem.main));
+  if(d.problem.subs.filter(Boolean).length){
+    ps.push(_h3('الأسئلة الفرعية'));
+    d.problem.subs.filter(Boolean).forEach((q,i)=>ps.push(_li(q,i+1)));
+  }
+  if(d.problem.hyps.filter(Boolean).length){
+    ps.push(_h3('الفرضيات'));
+    d.problem.hyps.filter(Boolean).forEach((h,i)=>ps.push(_li(h,i+1)));
   }
 
-  /* ── الأقسام ── */
-  ps.push(_h2(`${ord[1]}: أسباب اختيار الموضوع`));
-  ps.push(_h3('الأسباب الذاتية'));ps.push(_body(d.reasons.subj));
-  ps.push(_h3('الأسباب الموضوعية'));ps.push(_body(d.reasons.obj));
+  ps.push(_h2(ord[3]+': المنهج المعتمد'));
+  ps.push(_p(d.method.chosen));
+  if(d.method.justify) { ps.push(_h3('مبررات الاختيار')); ps.push(_p(d.method.justify)); }
+  if(d.method.tools) { ps.push(_h3('الأدوات الإجرائية')); ps.push(_p(d.method.tools)); }
 
-  ps.push(_h2(`${ord[2]}: الإشكالية والفرضيات`));
-  ps.push(_h3('الإشكالية المحورية'));ps.push(_body(d.problem.main));
-  const subs=d.problem.subs.filter(Boolean);
-  if(subs.length){ps.push(_h3('الأسئلة الفرعية'));subs.forEach((q,i)=>ps.push(_li(q,i+1)));}
-  const hyps=d.problem.hyps.filter(Boolean);
-  if(hyps.length){ps.push(_h3('الفرضيات'));hyps.forEach((h,i)=>ps.push(_li(h,i+1)));}
-
-  ps.push(_h2(`${ord[3]}: الجهاز المنهجي`));
-  ps.push(_h3('المنهج المعتمد'));ps.push(_body(d.method.chosen));
-  if(d.method.justify){ps.push(_h3('مبررات الاختيار'));ps.push(_body(d.method.justify));}
-  if(d.method.tools){ps.push(_h3('الأدوات الإجرائية'));ps.push(_body(d.method.tools));}
-
-  ps.push(_h2(`${ord[4]}: خطة البحث الأولية`));
-  if(d.plan.intro){ps.push(_h3('المقدمة'));ps.push(_body(d.plan.intro));}
+  ps.push(_h2(ord[4]+': خطة البحث الأولية'));
+  if(d.plan.intro) { ps.push(_h3('المقدمة')); ps.push(_p(d.plan.intro)); }
   d.plan.chs.forEach(c=>{
     ps.push(_h3(c.title));
     c.secs.filter(Boolean).forEach((s,i)=>ps.push(_li(s,i+1)));
   });
-  if(d.plan.conc){ps.push(_h3('الخاتمة'));ps.push(_body(d.plan.conc));}
+  if(d.plan.conc) { ps.push(_h3('الخاتمة')); ps.push(_p(d.plan.conc)); }
 
-  ps.push(_h2(`${ord[5]}: الدراسات السابقة`));
-  d.prevlit.items.filter(it=>it.auth||it.title).forEach((it,i)=>{
-    ps.push(_p(`${i+1}. ${it.auth||''} (${it.year||''}). ${it.title||''}${it.link?' — '+it.link:''}`, '', {sz:24,italic:true}));
-  });
-  if(d.prevlit.added){ps.push(_h3('الجديد الذي يُضيفه البحث'));ps.push(_body(d.prevlit.added));}
+  ps.push(_h2(ord[5]+': الدراسات السابقة'));
+  d.prevlit.items.filter(it=>it.auth||it.title).forEach((it,i)=>ps.push(_li(`${it.auth||''} (${it.year||''}). ${it.title||''}${it.link?' — '+it.link:''}`,i+1)));
+  if(d.prevlit.added) { ps.push(_h3('الجديد الذي يُضيفه البحث')); ps.push(_p(d.prevlit.added)); }
 
-  ps.push(_h2(`${ord[6]}: المصادر والمراجع`));
-  ps.push(_h3('المصادر الأولية (النصوص الأدبية)'));
+  ps.push(_h2(ord[6]+': المصادر والمراجع'));
+  ps.push(_h3('المصادر الأولية'));
   d.sources.primary.filter(r=>r.text).forEach((r,i)=>ps.push(_li(r.text,i+1)));
   ps.push(_h3('المراجع النقدية والنظرية'));
   d.sources.secondary.filter(r=>r.text).forEach((r,i)=>ps.push(_li(r.text,i+1)));
 
-  ps.push(_h2(`${ord[7]}: النتائج المتوقعة`));
+  ps.push(_h2(ord[7]+': النتائج المتوقعة'));
   d.results.items.filter(Boolean).forEach((r,i)=>ps.push(_li(r,i+1)));
 
   if(tlHas){
-    ps.push(_h2(`${ord[8]}: الجدول الزمني`));
-    const tblRows=[_tblRow(['المرحلة','المدة','الوحدة'],true)];
-    d.timeline.rows.filter(r=>r.task).forEach(r=>tblRows.push(_tblRow([r.task,r.dur,r.unit],false)));
-    ps.push(`<w:tbl><w:tblPr><w:tblW w:w="5000" w:type="pct"/><w:tblBorders><w:top w:val="single" w:sz="4" w:color="c8b89a"/><w:bottom w:val="single" w:sz="4" w:color="c8b89a"/><w:insideH w:val="single" w:sz="4" w:color="c8b89a"/></w:tblBorders></w:tblPr><w:tblGrid><w:gridCol w:w="3600"/><w:gridCol w:w="900"/><w:gridCol w:w="900"/></w:tblGrid>${tblRows.join('')}</w:tbl>`);
+    ps.push(_h2(ord[8]+': الجدول الزمني'));
+    d.timeline.rows.filter(r=>r.task).forEach((r,i)=>ps.push(_li(`${r.task} — ${r.dur} ${r.unit}`,i+1)));
   }
 
   /* ── الفهرس ── */
   ps.push(_pageBreak());
-  ps.push(_h2('فهرس محتويات التصور البحثي'));
-  const tocItems=['صفحة الغلاف','العنوان والمتن','أسباب اختيار الموضوع','الإشكالية والفرضيات','الجهاز المنهجي','خطة البحث الأولية','الدراسات السابقة','المصادر والمراجع','النتائج المتوقعة',...(tlHas?['الجدول الزمني']:[]),'فهرس التصور'];
+  ps.push(_h2('فهرس المحتويات'));
+  const tocItems=['صفحة الغلاف','العنوان والمتن','أسباب اختيار الموضوع','الإشكالية والفرضيات','المنهج المعتمد','خطة البحث الأولية','الدراسات السابقة','المصادر والمراجع','النتائج المتوقعة',...(tlHas?['الجدول الزمني']:[]),'فهرس المحتويات'];
   tocItems.forEach((t,i)=>ps.push(_li(t,i+1)));
 
   const marginTwips=Math.round((parseFloat(f.marginCm||2.5)/2.54)*1440);
@@ -1179,7 +1131,7 @@ window.exportPdf=()=>{
   let meth=sub('المنهج المعتمد',d.method.chosen);
   if(d.method.justify) meth+=sub('مبررات الاختيار',d.method.justify);
   if(d.method.tools) meth+=sub('الأدوات الإجرائية',d.method.tools);
-  body+=sec(`${ord[3]}: الجهاز المنهجي`,meth);
+  body+=sec(`${ord[3]}: المنهج المعتمد`,meth);
 
   let plan=d.plan.intro?sub('المقدمة',d.plan.intro):'';
   d.plan.chs.forEach(c=>{plan+=`<h3>${c.title}</h3>${ol(c.secs.filter(Boolean))}`;});
@@ -1201,8 +1153,8 @@ window.exportPdf=()=>{
     body+=sec(`${ord[8]}: الجدول الزمني`,`<table><thead><tr><th>المرحلة</th><th>المدة</th></tr></thead><tbody>${rows}</tbody></table>`);
   }
 
-  const tocItems=['صفحة الغلاف','العنوان والمتن','أسباب اختيار الموضوع','الإشكالية والفرضيات','الجهاز المنهجي','خطة البحث الأولية','الدراسات السابقة','المصادر والمراجع','النتائج المتوقعة',...(tlHas?['الجدول الزمني']:[]),'فهرس التصور'];
-  body+=`<div class="pb"></div><div class="sec"><h2>فهرس محتويات التصور البحثي</h2><ol>${tocItems.map(t=>`<li>${t}</li>`).join('')}</ol></div>`;
+  const tocItems=['صفحة الغلاف','العنوان والمتن','أسباب اختيار الموضوع','الإشكالية والفرضيات','المنهج المعتمد','خطة البحث الأولية','الدراسات السابقة','المصادر والمراجع','النتائج المتوقعة',...(tlHas?['الجدول الزمني']:[]),'فهرس المحتويات'];
+  body+=`<div class="pb"></div><div class="sec"><h2>فهرس المحتويات</h2><ol>${tocItems.map(t=>`<li>${t}</li>`).join('')}</ol></div>`;
 
   const html=`<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8">
 <title>التصور البحثي — ${d.title.text||''}</title>
@@ -1279,59 +1231,17 @@ function showMobileLink(url,filename){
     </button>
   </div>`;
   document.body.appendChild(overlay);
-  overlay.addEventListener('click',e=>{if(e.target===overlay)overlay.remove();});
 }
 
-/* ── قائمة الهاتف (Drawer) ── */
-function buildDrawerNav(){
-  const el=document.getElementById('drawerNav');
-  if(!el)return;
-  let html='',lastGrp='';
-  STEPS.forEach((s,i)=>{
-    if(s.grp!==lastGrp){
-      if(lastGrp)html+='<div class="nav-sep"></div>';
-      html+=`<div class="nav-group-lbl">${s.grp}</div>`;
-      lastGrp=s.grp;
-    }
-    html+=`<li class="nav-item${i===cur?' active':''}${s.opt?' opt':''}" onclick="goTo(${i});closeDrawer()">
-      <span class="n-num">${i+1}</span><span>${s.lbl}</span></li>`;
-  });
-  el.innerHTML=html;
+function acceptTOS(){
+  localStorage.setItem('ARProposal4_TOS','1');
+  $('tosModal').classList.remove('on');
 }
-window.openDrawer=function(){
-  buildDrawerNav();
-  document.getElementById('navDrawer').classList.add('open');
-  document.getElementById('drawerOvl').style.display='block';
-};
-window.closeDrawer=function(){
-  document.getElementById('navDrawer').classList.remove('open');
-  document.getElementById('drawerOvl').style.display='none';
-};
 
-/* ── اتفاقية الاستخدام ── */
-function initTOS(){
-  const modal=document.getElementById('tosModal');
-  const agreed=localStorage.getItem('ARProposal_TOS_v2');
-  if(agreed){
-    // سبق القبول — أخفِ المودال فوراً
-    modal.style.display='none';
-  } else {
-    // لم يسبق القبول — أظهر مع تلاشٍ ناعم
-    modal.style.display='flex';
-    modal.style.opacity='0';
-    setTimeout(()=>{modal.style.transition='opacity .4s';modal.style.opacity='1';},30);
-  }
-}
-window.acceptTOS=function(){
-  localStorage.setItem('ARProposal_TOS_v2','accepted_'+new Date().toISOString());
-  const modal=document.getElementById('tosModal');
-  modal.style.transition='opacity .35s';
-  modal.style.opacity='0';
-  setTimeout(()=>{modal.style.display='none';},380);
+window.onload=()=>{
+  if(!localStorage.getItem('ARProposal4_TOS')) $('tosModal').classList.add('on');
+  buildNav();render();
 };
-
-buildNav();render();
-initTOS();
 </script>
 </body>
 </html>
